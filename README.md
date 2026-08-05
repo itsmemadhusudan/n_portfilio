@@ -67,7 +67,7 @@ If GitHub Pages was switched on for this repo, turn it off under **Settings -> P
 - The web root pointed at `public/`, never at the project root
 - A `.env` file created on the server (never committed) — copy `.env.production.example` and fill in `APP_URL`
 - `php artisan key:generate` run once, so `APP_KEY` is set
-- Built assets in `public/build`, which is gitignored, so either run `npm run build` on the server or build locally and upload that folder
+- Nothing to compile on the server: `public/build` is committed, so hosts without Node.js work fine. Just remember to run `npm run build` and commit the result whenever you change anything in `resources/css` or `resources/js`
 
 No database is required. The portfolio reads everything from `config/portfolio.php`, and `.env.production.example` sets the session, cache and queue drivers to file/sync so there are no migrations to run.
 
@@ -77,23 +77,22 @@ No database is required. The portfolio reads everything from `config/portfolio.p
 2. Upload the contents of the project's `public/` folder into `public_html`, or point the domain's document root at `~/portfolio/public` if the panel allows it.
 3. If you had to split the folders in step 2, edit `public_html/index.php` and fix the two `require` paths so they point at `~/portfolio`.
 4. Over SSH, run `composer install --no-dev --optimize-autoloader`, create `.env`, run `php artisan key:generate`, then `composer deploy`.
-5. Build assets locally with `npm run build` and upload `public/build` if the host has no Node.
 
 ### Railway or Render
 
 1. Connect the GitHub repository and let the platform auto-detect PHP.
-2. Build command: `composer install --no-dev --optimize-autoloader && npm ci && npm run build`
+2. Build command: `composer install --no-dev --optimize-autoloader`
 3. Start command: `php artisan serve --host 0.0.0.0 --port $PORT`
 4. Set the environment variables from `.env.production.example` in the platform dashboard, including a generated `APP_KEY` (`php artisan key:generate --show` prints one).
 
 ### VPS (Ubuntu with Nginx)
 
 1. `git clone` the repository into `/var/www/portfolio`.
-2. Run `composer install --no-dev --optimize-autoloader`, `npm ci && npm run build`, create `.env`, `php artisan key:generate`, then `composer deploy`.
+2. Run `composer install --no-dev --optimize-autoloader`, create `.env`, `php artisan key:generate`, then `composer deploy`.
 3. Give the web server user write access: `chown -R www-data:www-data storage bootstrap/cache`.
 4. Point the Nginx `root` at `/var/www/portfolio/public` and pass `.php` requests to PHP-FPM.
 
-To update any of these later: `git pull`, reinstall dependencies if they changed, rebuild assets, then `php artisan optimize:clear && composer deploy`.
+To update any of these later: `git pull`, reinstall dependencies if they changed, then `php artisan optimize:clear && composer deploy`.
 
 ## Project layout
 
