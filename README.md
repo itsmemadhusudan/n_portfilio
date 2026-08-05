@@ -94,6 +94,19 @@ No database is required. The portfolio reads everything from `config/portfolio.p
 
 To update any of these later: `git pull`, reinstall dependencies if they changed, then `php artisan optimize:clear && composer deploy`.
 
+### Static copy for GitHub Pages
+
+Every page is server-rendered from static content, so the site can also be exported to plain HTML and served by GitHub Pages while the Laravel app remains the source of truth:
+
+```bash
+npm run build
+php artisan site:export --base=https://itsmemadhusudan.github.io/n_portfilio
+```
+
+That writes `docs/` — one `index.html` per route, a copy of `public/build`, and a `.nojekyll` marker. Commit the folder, then enable **Settings -> Pages -> Source: Deploy from a branch -> Branch: main -> Folder: /docs**.
+
+The `--base` flag matters: GitHub project sites live under a subdirectory, so every link and asset URL is rewritten with that prefix. Re-run the two commands after any content change, since the export is a snapshot rather than a live render.
+
 ## Project layout
 
 ```
