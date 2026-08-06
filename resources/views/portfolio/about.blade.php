@@ -8,7 +8,7 @@
         accent="var(--coral)"
     />
 
-    <section class="max-w-5xl mx-auto px-6 pb-10">
+    <section class="max-w-7xl mx-auto px-6 pb-10">
         <div class="grid lg:grid-cols-5 gap-8 mb-12">
             <div class="lg:col-span-3 space-y-4">
                 <x-anim-card padding="p-6 sm:p-8">

@@ -10,7 +10,7 @@
 
     @include('portfolio.partials.stack', ['standalone' => true])
 
-    <section class="max-w-5xl mx-auto px-6 pb-10">
+    <section class="max-w-7xl mx-auto px-6 pb-10">
         <h2 class="text-2xl font-display mb-6" style="font-weight: 700; color: #F8FAFC;">Languages & frameworks</h2>
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-12">
             @foreach ($portfolio['languages'] as $lang)

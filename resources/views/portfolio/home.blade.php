@@ -3,7 +3,7 @@
 @section('content')
     @include('portfolio.partials.hero')
 
-    <section class="max-w-5xl mx-auto px-6 pb-16">
+    <section class="max-w-7xl mx-auto px-6 pb-16">
         <div class="mb-14">
             <p class="text-xs font-mono uppercase tracking-wider mb-2" style="color: var(--coral);">Backend Developer</p>
             <h2 class="text-2xl sm:text-3xl font-display mb-4" style="font-weight: 700; color: #F8FAFC;">What I focus on</h2>

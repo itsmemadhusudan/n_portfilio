@@ -10,7 +10,7 @@
 
     @include('portfolio.partials.education', ['standalone' => true])
 
-    <section class="max-w-5xl mx-auto px-6 pb-16">
+    <section class="max-w-7xl mx-auto px-6 pb-16">
         <h2 class="text-2xl font-display mb-3" style="font-weight: 700; color: #F8FAFC;">Beyond the classroom</h2>
         <p class="text-sm leading-relaxed mb-6 max-w-3xl" style="color: #94A3B8;">
             Formal study is only part of the picture. Mentoring, organizing workshops and representing classmates taught me communication and ownership — the same habits I bring into freelance projects and team development work.

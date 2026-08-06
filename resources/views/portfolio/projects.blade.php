@@ -8,7 +8,7 @@
         accent="var(--blue)"
     />
 
-    <section class="max-w-5xl mx-auto px-6 pb-6">
+    <section class="max-w-7xl mx-auto px-6 pb-6">
         <x-anim-card padding="p-6" class="mb-8">
             <h2 class="text-lg font-display mb-2" style="font-weight: 600; color: #F8FAFC;">Project overview</h2>
             <p class="text-sm leading-relaxed" style="color: #94A3B8;">
@@ -20,7 +20,7 @@
 
     @include('portfolio.partials.projects', ['standalone' => true])
 
-    <section class="max-w-5xl mx-auto px-6 pb-16">
+    <section class="max-w-7xl mx-auto px-6 pb-16">
         <h2 class="text-2xl font-display mb-3" style="font-weight: 700; color: #F8FAFC;">Freelance capabilities</h2>
         <p class="text-sm leading-relaxed mb-6 max-w-3xl" style="color: #94A3B8;">{{ $portfolio['freelance']['intro'] }}</p>
         <div class="grid sm:grid-cols-2 gap-3 mb-10">

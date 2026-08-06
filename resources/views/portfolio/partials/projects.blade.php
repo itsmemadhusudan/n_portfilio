@@ -3,7 +3,7 @@
     $standalone = $standalone ?? false;
 @endphp
 
-<section class="max-w-5xl mx-auto px-6 {{ $standalone ? 'pb-10' : 'py-16' }}">
+<section class="max-w-7xl mx-auto px-6 {{ $standalone ? 'pb-10' : 'py-16' }}">
     @unless ($standalone)
         <div class="mb-10">
             <span class="text-xs uppercase tracking-wider font-mono" style="color: var(--blue); font-weight: 500;">

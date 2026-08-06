@@ -8,7 +8,7 @@
         accent="var(--mint)"
     />
 
-    <section class="max-w-5xl mx-auto px-6 pb-20">
+    <section class="max-w-7xl mx-auto px-6 pb-20">
         <p class="text-sm mb-8 max-w-2xl" style="color: #94A3B8;">
             {{ $portfolio['contact']['availability'] }}
         </p>

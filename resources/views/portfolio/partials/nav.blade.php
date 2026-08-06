@@ -1,5 +1,5 @@
 <header class="site-nav" x-data="{ open: false }">
-    <div class="site-nav__bar max-w-5xl mx-auto px-6">
+    <div class="site-nav__bar max-w-7xl mx-auto px-6">
         <a href="{{ route('home') }}" class="site-nav__brand font-display">
             {{ $portfolio['brand'] }}
         </a>
@@ -37,7 +37,7 @@
         </button>
     </div>
 
-    <div x-show="open" x-cloak x-transition class="site-nav__mobile max-w-5xl mx-auto px-6">
+    <div x-show="open" x-cloak x-transition class="site-nav__mobile max-w-7xl mx-auto px-6">
         <div class="site-nav__mobile-panel">
             @foreach ($portfolio['nav'] as $item)
                 @php $active = request()->routeIs($item['route']); @endphp

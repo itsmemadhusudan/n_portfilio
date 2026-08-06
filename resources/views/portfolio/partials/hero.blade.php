@@ -1,4 +1,4 @@
-<header class="max-w-5xl mx-auto px-6 pt-10 pb-20 grid md:grid-cols-2 gap-12 items-center">
+<header class="max-w-7xl mx-auto px-6 pt-10 pb-20 grid md:grid-cols-2 gap-12 items-center">
     <div
         x-data="{ shown: false }"
         x-intersect:enter.once="shown = true"

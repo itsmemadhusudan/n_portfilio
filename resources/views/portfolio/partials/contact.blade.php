@@ -1,6 +1,6 @@
 @php $standalone = $standalone ?? false; @endphp
 
-<section class="max-w-5xl mx-auto px-6 {{ $standalone ? 'pb-4' : 'py-20' }}">
+<section class="max-w-7xl mx-auto px-6 {{ $standalone ? 'pb-4' : 'py-20' }}">
     <x-anim-card padding="p-10 sm:p-14">
         <div class="text-center">
             <h2 class="text-3xl sm:text-4xl mb-3 font-display" style="font-weight: 700; color: #F8FAFC;">

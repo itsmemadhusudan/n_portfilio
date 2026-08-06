@@ -5,7 +5,7 @@
     'accent' => 'var(--coral)',
 ])
 
-<div class="max-w-5xl mx-auto px-6 pt-10 pb-8">
+<div class="max-w-7xl mx-auto px-6 pt-10 pb-8">
     @if ($eyebrow)
         <span class="text-xs uppercase tracking-wider font-mono" style="color: {{ $accent }}; font-weight: 500;">
             {{ $eyebrow }}
