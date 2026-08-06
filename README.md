@@ -100,12 +100,12 @@ Every page is server-rendered from static content, so the site can also be expor
 
 ```bash
 npm run build
-php artisan site:export --base=https://itsmemadhusudan.github.io/n_portfilio
+php artisan site:export --base=https://madhusudantimalsina.com.np
 ```
 
 That writes `docs/` — one `index.html` per route, a copy of `public/build`, and a `.nojekyll` marker. Commit the folder, then enable **Settings -> Pages -> Source: Deploy from a branch -> Branch: main -> Folder: /docs**.
 
-The `--base` flag matters: GitHub project sites live under a subdirectory, so every link and asset URL is rewritten with that prefix. Re-run the two commands after any content change, since the export is a snapshot rather than a live render.
+The `--base` flag must match the live URL visitors use. With a custom domain that is `https://madhusudantimalsina.com.np` (no `/n_portfilio` suffix). If CSS or nav links break after publishing, you almost always exported with the wrong `--base` — re-run the two commands and push `docs/` again.
 
 ## Project layout
 

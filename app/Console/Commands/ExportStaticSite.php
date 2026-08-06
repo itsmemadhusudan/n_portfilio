@@ -46,6 +46,9 @@ class ExportStaticSite extends Command
 
         URL::forceRootUrl($base);
         URL::useAssetOrigin($base);
+        if (str_starts_with($base, 'https://')) {
+            URL::forceScheme('https');
+        }
 
         // A running "npm run dev" leaves public/hot behind, which would otherwise
         // point the exported pages at the local Vite server instead of the build.
@@ -91,7 +94,8 @@ class ExportStaticSite extends Command
      */
     private function bindRequest(string $path, string $routeName): void
     {
-        $request = Request::create('/'.$path, 'GET');
+        $base = rtrim($this->option('base') ?: config('app.url'), '/');
+        $request = Request::create($base.'/'.$path, 'GET');
 
         if ($route = Route::getRoutes()->getByName($routeName)) {
             $request->setRouteResolver(fn () => $route);
@@ -100,7 +104,10 @@ class ExportStaticSite extends Command
         $this->laravel->instance('request', $request);
         Facade::clearResolvedInstance('request');
 
-        URL::forceRootUrl(rtrim($this->option('base') ?: config('app.url'), '/'));
+        URL::forceRootUrl($base);
+        if (str_starts_with($base, 'https://')) {
+            URL::forceScheme('https');
+        }
     }
 
     private function relative(string $path): string
