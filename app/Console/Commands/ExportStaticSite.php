@@ -43,6 +43,7 @@ class ExportStaticSite extends Command
 
         $base = rtrim($this->option('base') ?: config('app.url'), '/');
         $output = base_path($this->option('output'));
+        $cname = File::exists($output.'/CNAME') ? File::get($output.'/CNAME') : null;
 
         URL::forceRootUrl($base);
         URL::useAssetOrigin($base);
@@ -56,6 +57,11 @@ class ExportStaticSite extends Command
 
         File::deleteDirectory($output);
         File::ensureDirectoryExists($output);
+
+        // GitHub Pages custom domains live in docs/CNAME. Preserve it across exports.
+        if (! empty($cname)) {
+            File::put($output.'/CNAME', is_string($cname) ? trim($cname)."\n" : '');
+        }
 
         foreach (self::PAGES as $routeName => $method) {
             $path = $routeName === 'home' ? '' : $routeName;
