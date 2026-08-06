@@ -53,9 +53,20 @@
 
         <div class="grid lg:grid-cols-2 gap-6 mb-12">
             <x-anim-card padding="p-6 sm:p-8">
-                <h2 class="text-xl font-display mb-4" style="font-weight: 600; color: #F8FAFC;">Open to</h2>
+                <p class="text-xs font-mono uppercase tracking-wider mb-2" style="color: #64748B;">
+                    {{ $portfolio['contact']['current_role']['duration'] }}
+                </p>
+                <h2 class="text-xl font-display mb-2" style="font-weight: 600; color: #F8FAFC;">
+                    {{ $portfolio['contact']['current_role']['title'] }}
+                </h2>
+                <p class="text-sm mb-1" style="color: var(--coral);">
+                    {{ $portfolio['contact']['current_role']['role'] }} · {{ $portfolio['contact']['current_role']['company'] }}
+                </p>
+                <p class="text-sm leading-relaxed mb-5" style="color: #94A3B8;">
+                    {{ $portfolio['contact']['current_role']['summary'] }}
+                </p>
                 <ul class="space-y-3">
-                    @foreach ($portfolio['contact']['looking_for'] as $item)
+                    @foreach ($portfolio['contact']['current_role']['highlights'] as $item)
                         <li class="text-sm flex gap-2" style="color: #CBD5E1;">
                             <span class="mt-2 shrink-0 w-1.5 h-1.5 rounded-full" style="background: var(--coral);"></span>
                             <span>{{ $item }}</span>
