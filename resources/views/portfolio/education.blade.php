@@ -3,8 +3,8 @@
 @section('content')
     <x-page-header
         eyebrow="Background"
-        title="Education & highlights"
-        subtitle="Academic path at Apex College and Advance Academy, plus leadership through SMART Program mentoring, judging and campus tech events."
+        :title="$seo['h1']"
+        subtitle="BCIS at Apex College, leadership through the SMART Program, and continuous learning that supports professional backend development."
         accent="var(--yellow)"
     />
 

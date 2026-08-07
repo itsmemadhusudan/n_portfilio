@@ -107,6 +107,12 @@ That writes `docs/` — one `index.html` per route, a copy of `public/build`, an
 
 The `--base` flag must match the live URL visitors use. With a custom domain that is `https://madhusudantimalsina.com.np` (no `/n_portfilio` suffix). If CSS or nav links break after publishing, you almost always exported with the wrong `--base` — re-run the two commands and push `docs/` again.
 
+### SEO after publish
+
+1. Confirm `https://madhusudantimalsina.com.np/robots.txt` and `https://madhusudantimalsina.com.np/sitemap.xml` load.
+2. In [Google Search Console](https://search.google.com/search-console), add the property for `madhusudantimalsina.com.np` and submit the sitemap URL: `https://madhusudantimalsina.com.np/sitemap.xml`.
+3. Use URL Inspection on `/`, `/about`, and `/contact` after the first deploy with the new meta tags.
+
 ## Project layout
 
 ```

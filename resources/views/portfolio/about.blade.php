@@ -3,7 +3,7 @@
 @section('content')
     <x-page-header
         eyebrow="About"
-        title="Who I am"
+        :title="$seo['h1']"
         :subtitle="$portfolio['about_intro']"
         accent="var(--coral)"
     />
@@ -12,23 +12,25 @@
         <div class="grid lg:grid-cols-5 gap-8 mb-12">
             <div class="lg:col-span-3 space-y-4">
                 <x-anim-card padding="p-6 sm:p-8">
-                    <h2 class="text-xl font-display mb-4" style="font-weight: 600; color: #F8FAFC;">My story</h2>
+                    <h2 class="text-xl font-display mb-4" style="font-weight: 600; color: #F8FAFC;">Professional background</h2>
                     @foreach ($portfolio['about_story'] as $paragraph)
-                        <p class="text-base leading-relaxed mb-4 last:mb-0" style="color: #94A3B8;">{{ $paragraph }}</p>
+                        <p class="text-base leading-relaxed mb-4 last:mb-0" style="color: #CBD5E1;">{{ $paragraph }}</p>
                     @endforeach
                 </x-anim-card>
 
                 <x-anim-card padding="p-6 sm:p-8">
                     <h2 class="text-xl font-display mb-4" style="font-weight: 600; color: #F8FAFC;">Profile summary</h2>
-                    <p class="text-base leading-relaxed" style="color: #94A3B8;">{{ $portfolio['bio'] }}</p>
+                    <p class="text-base leading-relaxed" style="color: #CBD5E1;">{{ $portfolio['bio'] }}</p>
                 </x-anim-card>
             </div>
 
             <div class="lg:col-span-2 space-y-4">
                 <x-anim-card padding="p-6">
                     <p class="text-xs font-mono uppercase tracking-wider mb-2" style="color: #64748B;">Currently</p>
-                    <p class="font-display text-lg" style="font-weight: 600; color: #F8FAFC;">{{ $portfolio['badge'] }}</p>
-                    <p class="text-sm mt-2" style="color: #94A3B8;">{{ $portfolio['title'] }} · {{ $portfolio['location'] }}</p>
+                    <p class="font-display text-lg" style="font-weight: 600; color: #F8FAFC;">{{ $portfolio['contact']['current_role']['role'] }}</p>
+                    <p class="text-sm mt-1" style="color: #E2E8F0;">{{ $portfolio['contact']['current_role']['company'] }}</p>
+                    <p class="text-sm mt-2" style="color: #94A3B8;">{{ $portfolio['contact']['current_role']['duration'] }} · {{ $portfolio['location'] }}</p>
+                    <p class="text-sm mt-3 leading-relaxed" style="color: #CBD5E1;">{{ $portfolio['contact']['current_role']['summary'] }}</p>
                     <div class="mt-5 flex items-center gap-3">
                         <a
                             href="{{ $portfolio['email_href'] }}"
@@ -67,7 +69,7 @@
                     <h2 class="text-lg font-display mb-4" style="font-weight: 600; color: #F8FAFC;">Focus areas</h2>
                     <ul class="space-y-3">
                         @foreach ($portfolio['about_focus'] as $item)
-                            <li class="text-sm leading-relaxed flex gap-2" style="color: #94A3B8;">
+                            <li class="text-sm leading-relaxed flex gap-2" style="color: #CBD5E1;">
                                 <span class="mt-2 shrink-0 w-1.5 h-1.5 rounded-full" style="background: var(--coral);"></span>
                                 <span>{{ $item }}</span>
                             </li>
@@ -83,7 +85,7 @@
                 @foreach ($portfolio['values'] as $value)
                     <x-anim-card padding="p-5">
                         <h3 class="font-semibold mb-2" style="color: #F1F5F9;">{{ $value['title'] }}</h3>
-                        <p class="text-sm leading-relaxed" style="color: #94A3B8;">{{ $value['desc'] }}</p>
+                        <p class="text-sm leading-relaxed" style="color: #CBD5E1;">{{ $value['desc'] }}</p>
                     </x-anim-card>
                 @endforeach
             </div>
@@ -91,11 +93,11 @@
 
         <div class="mb-12">
             <h2 class="text-2xl font-display mb-3" style="font-weight: 700; color: #F8FAFC;">Freelance & collaboration</h2>
-            <p class="text-base leading-relaxed mb-6 max-w-3xl" style="color: #94A3B8;">{{ $portfolio['freelance']['intro'] }}</p>
+            <p class="text-base leading-relaxed mb-6 max-w-3xl" style="color: #CBD5E1;">{{ $portfolio['freelance']['intro'] }}</p>
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 @foreach ($portfolio['freelance']['offers'] as $offer)
                     <x-anim-card padding="px-4 py-3">
-                        <p class="text-sm" style="color: #CBD5E1;">{{ $offer }}</p>
+                        <p class="text-sm" style="color: #E2E8F0;">{{ $offer }}</p>
                     </x-anim-card>
                 @endforeach
             </div>

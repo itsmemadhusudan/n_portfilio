@@ -3,8 +3,8 @@
 @section('content')
     <x-page-header
         eyebrow="Technical skills"
-        title="Tools and capabilities"
-        subtitle="A practical mix of frontend, backend, database and collaboration skills from coursework, college projects and freelance work."
+        :title="$seo['h1']"
+        subtitle="Laravel, Node.js, Python, REST APIs, database design and collaboration skills from production work at Smartsarka, academic projects and freelance backend delivery."
         accent="var(--coral)"
     />
 

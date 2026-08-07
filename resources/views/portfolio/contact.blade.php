@@ -3,7 +3,7 @@
 @section('content')
     <x-page-header
         eyebrow="Contact"
-        title="Let’s work together"
+        :title="$seo['h1']"
         :subtitle="$portfolio['contact']['blurb']"
         accent="var(--mint)"
     />
@@ -98,6 +98,20 @@
                 @endforeach
             </div>
         </div>
+
+        @if (! empty($seo['faqs']))
+            <div class="mb-12">
+                <h2 class="text-xl font-display mb-4" style="font-weight: 600; color: #F8FAFC;">Frequently asked questions</h2>
+                <div class="space-y-3">
+                    @foreach ($seo['faqs'] as $faq)
+                        <x-anim-card padding="p-5">
+                            <h3 class="font-semibold mb-2" style="color: #F8FAFC;">{{ $faq['question'] }}</h3>
+                            <p class="text-sm leading-relaxed" style="color: #CBD5E1;">{{ $faq['answer'] }}</p>
+                        </x-anim-card>
+                    @endforeach
+                </div>
+            </div>
+        @endif
 
         @include('portfolio.partials.contact', ['standalone' => true])
     </section>

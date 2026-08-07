@@ -31,7 +31,7 @@ class ExportStaticSite extends Command
         'contact' => 'contact',
     ];
 
-    private const COPIED_FILES = ['favicon.ico', 'favicon.png', 'robots.txt'];
+    private const COPIED_FILES = ['favicon.ico', 'favicon.png', 'robots.txt', 'sitemap.xml'];
 
     public function handle(PortfolioController $controller): int
     {
@@ -77,6 +77,11 @@ class ExportStaticSite extends Command
 
         File::copyDirectory(public_path('build'), $output.'/build');
         $this->components->twoColumnDetail('assets', $this->relative($output.'/build'));
+
+        if (File::isDirectory(public_path('images'))) {
+            File::copyDirectory(public_path('images'), $output.'/images');
+            $this->components->twoColumnDetail('images', $this->relative($output.'/images'));
+        }
 
         foreach (self::COPIED_FILES as $file) {
             if (File::exists(public_path($file))) {

@@ -3,8 +3,8 @@
 @section('content')
     <x-page-header
         eyebrow="Selected work"
-        title="Projects & builds"
-        subtitle="College products, personal tools and freelance-ready capabilities across web, Laravel, Flutter and databases."
+        :title="$seo['h1']"
+        subtitle="College products, production-minded builds and freelance-ready capabilities across Laravel backends, APIs, Flutter apps and databases."
         accent="var(--blue)"
     />
 

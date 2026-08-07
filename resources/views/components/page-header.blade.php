@@ -15,7 +15,7 @@
         {{ $title }}
     </h1>
     @if ($subtitle)
-        <p class="mt-3 max-w-2xl text-base leading-relaxed" style="color: #94A3B8;">
+        <p class="mt-3 max-w-2xl text-base leading-relaxed" style="color: #CBD5E1;">
             {{ $subtitle }}
         </p>
     @endif

@@ -1,4 +1,5 @@
 import './bootstrap';
+import './cosmic/universe';
 
 import Alpine from 'alpinejs';
 import intersect from '@alpinejs/intersect';
