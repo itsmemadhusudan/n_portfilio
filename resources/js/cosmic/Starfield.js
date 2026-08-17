@@ -123,9 +123,9 @@ export class Starfield {
             width * 0.5, height * 0.5, 50,
             width * 0.5, height * 0.5, Math.max(width, height) * 0.8,
         );
-        bgGrad.addColorStop(0, '#0a091a');
-        bgGrad.addColorStop(0.5, '#05050e');
-        bgGrad.addColorStop(1, '#020205');
+        bgGrad.addColorStop(0, '#12182a');
+        bgGrad.addColorStop(0.5, '#0c1220');
+        bgGrad.addColorStop(1, '#0a0e16');
         ctx.fillStyle = bgGrad;
         ctx.fillRect(0, 0, width, height);
 

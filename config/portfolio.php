@@ -104,14 +104,16 @@ return [
         'linkedin' => 'https://www.linkedin.com/in/madhusudan-timalsina-75a910183/',
     ],
     'palette' => [
-        'bg' => '#05070d',
-        'ink' => '#E8EEF7',
-        'coral' => '#2DD4BF',
-        'yellow' => '#F59E0B',
-        'mint' => '#14B8A6',
-        'blue' => '#60A5FA',
-        'card' => 'rgba(12, 18, 32, 0.72)',
-        'soft' => 'rgba(148, 163, 184, 0.12)',
+        'bg' => '#F3EBD9',
+        'ink' => '#2A241C',
+        'coral' => '#C4784A',
+        'yellow' => '#C4A35A',
+        'mint' => '#6B8F71',
+        'blue' => '#5B7C8A',
+        'card' => '#FFF9F0',
+        'soft' => 'rgba(139, 90, 43, 0.12)',
+        'surface_1' => '#FFF9F0',
+        'surface_2' => '#F3EBD9',
     ],
     'requests' => [
         ['method' => 'GET', 'path' => '/api/profile', 'status' => 200, 'color' => 'mint'],
@@ -327,6 +329,7 @@ return [
         ['label' => 'Skills', 'route' => 'skills'],
         ['label' => 'Projects', 'route' => 'projects'],
         ['label' => 'Education', 'route' => 'education'],
+        ['label' => 'Contact', 'route' => 'contact'],
     ],
     'contact' => [
         'title' => 'Let’s build the backend.',
@@ -374,7 +377,7 @@ return [
         'image' => '/images/1738049302099.jpg',
         'image_alt' => 'Madhusudan Timalsina, Backend Developer',
         'locale' => 'en_US',
-        'theme_color' => '#020205',
+        'theme_color' => '#F3EBD9',
         'pages' => [
             'home' => [
                 'path' => '/',

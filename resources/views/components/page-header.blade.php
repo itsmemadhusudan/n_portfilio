@@ -2,20 +2,20 @@
     'eyebrow' => null,
     'title',
     'subtitle' => null,
-    'accent' => 'var(--coral)',
+    'accent' => 'var(--text-accent)',
 ])
 
-<div class="max-w-7xl mx-auto px-6 pt-10 pb-8">
+<div class="page-wrap pt-12 pb-6">
     @if ($eyebrow)
-        <span class="text-xs uppercase tracking-wider font-mono" style="color: {{ $accent }}; font-weight: 500;">
+        <span class="section-label" style="color: {{ $accent }}; display: block;">
             {{ $eyebrow }}
         </span>
     @endif
-    <h1 class="text-3xl sm:text-4xl mt-2 font-display" style="font-weight: 700; color: #F8FAFC;">
+    <h1 class="text-3xl sm:text-4xl mt-1 font-display" style="font-weight: 600; color: var(--text-primary);">
         {{ $title }}
     </h1>
     @if ($subtitle)
-        <p class="mt-3 max-w-2xl text-base leading-relaxed" style="color: #CBD5E1;">
+        <p class="mt-3 max-w-2xl text-[15px] leading-relaxed" style="color: var(--text-secondary);">
             {{ $subtitle }}
         </p>
     @endif

@@ -12,7 +12,7 @@
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="googlebot" content="index, follow">
     <meta name="theme-color" content="{{ $seo['theme_color'] }}">
-    <meta name="color-scheme" content="dark">
+    <meta name="color-scheme" content="light">
     <link rel="canonical" href="{{ $seo['canonical'] }}">
 
     <meta property="og:type" content="{{ $pageKey === 'home' ? 'website' : 'profile' }}">
@@ -138,19 +138,55 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body
-    class="min-h-screen w-full antialiased flex flex-col"
-    style="background: #020205; font-family: 'Plus Jakarta Sans', sans-serif; color: var(--ink);"
+    class="min-h-screen w-full antialiased"
+    style="background: var(--surface-2); font-family: 'Plus Jakarta Sans', sans-serif; color: var(--text-primary);"
 >
-    @include('portfolio.partials.background')
+    <div class="site-frame">
+        <div class="site-panel">
+            @include('portfolio.partials.nav')
 
-    @include('portfolio.partials.nav')
+            <main id="main-content">
+                @yield('content')
+            </main>
 
-    <main class="flex-1" id="main-content">
-        @yield('content')
-    </main>
-
-    <footer class="text-center py-10 text-xs" style="color: #64748B;" role="contentinfo">
-        {{ $portfolio['footer'] }}
-    </footer>
+            <footer class="site-footer" role="contentinfo">
+                <div class="site-footer__inner">
+                    <div class="site-footer__social">
+                        <a
+                            href="{{ $portfolio['social']['linkedin'] }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="contact-chip"
+                            aria-label="LinkedIn profile"
+                            title="LinkedIn"
+                        >
+                            <x-icon name="linkedin" :size="18" />
+                        </a>
+                        <a
+                            href="{{ $portfolio['email_href'] }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="contact-chip"
+                            aria-label="Send an email via Gmail"
+                            title="Email"
+                        >
+                            <x-icon name="mail" :size="18" />
+                        </a>
+                        <a
+                            href="{{ $portfolio['phone_href'] }}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="contact-chip"
+                            aria-label="Chat on WhatsApp"
+                            title="WhatsApp"
+                        >
+                            <x-icon name="phone" :size="18" />
+                        </a>
+                    </div>
+                    <p class="site-footer__copy">{{ $portfolio['footer'] }}</p>
+                </div>
+            </footer>
+        </div>
+    </div>
 </body>
 </html>

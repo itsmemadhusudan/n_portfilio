@@ -65,7 +65,7 @@ class PortfolioController extends Controller
                 'og_image' => $ogImage,
                 'og_image_alt' => $seo['image_alt'] ?? $portfolio['full_name'],
                 'locale' => $seo['locale'] ?? 'en_US',
-                'theme_color' => $seo['theme_color'] ?? '#020205',
+                'theme_color' => $seo['theme_color'] ?? '#F3EBD9',
                 'twitter' => $seo['twitter'] ?? null,
                 'faqs' => $seo['faqs'] ?? [],
             ],

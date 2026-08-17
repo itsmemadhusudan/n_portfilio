@@ -3,105 +3,140 @@
 @section('content')
     @include('portfolio.partials.hero')
 
-    <section class="max-w-7xl mx-auto px-6 pb-16">
-        <div class="mb-14">
-            <p class="text-xs font-mono uppercase tracking-wider mb-2" style="color: var(--coral);">Backend Developer</p>
-            <h2 class="text-2xl sm:text-3xl font-display mb-4" style="font-weight: 700; color: #F8FAFC;">What I focus on</h2>
-            <p class="text-sm sm:text-base leading-relaxed max-w-3xl mb-6" style="color: #94A3B8;">
+    <section class="page-wrap pb-12">
+        <p class="section-label">Tech stack</p>
+        <div class="flex flex-wrap gap-2 mb-12">
+            @foreach ($portfolio['backend_stack'] as $tech)
+                <span class="chip">{{ $tech }}</span>
+            @endforeach
+        </div>
+
+        <div class="mb-12">
+            <p class="section-label">Focus</p>
+            <h2 class="text-2xl font-display mb-3" style="font-weight: 600; color: var(--text-primary); letter-spacing: -0.03em;">What I focus on</h2>
+            <p class="text-[15px] leading-relaxed max-w-3xl mb-6" style="color: var(--text-secondary);">
                 {{ $portfolio['backend_intro'] }}
             </p>
-            <div class="flex flex-wrap gap-2 mb-8">
-                @foreach ($portfolio['backend_stack'] as $tech)
-                    <span class="text-xs px-2.5 py-1 rounded-md font-mono" style="background: var(--soft); color: #CBD5E1; border: 1px solid rgba(148,163,184,0.15);">
-                        {{ $tech }}
-                    </span>
-                @endforeach
-            </div>
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 @foreach ($portfolio['backend_highlights'] as $item)
                     <x-anim-card padding="p-5">
-                        <h3 class="font-semibold mb-2" style="color: #F1F5F9;">{{ $item['title'] }}</h3>
-                        <p class="text-sm leading-relaxed" style="color: #94A3B8;">{{ $item['desc'] }}</p>
+                        <h3 class="font-medium mb-1.5 text-sm" style="color: var(--text-primary);">{{ $item['title'] }}</h3>
+                        <p class="text-[13px] leading-relaxed" style="color: var(--text-secondary);">{{ $item['desc'] }}</p>
                     </x-anim-card>
                 @endforeach
             </div>
         </div>
 
-        <div class="grid sm:grid-cols-3 gap-4 mb-14">
+        <div class="grid sm:grid-cols-3 gap-3 mb-12">
             <x-anim-card :href="route('projects')" padding="p-5">
-                <p class="text-xs font-mono uppercase tracking-wider mb-2" style="color: var(--blue);">Projects</p>
-                <p class="font-display text-lg" style="font-weight: 600; color: #F8FAFC;">{{ count($portfolio['projects']) }} featured builds</p>
-                <p class="text-sm mt-2" style="color: #94A3B8;">APIs, databases, Laravel apps and full product backends.</p>
+                <p class="section-label">Projects</p>
+                <p class="font-display text-[17px]" style="font-weight: 600; color: var(--text-primary);">{{ count($portfolio['projects']) }} featured builds</p>
+                <p class="text-[13px] mt-1.5 leading-relaxed" style="color: var(--text-secondary);">APIs, databases, Laravel apps and full product backends.</p>
             </x-anim-card>
             <x-anim-card :href="route('skills')" padding="p-5">
-                <p class="text-xs font-mono uppercase tracking-wider mb-2" style="color: var(--coral);">Backend stack</p>
-                <p class="font-display text-lg" style="font-weight: 600; color: #F8FAFC;">Laravel · Node · Python</p>
-                <p class="text-sm mt-2" style="color: #94A3B8;">REST APIs, auth flows and database modeling.</p>
+                <p class="section-label">Backend stack</p>
+                <p class="font-display text-[17px]" style="font-weight: 600; color: var(--text-primary);">Laravel · Node · Python</p>
+                <p class="text-[13px] mt-1.5 leading-relaxed" style="color: var(--text-secondary);">REST APIs, auth flows and database modeling.</p>
             </x-anim-card>
             <x-anim-card :href="route('education')" padding="p-5">
-                <p class="text-xs font-mono uppercase tracking-wider mb-2" style="color: var(--yellow);">Education</p>
-                <p class="font-display text-lg" style="font-weight: 600; color: #F8FAFC;">BCIS · Apex College</p>
-                <p class="text-sm mt-2" style="color: #94A3B8;">Leadership, mentoring and campus tech involvement.</p>
+                <p class="section-label">Education</p>
+                <p class="font-display text-[17px]" style="font-weight: 600; color: var(--text-primary);">BCIS · Apex College</p>
+                <p class="text-[13px] mt-1.5 leading-relaxed" style="color: var(--text-secondary);">Leadership, mentoring and campus tech involvement.</p>
             </x-anim-card>
         </div>
 
-        <div class="mb-14">
-            <div class="flex items-end justify-between gap-4 mb-6">
+        <div class="mb-12">
+            <div class="flex items-end justify-between gap-4 mb-5">
                 <div>
-                    <p class="text-xs font-mono uppercase tracking-wider mb-2" style="color: var(--coral);">What I do</p>
-                    <h2 class="text-2xl sm:text-3xl font-display" style="font-weight: 700; color: #F8FAFC;">Services & freelance work</h2>
+                    <p class="section-label">Services</p>
+                    <h2 class="text-2xl font-display" style="font-weight: 600; color: var(--text-primary); letter-spacing: -0.03em;">Services & freelance work</h2>
                 </div>
-                <x-anim-btn :href="route('contact')" variant="ghost">Hire me →</x-anim-btn>
+                <x-anim-btn :href="route('contact')" variant="ghost">Get in touch</x-anim-btn>
             </div>
-            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 @foreach ($portfolio['services'] as $service)
                     <x-anim-card padding="p-5">
-                        <h3 class="font-semibold mb-2" style="color: #F1F5F9;">{{ $service['title'] }}</h3>
-                        <p class="text-sm leading-relaxed" style="color: #94A3B8;">{{ $service['desc'] }}</p>
+                        <h3 class="font-medium mb-1.5 text-sm" style="color: var(--text-primary);">{{ $service['title'] }}</h3>
+                        <p class="text-[13px] leading-relaxed" style="color: var(--text-secondary);">{{ $service['desc'] }}</p>
                     </x-anim-card>
                 @endforeach
             </div>
         </div>
 
-        <div class="mb-14">
-            <div class="flex items-end justify-between gap-4 mb-6">
+        <div class="mb-12">
+            <div class="flex items-end justify-between gap-4 mb-5">
                 <div>
-                    <p class="text-xs font-mono uppercase tracking-wider mb-2" style="color: var(--blue);">Selected work</p>
-                    <h2 class="text-2xl sm:text-3xl font-display" style="font-weight: 700; color: #F8FAFC;">Recent projects</h2>
+                    <p class="section-label">Selected work</p>
+                    <h2 class="text-2xl font-display" style="font-weight: 600; color: var(--text-primary); letter-spacing: -0.03em;">Featured projects</h2>
                 </div>
-                <x-anim-btn :href="route('projects')" variant="ghost">View all →</x-anim-btn>
+                <x-anim-btn :href="route('projects')" variant="ghost">View all</x-anim-btn>
             </div>
-            <div class="grid sm:grid-cols-2 gap-4">
-                @foreach (array_slice($portfolio['projects'], 0, 4) as $project)
-                    @php $color = $portfolio['palette'][$project['color']]; @endphp
+            <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                @foreach (array_slice($portfolio['projects'], 0, 3) as $project)
+                    @php
+                        $iconMap = ['FULL-STACK' => 'layout', 'LARAVEL' => 'server', 'MOBILE' => 'sparkles', 'FLUTTER' => 'database'];
+                        $icon = $iconMap[$project['tag']] ?? 'server';
+                    @endphp
                     <x-anim-card :href="route('projects')" padding="p-5">
-                        <div class="flex items-center justify-between gap-2 mb-2">
-                            <h3 class="font-display text-lg" style="font-weight: 600; color: #F8FAFC;">{{ $project['name'] }}</h3>
-                            <span class="text-[10px] px-2 py-0.5 rounded font-mono" style="background: {{ $color }}; color: #042F2E;">{{ $project['tag'] }}</span>
+                        <span style="color: var(--text-accent); display: inline-flex;">
+                            <x-icon :name="$icon" :size="20" />
+                        </span>
+                        <div class="flex items-start justify-between gap-2 mb-1 mt-3">
+                            <h3 class="font-medium text-sm" style="color: var(--text-primary);">{{ $project['name'] }}</h3>
+                            <span class="chip">{{ $project['tag'] }}</span>
                         </div>
-                        <p class="text-sm leading-relaxed" style="color: #94A3B8;">{{ $project['desc'] }}</p>
+                        <p class="text-[13px] leading-relaxed" style="color: var(--text-secondary);">{{ $project['desc'] }}</p>
                     </x-anim-card>
                 @endforeach
             </div>
         </div>
 
-        <div class="mb-14">
-            <p class="text-xs font-mono uppercase tracking-wider mb-2" style="color: var(--yellow);">How I work</p>
-            <h2 class="text-2xl sm:text-3xl font-display mb-6" style="font-weight: 700; color: #F8FAFC;">Simple delivery process</h2>
-            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="mb-12">
+            <p class="section-label">Career</p>
+            <h2 class="text-2xl font-display mb-5" style="font-weight: 600; color: var(--text-primary); letter-spacing: -0.03em;">Experience</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div>
+                        <p class="text-sm font-medium m-0" style="color: var(--text-primary);">
+                            {{ $portfolio['contact']['current_role']['role'] }}, {{ $portfolio['contact']['current_role']['company'] }}
+                        </p>
+                        <p class="text-[13px] mt-0.5" style="color: var(--text-secondary);">
+                            {{ $portfolio['contact']['current_role']['duration'] }} · {{ $portfolio['location'] }}
+                        </p>
+                    </div>
+                </div>
+                @foreach ($portfolio['education'] as $item)
+                    <div class="timeline-item">
+                        <div class="timeline-dot timeline-dot--past"></div>
+                        <div>
+                            <p class="text-sm font-medium m-0" style="color: var(--text-primary);">
+                                {{ $item['degree'] }}, {{ $item['school'] }}
+                            </p>
+                            <p class="text-[13px] mt-0.5" style="color: var(--text-secondary);">{{ $item['period'] }}</p>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+
+        <div class="mb-12">
+            <p class="section-label">Process</p>
+            <h2 class="text-2xl font-display mb-5" style="font-weight: 600; color: var(--text-primary); letter-spacing: -0.03em;">How I work</h2>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
                 @foreach ($portfolio['process'] as $step)
                     <x-anim-card padding="p-5">
-                        <p class="text-xs font-mono mb-3" style="color: var(--coral);">{{ $step['step'] }}</p>
-                        <h3 class="font-semibold mb-2" style="color: #F1F5F9;">{{ $step['title'] }}</h3>
-                        <p class="text-sm leading-relaxed" style="color: #94A3B8;">{{ $step['desc'] }}</p>
+                        <p class="text-[13px] mb-2" style="color: var(--text-accent);">{{ $step['step'] }}</p>
+                        <h3 class="font-medium mb-1.5 text-sm" style="color: var(--text-primary);">{{ $step['title'] }}</h3>
+                        <p class="text-[13px] leading-relaxed" style="color: var(--text-secondary);">{{ $step['desc'] }}</p>
                     </x-anim-card>
                 @endforeach
             </div>
         </div>
 
         <x-anim-card padding="p-8 sm:p-10">
-            <h2 class="text-2xl font-display mb-3" style="font-weight: 700; color: #F8FAFC;">Ready to build something?</h2>
-            <p class="text-sm sm:text-base max-w-2xl mb-6" style="color: #94A3B8;">
+            <h2 class="text-2xl font-display mb-3" style="font-weight: 600; color: var(--text-primary); letter-spacing: -0.03em;">Ready to build something?</h2>
+            <p class="text-[15px] max-w-2xl mb-6 leading-relaxed" style="color: var(--text-secondary);">
                 {{ $portfolio['contact']['blurb'] }} Based in {{ $portfolio['location'] }} — open to remote and local collaboration.
             </p>
             <div class="flex flex-wrap gap-3">

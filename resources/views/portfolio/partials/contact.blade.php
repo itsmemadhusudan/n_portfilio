@@ -1,13 +1,13 @@
 @php $standalone = $standalone ?? false; @endphp
 
-<section class="max-w-7xl mx-auto px-6 {{ $standalone ? 'pb-4' : 'py-20' }}">
+<section class="page-wrap {{ $standalone ? 'pb-4' : 'py-10' }}">
     <x-anim-card padding="p-10 sm:p-14">
         <div class="text-center">
-            <h2 class="text-3xl sm:text-4xl mb-3 font-display" style="font-weight: 700; color: #F8FAFC;">
+            <h2 class="text-3xl sm:text-4xl mb-3 font-display" style="font-weight: 600; color: var(--text-primary);">
                 {{ $portfolio['contact']['title'] }}
             </h2>
 
-            <p class="text-sm sm:text-base mb-8 max-w-lg mx-auto" style="color: #94A3B8;">
+            <p class="text-[15px] mb-8 max-w-lg mx-auto" style="color: var(--text-secondary);">
                 {{ $portfolio['contact']['blurb'] }}
             </p>
 
