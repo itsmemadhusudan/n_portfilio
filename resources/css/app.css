@@ -36,6 +36,7 @@
     --card: var(--surface-1);
     --soft: var(--bg-accent);
     --muted: #8A8A8A;
+    --content-max: 1440px;
 }
 
 .font-display {
@@ -59,7 +60,7 @@ body {
 
 .page-wrap {
     width: 100%;
-    max-width: 1080px;
+    max-width: var(--content-max);
     margin-left: auto;
     margin-right: auto;
     padding-left: 24px;
@@ -166,9 +167,9 @@ main {
     grid-template-columns: auto 1fr auto;
     align-items: center;
     gap: 1.25rem;
-    max-width: 1120px;
+    max-width: var(--content-max);
     margin: 0 auto;
-    padding: 22px 28px 10px;
+    padding: 22px 24px 10px;
     width: 100%;
 }
 
@@ -300,7 +301,7 @@ main {
 }
 
 .site-footer__inner {
-    max-width: 1080px;
+    max-width: var(--content-max);
     margin: 0 auto;
     width: 100%;
     padding: 20px 24px 28px;
@@ -407,7 +408,7 @@ main {
     grid-template-columns: 1fr;
     align-items: center;
     gap: 1.25rem;
-    padding: 12px 24px 32px;
+    padding: 12px 0 32px;
     text-align: left;
     min-height: calc(100vh - 110px);
 }
@@ -639,15 +640,15 @@ main {
 @media (min-width: 900px) {
     .hero {
         grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
-        gap: 1rem 1.5rem;
-        padding: 8px 48px 0 48px;
+        gap: 1rem 2.5rem;
+        padding: 8px 0 0;
         min-height: calc(100vh - 96px);
     }
 
     .hero-portrait {
-        width: 360px;
+        width: 420px;
         margin-left: auto;
-        margin-right: 8%;
+        margin-right: 0;
     }
 }
 
