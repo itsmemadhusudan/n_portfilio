@@ -126,6 +126,7 @@ main {
     position: relative;
     z-index: 1;
     flex: 1;
+    perspective: 900px;
 }
 
 @keyframes fadeIn {
@@ -488,7 +489,9 @@ main {
     font-size: 15px;
     font-weight: 600;
     text-decoration: none;
-    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+    transform-style: preserve-3d;
+    will-change: transform;
+    transition: transform 0.18s ease-out, background 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .btn-pill--solid {
@@ -499,7 +502,6 @@ main {
 
 .btn-pill--solid:hover {
     background: #ff7224;
-    transform: translateY(-1px);
 }
 
 .btn-pill--ghost {
@@ -510,42 +512,61 @@ main {
 
 .btn-pill--ghost:hover {
     border-color: var(--text-primary);
-    transform: translateY(-1px);
 }
 
 .hero-stats {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    max-width: 30rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 36rem;
     padding: 18px 8px;
     border-radius: 12px;
     background: #1c1c1c;
     box-shadow: 0 8px 28px rgba(0, 0, 0, 0.28);
+    row-gap: 14px;
+}
+
+@media (min-width: 640px) {
+    .hero-stats {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        row-gap: 0;
+    }
 }
 
 .hero-stats__item {
     display: flex;
     flex-direction: column;
     gap: 4px;
-    padding: 0 18px;
+    padding: 0 12px;
     border-left: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-.hero-stats__item:first-child {
+.hero-stats__item:first-child,
+.hero-stats__item:nth-child(2n + 1) {
     border-left: 0;
+}
+
+@media (min-width: 640px) {
+    .hero-stats__item:nth-child(2n + 1) {
+        border-left: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .hero-stats__item:first-child {
+        border-left: 0;
+    }
 }
 
 .hero-stats__value {
     font-family: var(--font-display);
-    font-size: 1.7rem;
+    font-size: clamp(1.2rem, 2.6vw, 1.55rem);
     font-weight: 800;
     color: var(--fill-accent);
-    line-height: 1.1;
+    line-height: 1.15;
 }
 
 .hero-stats__label {
-    font-size: 13px;
+    font-size: 12px;
     color: #f0f0f0;
+    line-height: 1.35;
 }
 
 .hero__visual {
@@ -645,7 +666,9 @@ main {
     border-radius: var(--radius);
     padding: 1px;
     background: var(--border);
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    transform-style: preserve-3d;
+    will-change: transform;
+    transition: transform 0.18s ease-out, box-shadow 0.3s ease, background 0.3s ease;
     overflow: hidden;
     text-decoration: none;
     color: inherit;
@@ -674,9 +697,10 @@ main {
 }
 
 .anim-border:hover,
-.project-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+.project-card:hover,
+.anim-border.is-magnetic-active,
+.project-card.is-magnetic-active {
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.32);
     background: transparent;
 }
 
@@ -704,7 +728,9 @@ main {
     background: var(--border);
     overflow: hidden;
     text-decoration: none;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    transform-style: preserve-3d;
+    will-change: transform;
+    transition: transform 0.18s ease-out, box-shadow 0.3s ease, background 0.3s ease;
     vertical-align: middle;
 }
 
@@ -728,10 +754,10 @@ main {
     animation-play-state: paused;
 }
 
-.anim-btn:hover {
-    transform: translateY(-1px);
+.anim-btn:hover,
+.anim-btn.is-magnetic-active {
     background: transparent;
-    box-shadow: 0 6px 16px rgba(255, 92, 0, 0.18);
+    box-shadow: 0 8px 18px rgba(255, 92, 0, 0.2);
 }
 
 .anim-btn:hover .anim-btn__glow {
@@ -787,6 +813,15 @@ main {
     .anim-btn:hover .anim-btn__glow {
         opacity: 0.75;
         background: linear-gradient(135deg, #FF5C00, #FF8A3D, #6B8F71);
+    }
+
+    .is-magnetic,
+    .btn-pill,
+    .anim-border,
+    .project-card,
+    .anim-btn {
+        transform: none !important;
+        transition: none !important;
     }
 
     *,

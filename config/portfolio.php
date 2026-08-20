@@ -107,9 +107,10 @@ return [
         'linkedin' => 'https://www.linkedin.com/in/madhusudan-timalsina-75a910183/',
     ],
     'stats' => [
-        ['value' => '1+', 'label' => 'Experiences'],
-        ['value' => '4+', 'label' => 'Project done'],
-        ['value' => '42+', 'label' => 'Students mentored'],
+        ['value' => '5 years+', 'label' => 'Experience'],
+        ['value' => '20+', 'label' => 'Systems'],
+        ['value' => '10+', 'label' => 'Websites'],
+        ['value' => '4+', 'label' => 'College workshops'],
     ],
     'palette' => [
         'bg' => '#121212',
