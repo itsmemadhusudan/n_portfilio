@@ -12,7 +12,7 @@
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="googlebot" content="index, follow">
     <meta name="theme-color" content="{{ $seo['theme_color'] }}">
-    <meta name="color-scheme" content="light">
+    <meta name="color-scheme" content="dark">
     <link rel="canonical" href="{{ $seo['canonical'] }}">
 
     <meta property="og:type" content="{{ $pageKey === 'home' ? 'website' : 'profile' }}">
@@ -139,7 +139,7 @@
 </head>
 <body
     class="min-h-screen w-full antialiased"
-    style="background: var(--surface-2); font-family: 'Plus Jakarta Sans', sans-serif; color: var(--text-primary);"
+    style="font-family: 'Plus Jakarta Sans', sans-serif; color: var(--text-primary);"
 >
     <div class="site-frame">
         <div class="site-panel">

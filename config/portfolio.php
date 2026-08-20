@@ -2,9 +2,12 @@
 
 return [
     'brand' => 'Madhusudan Timalsina',
+    'brand_mark' => 'MT',
     'name' => 'Madhusudan',
     'full_name' => 'Madhusudan Timalsina',
     'title' => 'Backend Developer',
+    'photo' => '/images/bgimage.png',
+    'cv' => null,
     'location' => 'Nepal',
     'badge' => 'Backend Developer at Smartsarka · BCIS · Apex College',
     'headline' => 'I build the APIs, databases and server logic that power real products.',
@@ -103,17 +106,22 @@ return [
     'social' => [
         'linkedin' => 'https://www.linkedin.com/in/madhusudan-timalsina-75a910183/',
     ],
+    'stats' => [
+        ['value' => '1+', 'label' => 'Experiences'],
+        ['value' => '4+', 'label' => 'Project done'],
+        ['value' => '42+', 'label' => 'Students mentored'],
+    ],
     'palette' => [
-        'bg' => '#F3EBD9',
-        'ink' => '#2A241C',
-        'coral' => '#C4784A',
-        'yellow' => '#C4A35A',
+        'bg' => '#121212',
+        'ink' => '#F4F4F4',
+        'coral' => '#FF5C00',
+        'yellow' => '#FF8A3D',
         'mint' => '#6B8F71',
         'blue' => '#5B7C8A',
-        'card' => '#FFF9F0',
-        'soft' => 'rgba(139, 90, 43, 0.12)',
-        'surface_1' => '#FFF9F0',
-        'surface_2' => '#F3EBD9',
+        'card' => '#1C1C1C',
+        'soft' => 'rgba(255, 92, 0, 0.14)',
+        'surface_1' => '#1C1C1C',
+        'surface_2' => '#141414',
     ],
     'requests' => [
         ['method' => 'GET', 'path' => '/api/profile', 'status' => 200, 'color' => 'mint'],
@@ -374,10 +382,10 @@ return [
             'freelance backend developer',
             'Apex College BCIS',
         ],
-        'image' => '/images/1738049302099.jpg',
+        'image' => '/images/bgimage.png',
         'image_alt' => 'Madhusudan Timalsina, Backend Developer',
         'locale' => 'en_US',
-        'theme_color' => '#F3EBD9',
+        'theme_color' => '#121212',
         'pages' => [
             'home' => [
                 'path' => '/',
