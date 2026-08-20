@@ -133,7 +133,11 @@
             '@graph' => $graph,
         ];
     @endphp
-    <script type="application/ld+json">{!! json_encode($jsonLd, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT) !!}</script>
+    <script type="application/ld+json">{!! json_encode($jsonLd, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE) !!}</script>
+
+    @if ($pageKey === 'home')
+        <link rel="preload" as="image" href="{{ asset('images/bgimage.webp') }}" type="image/webp">
+    @endif
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>

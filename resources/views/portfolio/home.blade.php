@@ -3,7 +3,7 @@
 @section('content')
     @include('portfolio.partials.hero')
 
-    <section class="page-wrap pb-12">
+    <section class="page-wrap pb-12" style="content-visibility: auto; contain-intrinsic-size: 1px 2400px;">
         <p class="section-label">Tech stack</p>
         <div class="flex flex-wrap gap-2 mb-12">
             @foreach ($portfolio['backend_stack'] as $tech)

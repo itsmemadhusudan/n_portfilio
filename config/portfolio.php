@@ -382,7 +382,7 @@ return [
             'freelance backend developer',
             'Apex College BCIS',
         ],
-        'image' => '/images/bgimage.png',
+        'image' => '/images/bgimage-avatar.jpg',
         'image_alt' => 'Madhusudan Timalsina, Backend Developer',
         'locale' => 'en_US',
         'theme_color' => '#121212',

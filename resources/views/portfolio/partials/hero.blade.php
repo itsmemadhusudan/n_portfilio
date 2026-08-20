@@ -55,17 +55,21 @@
 
     <div class="hero__visual">
         <div class="hero-portrait">
-            <img
-                src="{{ asset('images/bgimage.png') }}"
-                alt="{{ $portfolio['full_name'] }}, Backend Developer at Smartsarka Pvt. Ltd."
-                title="{{ $portfolio['full_name'] }} — Backend Developer"
-                class="hero-portrait__img"
-                width="360"
-                height="360"
-                fetchpriority="high"
-                decoding="async"
-                loading="eager"
-            >
+            <picture>
+                <source srcset="{{ asset('images/bgimage.webp') }}" type="image/webp">
+                <img
+                    src="{{ asset('images/bgimage-avatar.jpg') }}"
+                    alt="{{ $portfolio['full_name'] }}, Backend Developer at Smartsarka Pvt. Ltd."
+                    title="{{ $portfolio['full_name'] }} — Backend Developer"
+                    class="hero-portrait__img"
+                    width="360"
+                    height="360"
+                    sizes="(min-width: 900px) 360px, 72vw"
+                    fetchpriority="high"
+                    decoding="async"
+                    loading="eager"
+                >
+            </picture>
         </div>
     </div>
 </header>
