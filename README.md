@@ -1,6 +1,20 @@
-# n_portfilio
+# Madhusudan Timalsina — Portfolio
 
-Personal portfolio site for **Madhusudan Timalsina** — Backend Developer portfolio built with Laravel, Blade, Tailwind CSS and Alpine.js.
+Personal portfolio for **Madhusudan Timalsina**, Backend Developer at **Smart Sarks**.
+
+**Live site:** [madhusudantimalsina.com.np](https://madhusudantimalsina.com.np)
+
+| | |
+| --- | --- |
+| Role | Backend Developer |
+| Employer | Smart Sarks |
+| Location | Nepal |
+| LinkedIn | [madhusudan-timalsina-75a910183](https://www.linkedin.com/in/madhusudan-timalsina-75a910183/) |
+| GitHub | [itsmemadhusudan](https://github.com/itsmemadhusudan) |
+
+Built with Laravel, Blade, Tailwind CSS and Alpine.js. Focus areas: Laravel, Node.js, Python, REST APIs and database design.
+
+> Spelling: **Timalsina** (with an **a**). Use this exact name on every profile so search engines treat it separately from similar surnames.
 
 ## Stack
 
@@ -18,11 +32,18 @@ Personal portfolio site for **Madhusudan Timalsina** — Backend Developer portf
 | `/skills` | Skills — stack layers, languages, frameworks, soft skills |
 | `/projects` | Projects — case studies and freelance capabilities |
 | `/education` | Education — degrees, coursework, achievements |
-| `/contact` | Contact — availability, roles and direct links |
+| `/contact` | Contact — availability, role and direct links |
 
 ## Content
 
 All copy, links, projects, skills and contact details live in a single file: `config/portfolio.php`. Edit that file to update the site — the Blade views read everything from it, so no markup changes are needed for content edits.
+
+Canonical identity strings in that file:
+
+- Name: `Madhusudan Timalsina`
+- Title: `Backend Developer`
+- Employer: `Smart Sarks`
+- Social: LinkedIn + GitHub (also used in schema.org `sameAs`)
 
 ## Local setup
 
@@ -127,6 +148,7 @@ Set **Browser TTL** and **Edge TTL** to 1 year and **Override origin**. Hashed f
 1. Confirm `https://madhusudantimalsina.com.np/robots.txt` and `https://madhusudantimalsina.com.np/sitemap.xml` load.
 2. In [Google Search Console](https://search.google.com/search-console), add the property for `madhusudantimalsina.com.np` and submit the sitemap URL: `https://madhusudantimalsina.com.np/sitemap.xml`.
 3. Use URL Inspection on `/`, `/about`, and `/contact` after the first deploy with the new meta tags.
+4. Keep the public title **Backend Developer**, employer **Smart Sarks**, and spelling **Timalsina** identical on LinkedIn, GitHub and this site.
 
 ## Project layout
 
@@ -135,7 +157,7 @@ app/Http/Controllers/PortfolioController.php   one method per page
 config/portfolio.php                           all site content
 resources/views/layouts/portfolio.blade.php    shared layout
 resources/views/portfolio/                     page views
-resources/views/portfolio/partials/            nav, background, terminal, contact
+resources/views/portfolio/partials/            nav, hero, contact
 resources/views/components/                    icon, page-header, anim-card, anim-btn
 resources/css/app.css                          theme, animations, gradient borders
 ```
