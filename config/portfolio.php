@@ -5,14 +5,14 @@ return [
     'brand_mark' => 'MT',
     'name' => 'Madhusudan',
     'full_name' => 'Madhusudan Timalsina',
-    'title' => 'Developer',
+    'title' => 'Backend Developer',
     'photo' => '/images/bgimage.png',
     'cv' => null,
     'location' => 'Nepal',
-    'badge' => 'Backend Developer at Smartsarka · BCIS · Apex College',
+    'badge' => 'Backend Developer at Smart Sarks · BCIS · Apex College',
     'headline' => 'I build the APIs, databases and server logic that power real products.',
-    'bio' => 'Backend Developer at Smartsarka Pvt. Ltd., specializing in Laravel, Node.js, Python, REST APIs and database design. I design reliable server-side systems, model clean data structures and deliver maintainable features for production products.',
-    'backend_intro' => 'As a Backend Developer I focus on how data moves, how APIs stay consistent and how authentication, business rules and database design support the product — in production work at Smartsarka, freelance engagements and academic builds.',
+    'bio' => 'Backend Developer at Smart Sarks, specializing in Laravel, Node.js, Python, REST APIs and database design. I design reliable server-side systems, model clean data structures and deliver maintainable features for production products.',
+    'backend_intro' => 'As a Backend Developer I focus on how data moves, how APIs stay consistent and how authentication, business rules and database design support the product — in production work at Smart Sarks, freelance engagements and academic builds.',
     'backend_highlights' => [
         [
             'title' => 'API development',
@@ -41,9 +41,9 @@ return [
     ],
     'backend_stack' => ['Laravel', 'Node.js', 'Python', 'REST APIs', 'Database Design', 'SQLite', 'Auth flows', 'CRUD systems'],
     'about_title' => 'Backend Developer',
-    'about_intro' => 'I work as a Backend Developer at Smartsarka Pvt. Ltd., building APIs, database systems and server-side features for production applications — while completing my BCIS at Apex College.',
+    'about_intro' => 'I work as a Backend Developer at Smart Sarks, building APIs, database systems and server-side features for production applications — while completing my BCIS at Apex College.',
     'about_story' => [
-        'I am a Backend Developer at Smartsarka Pvt. Ltd., where I contribute to production server-side systems — APIs, data models, authentication flows and feature delivery that keep products reliable as they grow.',
+        'I am a Backend Developer at Smart Sarks, where I contribute to production server-side systems — APIs, data models, authentication flows and feature delivery that keep products reliable as they grow.',
         'My foundation comes from BCIS studies at Apex College and hands-on builds across book trading, fashion e-commerce, food discovery and fitness tracking. Those projects sharpened how I approach data modeling, API design and shipping under real deadlines.',
         'Alongside my role, I take selective freelance backend work for clients who need Laravel features, database structure or API support. I also mentor peers through the SMART Program and stay active in campus tech leadership.',
     ],
@@ -66,7 +66,7 @@ return [
         ],
         [
             'title' => 'Production mindset',
-            'desc' => 'From Smartsarka work to freelance projects, I focus on features that are usable, maintainable and ready for real users.',
+            'desc' => 'From Smart Sarks work to freelance projects, I focus on features that are usable, maintainable and ready for real users.',
         ],
         [
             'title' => 'Continuous growth',
@@ -105,6 +105,7 @@ return [
     'phone_href' => 'https://wa.me/9779861333037',
     'social' => [
         'linkedin' => 'https://www.linkedin.com/in/madhusudan-timalsina-75a910183/',
+        'github' => 'https://github.com/itsmemadhusudan',
     ],
     'stats' => [
         ['value' => '5+', 'suffix' => 'years', 'label' => 'Experience'],
@@ -251,7 +252,7 @@ return [
         ],
     ],
     'freelance' => [
-        'intro' => 'Alongside my role at Smartsarka, I take selective freelance backend and product work — helping individuals and small teams ship Laravel features, APIs, database structure and focused UI when needed.',
+        'intro' => 'Alongside my role at Smart Sarks, I take selective freelance backend and product work — helping individuals and small teams ship Laravel features, APIs, database structure and focused UI when needed.',
         'offers' => [
             'Laravel API and feature development',
             'Database schema planning and administration',
@@ -341,16 +342,16 @@ return [
     ],
     'contact' => [
         'title' => 'Let’s build the backend.',
-        'blurb' => 'Currently working as a Backend Developer at Smartsarka Pvt. Ltd. Open to freelance API/database work and collaborative builds in Laravel, Node.js and Python.',
-        'availability' => 'Working as a Backend Developer at Smartsarka Pvt. Ltd. since last year. Still available for freelance backend conversations — usually respond within 24–48 hours.',
+        'blurb' => 'Currently working as a Backend Developer at Smart Sarks. Open to freelance API/database work and collaborative builds in Laravel, Node.js and Python.',
+        'availability' => 'Working as a Backend Developer at Smart Sarks since last year. Still available for freelance backend conversations — usually respond within 24–48 hours.',
         'current_role' => [
             'title' => 'Currently working',
-            'company' => 'Smartsarka Pvt. Ltd.',
+            'company' => 'Smart Sarks',
             'role' => 'Backend Developer',
             'duration' => 'Since last year',
-            'summary' => 'Building and maintaining server-side systems, APIs and database work in a production environment at Smartsarka Pvt. Ltd.',
+            'summary' => 'Building and maintaining server-side systems, APIs and database work in a production environment at Smart Sarks.',
             'highlights' => [
-                'Backend Developer at Smartsarka Pvt. Ltd.',
+                'Backend Developer at Smart Sarks',
                 'In this role since last year',
                 'Hands-on with APIs, Laravel and production delivery',
                 'Open to selective freelance Laravel and API work',
@@ -369,16 +370,17 @@ return [
         'site_url' => 'https://madhusudantimalsina.com.np',
         'site_name' => 'Madhusudan Timalsina',
         'default_title' => 'Madhusudan Timalsina | Backend Developer',
-        'default_description' => 'Backend Developer at Smartsarka Pvt. Ltd. specializing in Laravel, Node.js, Python, REST APIs and database design. Hire Madhusudan Timalsina for production backend and freelance API work in Nepal.',
+        'default_description' => 'Backend Developer at Smart Sarks specializing in Laravel, Node.js, Python, REST APIs and database design. Hire Madhusudan Timalsina for production backend and freelance API work in Nepal.',
         'keywords' => [
             'Madhusudan Timalsina',
+            'Madhusudan Timalsina Backend Developer',
             'Backend Developer Nepal',
             'Laravel developer',
             'REST API developer',
             'Node.js developer',
             'Python backend',
             'database design',
-            'Smartsarka',
+            'Smart Sarks',
             'freelance backend developer',
             'Apex College BCIS',
         ],
@@ -390,13 +392,13 @@ return [
             'home' => [
                 'path' => '/',
                 'title' => 'Madhusudan Timalsina | Backend Developer',
-                'description' => 'Backend Developer at Smartsarka Pvt. Ltd. building Laravel APIs, databases and server-side systems. Explore projects, skills and freelance backend services by Madhusudan Timalsina.',
+                'description' => 'Backend Developer at Smart Sarks building Laravel APIs, databases and server-side systems. Explore projects, skills and freelance backend services by Madhusudan Timalsina.',
                 'h1' => 'Madhusudan Timalsina — Backend Developer',
             ],
             'about' => [
                 'path' => '/about',
-                'title' => 'About Madhusudan Timalsina | Backend Developer at Smartsarka',
-                'description' => 'Learn about Madhusudan Timalsina, Backend Developer at Smartsarka Pvt. Ltd. — production APIs, Laravel systems, database design and BCIS studies at Apex College.',
+                'title' => 'About Madhusudan Timalsina | Backend Developer at Smart Sarks',
+                'description' => 'Learn about Madhusudan Timalsina, Backend Developer at Smart Sarks — production APIs, Laravel systems, database design and BCIS studies at Apex College.',
                 'h1' => 'About Madhusudan Timalsina',
             ],
             'skills' => [
@@ -420,7 +422,7 @@ return [
             'contact' => [
                 'path' => '/contact',
                 'title' => 'Contact Madhusudan Timalsina | Hire a Backend Developer',
-                'description' => 'Contact Madhusudan Timalsina for Laravel API work, database design and freelance backend development. Currently Backend Developer at Smartsarka Pvt. Ltd., based in Nepal.',
+                'description' => 'Contact Madhusudan Timalsina for Laravel API work, database design and freelance backend development. Currently Backend Developer at Smart Sarks, based in Nepal.',
                 'h1' => 'Hire a Backend Developer',
             ],
         ],
@@ -431,15 +433,15 @@ return [
             ],
             [
                 'question' => 'Where does Madhusudan currently work?',
-                'answer' => 'Madhusudan works as a Backend Developer at Smartsarka Pvt. Ltd., building and maintaining server-side systems, APIs and database features in a production environment.',
+                'answer' => 'Madhusudan works as a Backend Developer at Smart Sarks, building and maintaining server-side systems, APIs and database features in a production environment.',
             ],
             [
                 'question' => 'Is Madhusudan available for freelance backend work?',
-                'answer' => 'Yes. Alongside the Smartsarka role, Madhusudan takes selective freelance work for Laravel features, API development, database schema planning and related backend support.',
+                'answer' => 'Yes. Alongside the Smart Sarks role, Madhusudan takes selective freelance work for Laravel features, API development, database schema planning and related backend support.',
             ],
             [
                 'question' => 'How can I contact Madhusudan Timalsina?',
-                'answer' => 'You can reach Madhusudan by email at timmadh@gmail.com, WhatsApp at +977 9861333037, or LinkedIn at madhusudan-timalsina.',
+                'answer' => 'You can reach Madhusudan by email at timmadh@gmail.com, WhatsApp at +977 9861333037, or LinkedIn at linkedin.com/in/madhusudan-timalsina-75a910183.',
             ],
             [
                 'question' => 'What technologies does Madhusudan use for backend development?',

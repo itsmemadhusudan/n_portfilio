@@ -4,7 +4,7 @@
     <x-page-header
         eyebrow="Technical skills"
         :title="$seo['h1']"
-        subtitle="Laravel, Node.js, Python, REST APIs, database design and collaboration skills from production work at Smartsarka, academic projects and freelance backend delivery."
+        subtitle="Laravel, Node.js, Python, REST APIs, database design and collaboration skills from production work at Smart Sarks, academic projects and freelance backend delivery."
         accent="var(--text-accent)"
     />
 

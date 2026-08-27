@@ -89,6 +89,7 @@
                 'knowsAbout' => $portfolio['backend_stack'],
                 'sameAs' => array_values(array_filter([
                     $portfolio['social']['linkedin'] ?? null,
+                    $portfolio['social']['github'] ?? null,
                 ])),
             ],
             [
@@ -174,6 +175,18 @@
                         >
                             <x-icon name="linkedin" :size="18" />
                         </a>
+                        @if (! empty($portfolio['social']['github']))
+                            <a
+                                href="{{ $portfolio['social']['github'] }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="contact-chip"
+                                aria-label="GitHub profile"
+                                title="GitHub"
+                            >
+                                <x-icon name="github" :size="18" />
+                            </a>
+                        @endif
                         <a
                             href="{{ $portfolio['email_href'] }}"
                             target="_blank"

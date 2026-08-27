@@ -13,7 +13,7 @@
             {{ $portfolio['contact']['availability'] }}
         </p>
 
-        <div class="grid sm:grid-cols-3 gap-3 mb-10">
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 mb-10">
             <x-anim-card
                 :href="$portfolio['email_href']"
                 padding="p-6"
@@ -47,8 +47,18 @@
                     <x-icon name="linkedin" :size="18" />
                 </div>
                 <p class="text-sm font-medium mb-1" style="color: var(--text-primary);">LinkedIn</p>
-                <p class="text-sm" style="color: var(--text-secondary);">madhusudan-timalsina</p>
+                <p class="text-sm" style="color: var(--text-secondary);">madhusudan-timalsina-75a910183</p>
             </x-anim-card>
+
+            @if (! empty($portfolio['social']['github']))
+                <x-anim-card :href="$portfolio['social']['github']" padding="p-6">
+                    <div class="w-10 h-10 rounded-lg flex items-center justify-center mb-4" style="background: var(--bg-accent); color: var(--text-accent);">
+                        <x-icon name="github" :size="18" />
+                    </div>
+                    <p class="text-sm font-medium mb-1" style="color: var(--text-primary);">GitHub</p>
+                    <p class="text-sm" style="color: var(--text-secondary);">itsmemadhusudan</p>
+                </x-anim-card>
+            @endif
         </div>
 
         <div class="grid lg:grid-cols-2 gap-3 mb-10">

@@ -14,6 +14,17 @@
             >
                 <x-icon name="linkedin" :size="16" />
             </a>
+            @if (! empty($portfolio['social']['github']))
+                <a
+                    href="{{ $portfolio['social']['github'] }}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="hero-social__link"
+                    aria-label="GitHub profile"
+                >
+                    <x-icon name="github" :size="16" />
+                </a>
+            @endif
             <a
                 href="{{ $portfolio['email_href'] }}"
                 target="_blank"
@@ -64,7 +75,7 @@
                 <source srcset="{{ asset('images/bgimage.webp') }}" type="image/webp">
                 <img
                     src="{{ asset('images/bgimage-avatar.jpg') }}"
-                    alt="{{ $portfolio['full_name'] }}, Backend Developer at Smartsarka Pvt. Ltd."
+                    alt="{{ $portfolio['full_name'] }}, Backend Developer at Smart Sarks"
                     title="{{ $portfolio['full_name'] }} — Backend Developer"
                     class="hero-portrait__img"
                     width="360"

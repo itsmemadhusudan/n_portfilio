@@ -1,6 +1,6 @@
 # n_portfilio
 
-Personal portfolio site for **Madhusudan Timalsina** — a backend-focused developer portfolio built with Laravel, Blade, Tailwind CSS and Alpine.js.
+Personal portfolio site for **Madhusudan Timalsina** — Backend Developer portfolio built with Laravel, Blade, Tailwind CSS and Alpine.js.
 
 ## Stack
 

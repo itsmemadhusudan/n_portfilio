@@ -36,6 +36,13 @@
                     <x-icon name="linkedin" :size="16" />
                     LinkedIn
                 </x-anim-btn>
+
+                @if (! empty($portfolio['social']['github']))
+                    <x-anim-btn :href="$portfolio['social']['github']" variant="ghost" :external="true">
+                        <x-icon name="github" :size="16" />
+                        GitHub
+                    </x-anim-btn>
+                @endif
             </div>
         </div>
     </x-anim-card>

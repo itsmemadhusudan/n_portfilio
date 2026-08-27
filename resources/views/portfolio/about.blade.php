@@ -62,6 +62,18 @@
                         >
                             <x-icon name="linkedin" :size="18" />
                         </a>
+                        @if (! empty($portfolio['social']['github']))
+                            <a
+                                href="{{ $portfolio['social']['github'] }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="contact-chip"
+                                aria-label="GitHub profile"
+                                title="GitHub"
+                            >
+                                <x-icon name="github" :size="18" />
+                            </a>
+                        @endif
                     </div>
                 </x-anim-card>
 
