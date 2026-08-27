@@ -46,7 +46,12 @@
         <div class="hero-stats" aria-label="Career highlights">
             @foreach ($portfolio['stats'] as $stat)
                 <div class="hero-stats__item">
-                    <span class="hero-stats__value">{{ $stat['value'] }}</span>
+                    <span class="hero-stats__value">
+                        {{ $stat['value'] }}
+                        @if (! empty($stat['suffix']))
+                            <span class="hero-stats__suffix">{{ $stat['suffix'] }}</span>
+                        @endif
+                    </span>
                     <span class="hero-stats__label">{{ $stat['label'] }}</span>
                 </div>
             @endforeach

@@ -5,7 +5,7 @@ return [
     'brand_mark' => 'MT',
     'name' => 'Madhusudan',
     'full_name' => 'Madhusudan Timalsina',
-    'title' => 'Backend Developer',
+    'title' => 'Developer',
     'photo' => '/images/bgimage.png',
     'cv' => null,
     'location' => 'Nepal',
@@ -107,7 +107,7 @@ return [
         'linkedin' => 'https://www.linkedin.com/in/madhusudan-timalsina-75a910183/',
     ],
     'stats' => [
-        ['value' => '5 years+', 'label' => 'Experience'],
+        ['value' => '5+', 'suffix' => 'years', 'label' => 'Experience'],
         ['value' => '20+', 'label' => 'Systems'],
         ['value' => '10+', 'label' => 'Websites'],
         ['value' => '4+', 'label' => 'College workshops'],
@@ -338,7 +338,6 @@ return [
         ['label' => 'Skills', 'route' => 'skills'],
         ['label' => 'Projects', 'route' => 'projects'],
         ['label' => 'Education', 'route' => 'education'],
-        ['label' => 'Contact', 'route' => 'contact'],
     ],
     'contact' => [
         'title' => 'Let’s build the backend.',
