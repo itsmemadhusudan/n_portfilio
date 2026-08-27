@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap');
+@import './fonts.css';
 
 @import 'tailwindcss';
 
@@ -85,16 +85,16 @@ body {
 .site-frame::before,
 .site-frame::after {
     content: '';
-    position: absolute;
+    position: fixed;
     pointer-events: none;
     z-index: 0;
 }
 
 .site-frame::before {
     width: 58vw;
-    height: 140%;
-    top: -20%;
-    left: -18%;
+    height: 100vh;
+    top: -12vh;
+    left: -18vw;
     background: linear-gradient(118deg, #2a2a2a 0%, #111 55%, transparent 100%);
     transform: rotate(-28deg);
     opacity: 0.9;
@@ -102,9 +102,9 @@ body {
 
 .site-frame::after {
     width: 50vw;
-    height: 130%;
-    top: -10%;
-    right: -22%;
+    height: 95vh;
+    top: -8vh;
+    right: -22vw;
     background: linear-gradient(300deg, #2f2f2f 0%, #0f0f0f 60%, transparent 100%);
     transform: rotate(18deg);
     opacity: 0.75;

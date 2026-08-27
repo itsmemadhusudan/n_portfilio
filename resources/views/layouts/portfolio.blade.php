@@ -3,6 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-site-verification" content="K8Ai_OXXDW3Ph4PMbheHyoZ1G1vXbPonnIAcqas9Yh4" />
+    @if ($pageKey === 'home')
+        <link rel="preload" as="image" href="{{ asset('images/bgimage.webp') }}" type="image/webp" fetchpriority="high">
+    @endif
     <title>{{ $seo['title'] }}</title>
     <meta name="description" content="{{ $seo['description'] }}">
     @if (! empty($seo['keywords']))
@@ -135,11 +139,15 @@
     @endphp
     <script type="application/ld+json">{!! json_encode($jsonLd, JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE) !!}</script>
 
-    @if ($pageKey === 'home')
-        <link rel="preload" as="image" href="{{ asset('images/bgimage.webp') }}" type="image/webp">
+    @php($usingViteDev = file_exists(public_path('hot')))
+    @if ($usingViteDev)
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @else
+        <style>{!! file_get_contents(resource_path('css/critical.css')) !!}</style>
+        <link rel="preload" as="style" href="{{ Vite::asset('resources/css/app.css') }}" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="{{ Vite::asset('resources/css/app.css') }}"></noscript>
+        @vite(['resources/js/app.js'])
     @endif
-
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body
     class="min-h-screen w-full antialiased"

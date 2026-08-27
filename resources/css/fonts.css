@@ -1,0 +1,49 @@
+/* Self-hosted latin subsets — font-display: optional limits CLS from late font swap. */
+
+@font-face {
+    font-family: 'Sora';
+    font-style: normal;
+    font-display: optional;
+    font-weight: 600;
+    src: url('@fontsource/sora/files/sora-latin-600-normal.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Sora';
+    font-style: normal;
+    font-display: optional;
+    font-weight: 700;
+    src: url('@fontsource/sora/files/sora-latin-700-normal.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Sora';
+    font-style: normal;
+    font-display: optional;
+    font-weight: 800;
+    src: url('@fontsource/sora/files/sora-latin-800-normal.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Plus Jakarta Sans';
+    font-style: normal;
+    font-display: optional;
+    font-weight: 400;
+    src: url('@fontsource/plus-jakarta-sans/files/plus-jakarta-sans-latin-400-normal.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Plus Jakarta Sans';
+    font-style: normal;
+    font-display: optional;
+    font-weight: 500;
+    src: url('@fontsource/plus-jakarta-sans/files/plus-jakarta-sans-latin-500-normal.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Plus Jakarta Sans';
+    font-style: normal;
+    font-display: optional;
+    font-weight: 600;
+    src: url('@fontsource/plus-jakarta-sans/files/plus-jakarta-sans-latin-600-normal.woff2') format('woff2');
+}

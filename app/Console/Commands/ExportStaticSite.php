@@ -31,7 +31,7 @@ class ExportStaticSite extends Command
         'contact' => 'contact',
     ];
 
-    private const COPIED_FILES = ['favicon.ico', 'favicon.png', 'robots.txt', 'sitemap.xml'];
+    private const COPIED_FILES = ['favicon.ico', 'favicon.png', 'robots.txt', 'sitemap.xml', '_headers'];
 
     public function handle(PortfolioController $controller): int
     {

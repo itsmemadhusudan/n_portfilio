@@ -1,6 +1,30 @@
 {
+  "node_modules/@fontsource/plus-jakarta-sans/files/plus-jakarta-sans-latin-400-normal.woff2": {
+    "file": "assets/plus-jakarta-sans-latin-400-normal-Dhut76fR.woff2",
+    "src": "node_modules/@fontsource/plus-jakarta-sans/files/plus-jakarta-sans-latin-400-normal.woff2"
+  },
+  "node_modules/@fontsource/plus-jakarta-sans/files/plus-jakarta-sans-latin-500-normal.woff2": {
+    "file": "assets/plus-jakarta-sans-latin-500-normal-Bf-nb4oT.woff2",
+    "src": "node_modules/@fontsource/plus-jakarta-sans/files/plus-jakarta-sans-latin-500-normal.woff2"
+  },
+  "node_modules/@fontsource/plus-jakarta-sans/files/plus-jakarta-sans-latin-600-normal.woff2": {
+    "file": "assets/plus-jakarta-sans-latin-600-normal-DLTa1BUW.woff2",
+    "src": "node_modules/@fontsource/plus-jakarta-sans/files/plus-jakarta-sans-latin-600-normal.woff2"
+  },
+  "node_modules/@fontsource/sora/files/sora-latin-600-normal.woff2": {
+    "file": "assets/sora-latin-600-normal-Cdg4DaK0.woff2",
+    "src": "node_modules/@fontsource/sora/files/sora-latin-600-normal.woff2"
+  },
+  "node_modules/@fontsource/sora/files/sora-latin-700-normal.woff2": {
+    "file": "assets/sora-latin-700-normal-9waGdLWo.woff2",
+    "src": "node_modules/@fontsource/sora/files/sora-latin-700-normal.woff2"
+  },
+  "node_modules/@fontsource/sora/files/sora-latin-800-normal.woff2": {
+    "file": "assets/sora-latin-800-normal-2tKLL3qT.woff2",
+    "src": "node_modules/@fontsource/sora/files/sora-latin-800-normal.woff2"
+  },
   "resources/css/app.css": {
-    "file": "assets/app-C9M1dfFl.css",
+    "file": "assets/app-ef144_1R.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",

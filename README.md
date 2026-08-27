@@ -107,6 +107,21 @@ That writes `docs/` — one `index.html` per route, a copy of `public/build`, an
 
 The `--base` flag must match the live URL visitors use. With a custom domain that is `https://madhusudantimalsina.com.np` (no `/n_portfilio` suffix). If CSS or nav links break after publishing, you almost always exported with the wrong `--base` — re-run the two commands and push `docs/` again.
 
+### Performance (Lighthouse)
+
+The live site is static HTML from `docs/` on GitHub Pages, usually proxied through Cloudflare. After changing CSS or the layout `<head>`, run `npm run build` and `php artisan site:export` before pushing.
+
+**Cloudflare cache rules (required for long-lived assets):** GitHub Pages serves static files with a short default TTL (~4 hours). Cloudflare in front of the domain does not read `docs/_headers`. In the Cloudflare dashboard, add Cache Rules for:
+
+- `madhusudantimalsina.com.np/build/*`
+- `madhusudantimalsina.com.np/images/*`
+
+Set **Browser TTL** and **Edge TTL** to 1 year and **Override origin**. Hashed files under `/build/assets/` are safe to cache immutably; if you replace `/images/bgimage.webp`, use a new filename or query string so browsers pick up the change.
+
+**Cloudflare Web Analytics / RUM:** Lighthouse flags `beacon.min.js` and `/cdn-cgi/rum` when Cloudflare auto-injects analytics. That script is not in this repo. To remove it from the critical path, open **Cloudflare → Web Analytics** and disable automatic injection for this domain. Do not add an untokened `beacon.min.js` tag in Blade — if you want analytics, use Cloudflare’s deferred snippet once auto-inject is off.
+
+**Apache / PHP hosts:** `public/.htaccess` already sets `Cache-Control: public, max-age=31536000, immutable` for CSS, JS, images, and fonts.
+
 ### SEO after publish
 
 1. Confirm `https://madhusudantimalsina.com.np/robots.txt` and `https://madhusudantimalsina.com.np/sitemap.xml` load.
