@@ -1,49 +1,25 @@
-# Madhusudan Timalsina — Portfolio
+# Madhusudan Timalsina
 
-Personal portfolio for **Madhusudan Timalsina**, Backend Developer at **Smart Sarks**.
+**Backend Developer at Smart Sarks** · Nepal
 
-**Live site:** [madhusudantimalsina.com.np](https://madhusudantimalsina.com.np)
+Portfolio: [madhusudantimalsina.com.np](https://madhusudantimalsina.com.np) · [LinkedIn](https://www.linkedin.com/in/madhusudan-timalsina-75a910183/) · [GitHub](https://github.com/itsmemadhusudan)
 
-| | |
-| --- | --- |
-| Role | Backend Developer |
-| Employer | Smart Sarks |
-| Location | Nepal |
-| LinkedIn | [madhusudan-timalsina-75a910183](https://www.linkedin.com/in/madhusudan-timalsina-75a910183/) |
-| GitHub | [itsmemadhusudan](https://github.com/itsmemadhusudan) |
+I build Laravel APIs, databases and server-side systems for production products. Stack: Laravel, Node.js, Python, REST APIs, database design.
 
-Built with Laravel, Blade, Tailwind CSS and Alpine.js. Focus areas: Laravel, Node.js, Python, REST APIs and database design.
+> Exact spelling: **Timalsina** (with an **a**). Keep this name consistent on LinkedIn, GitHub and the site.
 
-> Spelling: **Timalsina** (with an **a**). Use this exact name on every profile so search engines treat it separately from similar surnames.
+## What's in this repo
 
-## Stack
-
-- **Laravel 12** (PHP 8.2+) — routing, controllers, Blade templating
-- **Tailwind CSS 4** — styling, via Vite
-- **Alpine.js** (with the `intersect` plugin) — scroll reveals and interactive cards
-- **Vite** — asset bundling and hot reload
-
-## Pages
+Laravel + Blade + Tailwind CSS + Alpine.js portfolio. All copy and links live in `config/portfolio.php`.
 
 | Route | Page |
 | --- | --- |
-| `/` | Home — hero, services, recent projects, process |
-| `/about` | About — story, profile, focus areas, values |
-| `/skills` | Skills — stack layers, languages, frameworks, soft skills |
-| `/projects` | Projects — case studies and freelance capabilities |
-| `/education` | Education — degrees, coursework, achievements |
-| `/contact` | Contact — availability, role and direct links |
-
-## Content
-
-All copy, links, projects, skills and contact details live in a single file: `config/portfolio.php`. Edit that file to update the site — the Blade views read everything from it, so no markup changes are needed for content edits.
-
-Canonical identity strings in that file:
-
-- Name: `Madhusudan Timalsina`
-- Title: `Backend Developer`
-- Employer: `Smart Sarks`
-- Social: LinkedIn + GitHub (also used in schema.org `sameAs`)
+| `/` | Home |
+| `/about` | About |
+| `/skills` | Skills |
+| `/projects` | Projects |
+| `/education` | Education |
+| `/contact` | Contact |
 
 ## Local setup
 
@@ -52,112 +28,36 @@ composer install
 npm install
 cp .env.example .env
 php artisan key:generate
+php artisan serve   # terminal 1
+npm run dev         # terminal 2
 ```
 
-Run the dev servers in two terminals:
+Open http://127.0.0.1:8000.
 
-```bash
-php artisan serve
-npm run dev
-```
-
-The site is then available at http://127.0.0.1:8000.
-
-## Production build
-
-```bash
-npm run build
-composer deploy
-```
-
-`composer deploy` caches the config, routes and views. Run it after every deploy, and run `php artisan optimize:clear` before pulling new code.
-
-## Deployment
-
-This repository is source code only. GitHub does not run the site — GitHub Pages is a static file host and cannot execute PHP, Blade, or Composer packages, so it would only ever show this README. The site has to run on a PHP 8.2+ host:
-
-```
-GitHub (version control)  ->  PHP host (runs the site)
-```
-
-If GitHub Pages was switched on for this repo, turn it off under **Settings -> Pages -> Source -> None**, otherwise it keeps serving this README at the `github.io` URL.
-
-### What every host needs
-
-- PHP 8.2 or newer with the standard Laravel extensions
-- The web root pointed at `public/`, never at the project root
-- A `.env` file created on the server (never committed) — copy `.env.production.example` and fill in `APP_URL`
-- `php artisan key:generate` run once, so `APP_KEY` is set
-- Nothing to compile on the server: `public/build` is committed, so hosts without Node.js work fine. Just remember to run `npm run build` and commit the result whenever you change anything in `resources/css` or `resources/js`
-
-No database is required. The portfolio reads everything from `config/portfolio.php`, and `.env.production.example` sets the session, cache and queue drivers to file/sync so there are no migrations to run.
-
-### Shared hosting (Hostinger, cPanel)
-
-1. Upload the project outside `public_html`, for example to `~/portfolio`.
-2. Upload the contents of the project's `public/` folder into `public_html`, or point the domain's document root at `~/portfolio/public` if the panel allows it.
-3. If you had to split the folders in step 2, edit `public_html/index.php` and fix the two `require` paths so they point at `~/portfolio`.
-4. Over SSH, run `composer install --no-dev --optimize-autoloader`, create `.env`, run `php artisan key:generate`, then `composer deploy`.
-
-### Railway or Render
-
-1. Connect the GitHub repository and let the platform auto-detect PHP.
-2. Build command: `composer install --no-dev --optimize-autoloader`
-3. Start command: `php artisan serve --host 0.0.0.0 --port $PORT`
-4. Set the environment variables from `.env.production.example` in the platform dashboard, including a generated `APP_KEY` (`php artisan key:generate --show` prints one).
-
-### VPS (Ubuntu with Nginx)
-
-1. `git clone` the repository into `/var/www/portfolio`.
-2. Run `composer install --no-dev --optimize-autoloader`, create `.env`, `php artisan key:generate`, then `composer deploy`.
-3. Give the web server user write access: `chown -R www-data:www-data storage bootstrap/cache`.
-4. Point the Nginx `root` at `/var/www/portfolio/public` and pass `.php` requests to PHP-FPM.
-
-To update any of these later: `git pull`, reinstall dependencies if they changed, then `php artisan optimize:clear && composer deploy`.
-
-### Static copy for GitHub Pages
-
-Every page is server-rendered from static content, so the site can also be exported to plain HTML and served by GitHub Pages while the Laravel app remains the source of truth:
+## Build & publish
 
 ```bash
 npm run build
 php artisan site:export --base=https://madhusudantimalsina.com.np
 ```
 
-That writes `docs/` — one `index.html` per route, a copy of `public/build`, and a `.nojekyll` marker. Commit the folder, then enable **Settings -> Pages -> Source: Deploy from a branch -> Branch: main -> Folder: /docs**.
+That updates `docs/` for GitHub Pages (branch `main`, folder `/docs`). `--base` must match the live domain.
 
-The `--base` flag must match the live URL visitors use. With a custom domain that is `https://madhusudantimalsina.com.np` (no `/n_portfilio` suffix). If CSS or nav links break after publishing, you almost always exported with the wrong `--base` — re-run the two commands and push `docs/` again.
-
-### Performance (Lighthouse)
-
-The live site is static HTML from `docs/` on GitHub Pages, usually proxied through Cloudflare. After changing CSS or the layout `<head>`, run `npm run build` and `php artisan site:export` before pushing.
-
-**Cloudflare cache rules (required for long-lived assets):** GitHub Pages serves static files with a short default TTL (~4 hours). Cloudflare in front of the domain does not read `docs/_headers`. In the Cloudflare dashboard, add Cache Rules for:
-
-- `madhusudantimalsina.com.np/build/*`
-- `madhusudantimalsina.com.np/images/*`
-
-Set **Browser TTL** and **Edge TTL** to 1 year and **Override origin**. Hashed files under `/build/assets/` are safe to cache immutably; if you replace `/images/bgimage.webp`, use a new filename or query string so browsers pick up the change.
-
-**Cloudflare Web Analytics / RUM:** Lighthouse flags `beacon.min.js` and `/cdn-cgi/rum` when Cloudflare auto-injects analytics. That script is not in this repo. To remove it from the critical path, open **Cloudflare → Web Analytics** and disable automatic injection for this domain. Do not add an untokened `beacon.min.js` tag in Blade — if you want analytics, use Cloudflare’s deferred snippet once auto-inject is off.
-
-**Apache / PHP hosts:** `public/.htaccess` already sets `Cache-Control: public, max-age=31536000, immutable` for CSS, JS, images, and fonts.
-
-### SEO after publish
-
-1. Confirm `https://madhusudantimalsina.com.np/robots.txt` and `https://madhusudantimalsina.com.np/sitemap.xml` load.
-2. In [Google Search Console](https://search.google.com/search-console), add the property for `madhusudantimalsina.com.np` and submit the sitemap URL: `https://madhusudantimalsina.com.np/sitemap.xml`.
-3. Use URL Inspection on `/`, `/about`, and `/contact` after the first deploy with the new meta tags.
-4. Keep the public title **Backend Developer**, employer **Smart Sarks**, and spelling **Timalsina** identical on LinkedIn, GitHub and this site.
+PHP host instead of Pages: point the web root at `public/`, copy `.env.production.example` → `.env`, run `php artisan key:generate`, then `composer deploy`. No database required.
 
 ## Project layout
 
 ```
-app/Http/Controllers/PortfolioController.php   one method per page
-config/portfolio.php                           all site content
-resources/views/layouts/portfolio.blade.php    shared layout
-resources/views/portfolio/                     page views
-resources/views/portfolio/partials/            nav, hero, contact
-resources/views/components/                    icon, page-header, anim-card, anim-btn
-resources/css/app.css                          theme, animations, gradient borders
+config/portfolio.php                         content, SEO, social links
+app/Http/Controllers/PortfolioController.php pages
+resources/views/layouts/portfolio.blade.php  layout + schema
+resources/views/portfolio/                   pages & partials
+resources/css/app.css                        theme
+docs/                                        static export for GitHub Pages
 ```
+
+## SEO checklist
+
+1. Live: [robots.txt](https://madhusudantimalsina.com.np/robots.txt) and [sitemap.xml](https://madhusudantimalsina.com.np/sitemap.xml)
+2. Submit the sitemap in [Google Search Console](https://search.google.com/search-console)
+3. Keep **Madhusudan Timalsina**, **Backend Developer**, and **Smart Sarks** identical on the site, LinkedIn and GitHub
