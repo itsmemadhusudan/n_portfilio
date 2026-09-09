@@ -51,6 +51,9 @@ class ExportStaticSite extends Command
             URL::forceScheme('https');
         }
 
+        // Contact form needs a live PHP host; hide it in the static export.
+        config(['portfolio.contact.form_enabled' => false]);
+
         // A running "npm run dev" leaves public/hot behind, which would otherwise
         // point the exported pages at the local Vite server instead of the build.
         Vite::useHotFile(storage_path('framework/static-export-hot'));

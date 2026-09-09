@@ -115,4 +115,17 @@ return [
         'name' => env('MAIL_FROM_NAME', env('APP_NAME', 'Laravel')),
     ],
 
+    /*
+    |--------------------------------------------------------------------------
+    | Contact Form Inbox
+    |--------------------------------------------------------------------------
+    |
+    | Messages submitted through the portfolio contact form are delivered here.
+    | Do not use the reserved top-level "to" / "reply_to" mail keys — Laravel
+    | treats those as global always-on addresses and expects a name field.
+    |
+    */
+
+    'contact_to' => env('MAIL_TO_ADDRESS', env('MAIL_FROM_ADDRESS')),
+
 ];

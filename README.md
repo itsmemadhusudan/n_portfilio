@@ -34,6 +34,18 @@ npm run dev         # terminal 2
 
 Open http://127.0.0.1:8000.
 
+### Contact form (Mailjet SMTP)
+
+The `/contact` form emails you the message and sends the visitor a confirmation.
+
+1. Copy mail settings from `.env.example` into your local `.env`
+2. Set `MAIL_USERNAME` / `MAIL_PASSWORD` to your Mailjet API key + secret
+3. Set `MAIL_FROM_ADDRESS` and `MAIL_TO_ADDRESS` (verify the from-address in Mailjet)
+4. Keep `QUEUE_CONNECTION=sync` so mail sends immediately
+5. Keep `CONTACT_FORM_ENABLED=true` on a PHP host; static GitHub Pages export turns the form off
+
+Never commit `.env` — only `.env.example` / `.env.production.example`.
+
 ## Build & publish
 
 ```bash

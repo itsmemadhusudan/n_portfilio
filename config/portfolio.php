@@ -344,6 +344,10 @@ return [
         'title' => 'Let’s build the backend.',
         'blurb' => 'Currently working as a Backend Developer at Smart Sarks. Open to freelance API/database work and collaborative builds in Laravel, Node.js and Python.',
         'availability' => 'Working as a Backend Developer at Smart Sarks since last year. Still available for freelance backend conversations — usually respond within 24–48 hours.',
+        'form_enabled' => env('CONTACT_FORM_ENABLED', true),
+        'form_title' => 'Send a message',
+        'form_intro' => 'Tell me about your project or question. You’ll get a confirmation email, and I’ll reply from my inbox within 24–48 hours.',
+        'form_success' => 'Thanks — your message is on its way. Check your inbox for a confirmation email.',
         'current_role' => [
             'title' => 'Currently working',
             'company' => 'Smart Sarks',
