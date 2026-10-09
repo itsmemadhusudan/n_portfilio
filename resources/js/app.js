@@ -25,7 +25,7 @@ function strengthFor(el) {
 }
 
 function bindMagnetic(el) {
-    if (el.dataset.magneticBound === '1') {
+    if (el.dataset.magneticBound === '1' || el.hasAttribute('data-no-magnetic') || el.closest('[data-no-magnetic], form')) {
         return;
     }
 

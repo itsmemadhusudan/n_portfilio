@@ -11,9 +11,15 @@
     <section class="page-wrap pb-10">
         <div class="contact-layout mb-10">
             {{-- Primary: message form --}}
-            <div class="contact-layout__main">
+            <div
+                class="contact-layout__main contact-reveal"
+                style="--reveal-delay: 0ms"
+                x-data="{ shown: false }"
+                x-intersect:enter.once="shown = true"
+                :class="shown && 'is-revealed'"
+            >
                 @if (! empty($portfolio['contact']['form_enabled']))
-                    <x-anim-card padding="p-6 sm:p-8" class="contact-form-card">
+                    <x-anim-card padding="p-6 sm:p-8" class="contact-form-card" data-no-magnetic>
                         <h2 class="text-xl font-display mb-2" style="font-weight: 600; color: var(--text-primary);">
                             {{ $portfolio['contact']['form_title'] }}
                         </h2>
@@ -43,6 +49,8 @@
                                 method="POST"
                                 class="contact-form"
                                 novalidate
+                                x-data="{ sending: false }"
+                                @submit="sending = true"
                             >
                                 @csrf
 
@@ -70,6 +78,7 @@
                                             maxlength="120"
                                             autocomplete="name"
                                             placeholder="Your name"
+                                            :disabled="sending"
                                         >
                                         @error('name')
                                             <span class="contact-form__error">{{ $message }}</span>
@@ -87,6 +96,7 @@
                                             maxlength="255"
                                             autocomplete="email"
                                             placeholder="you@example.com"
+                                            :disabled="sending"
                                         >
                                         @error('email')
                                             <span class="contact-form__error">{{ $message }}</span>
@@ -103,6 +113,7 @@
                                         value="{{ old('subject') }}"
                                         maxlength="160"
                                         placeholder="Project idea, freelance work, collaboration…"
+                                        :disabled="sending"
                                     >
                                     @error('subject')
                                         <span class="contact-form__error">{{ $message }}</span>
@@ -118,6 +129,7 @@
                                         required
                                         maxlength="5000"
                                         placeholder="What are you building, and how can I help?"
+                                        :disabled="sending"
                                     >{{ old('message') }}</textarea>
                                     @error('message')
                                         <span class="contact-form__error">{{ $message }}</span>
@@ -125,8 +137,17 @@
                                 </div>
 
                                 <div class="contact-form__actions">
-                                    <button type="submit" class="btn-pill btn-pill--solid">
-                                        Send message
+                                    <button
+                                        type="submit"
+                                        class="btn-pill btn-pill--solid"
+                                        :disabled="sending"
+                                        :aria-busy="sending"
+                                    >
+                                        <span x-show="!sending">Send message</span>
+                                        <span x-cloak x-show="sending" class="contact-form__sending">
+                                            <span class="contact-form__spinner" aria-hidden="true"></span>
+                                            Sending…
+                                        </span>
                                     </button>
                                     <p class="contact-form__note">
                                         Confirmation goes to your inbox · reply within 24–48 hours
@@ -140,101 +161,131 @@
 
             {{-- Side: reach me + role --}}
             <aside class="contact-layout__aside">
-                <x-anim-card padding="p-5">
-                    <p class="section-label mb-3">Reach me directly</p>
-                    <div class="contact-channels">
-                        <a
-                            href="{{ $portfolio['email_href'] }}"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="contact-channel"
-                        >
-                            <span class="contact-channel__icon" aria-hidden="true">
-                                <x-icon name="mail" :size="16" />
-                            </span>
-                            <span>
-                                <span class="contact-channel__label">Email</span>
-                                <span class="contact-channel__value">{{ $portfolio['email'] }}</span>
-                            </span>
-                        </a>
-                        <a
-                            href="{{ $portfolio['phone_href'] }}"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="contact-channel"
-                        >
-                            <span class="contact-channel__icon" aria-hidden="true">
-                                <x-icon name="phone" :size="16" />
-                            </span>
-                            <span>
-                                <span class="contact-channel__label">WhatsApp</span>
-                                <span class="contact-channel__value">{{ $portfolio['phone'] }}</span>
-                            </span>
-                        </a>
-                        <a
-                            href="{{ $portfolio['social']['linkedin'] }}"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="contact-channel"
-                        >
-                            <span class="contact-channel__icon" aria-hidden="true">
-                                <x-icon name="linkedin" :size="16" />
-                            </span>
-                            <span>
-                                <span class="contact-channel__label">LinkedIn</span>
-                                <span class="contact-channel__value">madhusudan-timalsina</span>
-                            </span>
-                        </a>
-                        @if (! empty($portfolio['social']['github']))
+                <div
+                    class="contact-reveal"
+                    style="--reveal-delay: 80ms"
+                    x-data="{ shown: false }"
+                    x-intersect:enter.once="shown = true"
+                    :class="shown && 'is-revealed'"
+                >
+                    <x-anim-card padding="p-5">
+                        <p class="section-label mb-3">Reach me directly</p>
+                        <div class="contact-channels">
                             <a
-                                href="{{ $portfolio['social']['github'] }}"
+                                href="{{ $portfolio['email_href'] }}"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 class="contact-channel"
                             >
                                 <span class="contact-channel__icon" aria-hidden="true">
-                                    <x-icon name="github" :size="16" />
+                                    <x-icon name="mail" :size="16" />
                                 </span>
                                 <span>
-                                    <span class="contact-channel__label">GitHub</span>
-                                    <span class="contact-channel__value">itsmemadhusudan</span>
+                                    <span class="contact-channel__label">Email</span>
+                                    <span class="contact-channel__value">{{ $portfolio['email'] }}</span>
                                 </span>
                             </a>
-                        @endif
-                    </div>
-                </x-anim-card>
+                            <a
+                                href="{{ $portfolio['phone_href'] }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="contact-channel"
+                            >
+                                <span class="contact-channel__icon" aria-hidden="true">
+                                    <x-icon name="phone" :size="16" />
+                                </span>
+                                <span>
+                                    <span class="contact-channel__label">WhatsApp</span>
+                                    <span class="contact-channel__value">{{ $portfolio['phone'] }}</span>
+                                </span>
+                            </a>
+                            <a
+                                href="{{ $portfolio['social']['linkedin'] }}"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="contact-channel"
+                            >
+                                <span class="contact-channel__icon" aria-hidden="true">
+                                    <x-icon name="linkedin" :size="16" />
+                                </span>
+                                <span>
+                                    <span class="contact-channel__label">LinkedIn</span>
+                                    <span class="contact-channel__value">madhusudan-timalsina</span>
+                                </span>
+                            </a>
+                            @if (! empty($portfolio['social']['github']))
+                                <a
+                                    href="{{ $portfolio['social']['github'] }}"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    class="contact-channel"
+                                >
+                                    <span class="contact-channel__icon" aria-hidden="true">
+                                        <x-icon name="github" :size="16" />
+                                    </span>
+                                    <span>
+                                        <span class="contact-channel__label">GitHub</span>
+                                        <span class="contact-channel__value">itsmemadhusudan</span>
+                                    </span>
+                                </a>
+                            @endif
+                        </div>
+                    </x-anim-card>
+                </div>
 
-                <x-anim-card padding="p-5">
-                    <p class="section-label">{{ $portfolio['contact']['current_role']['duration'] }}</p>
-                    <p class="font-display text-lg mt-1" style="font-weight: 600; color: var(--text-primary);">
-                        {{ $portfolio['contact']['current_role']['role'] }}
-                    </p>
-                    <p class="text-sm mt-1" style="color: var(--text-accent);">
-                        {{ $portfolio['contact']['current_role']['company'] }} · {{ $portfolio['location'] }}
-                    </p>
-                    <p class="text-sm mt-3 leading-relaxed" style="color: var(--text-secondary);">
-                        {{ $portfolio['contact']['availability'] }}
-                    </p>
-                </x-anim-card>
+                <div
+                    class="contact-reveal"
+                    style="--reveal-delay: 140ms"
+                    x-data="{ shown: false }"
+                    x-intersect:enter.once="shown = true"
+                    :class="shown && 'is-revealed'"
+                >
+                    <x-anim-card padding="p-5">
+                        <p class="section-label">{{ $portfolio['contact']['current_role']['duration'] }}</p>
+                        <p class="font-display text-lg mt-1" style="font-weight: 600; color: var(--text-primary);">
+                            {{ $portfolio['contact']['current_role']['role'] }}
+                        </p>
+                        <p class="text-sm mt-1" style="color: var(--text-accent);">
+                            {{ $portfolio['contact']['current_role']['company'] }} · {{ $portfolio['location'] }}
+                        </p>
+                        <p class="text-sm mt-3 leading-relaxed" style="color: var(--text-secondary);">
+                            {{ $portfolio['contact']['availability'] }}
+                        </p>
+                    </x-anim-card>
+                </div>
 
-                <x-anim-card padding="p-5">
-                    <h2 class="text-base font-display mb-3" style="font-weight: 600; color: var(--text-primary);">
-                        Good conversation topics
-                    </h2>
-                    <ul class="space-y-2.5">
-                        @foreach ($portfolio['contact']['topics'] as $item)
-                            <li class="text-sm flex gap-2" style="color: var(--text-secondary);">
-                                <span class="mt-2 shrink-0 w-1.5 h-1.5 rounded-full" style="background: var(--blue);"></span>
-                                <span>{{ $item }}</span>
-                            </li>
-                        @endforeach
-                    </ul>
-                </x-anim-card>
+                <div
+                    class="contact-reveal"
+                    style="--reveal-delay: 200ms"
+                    x-data="{ shown: false }"
+                    x-intersect:enter.once="shown = true"
+                    :class="shown && 'is-revealed'"
+                >
+                    <x-anim-card padding="p-5">
+                        <h2 class="text-base font-display mb-3" style="font-weight: 600; color: var(--text-primary);">
+                            Good conversation topics
+                        </h2>
+                        <ul class="space-y-2.5">
+                            @foreach ($portfolio['contact']['topics'] as $item)
+                                <li class="text-sm flex gap-2" style="color: var(--text-secondary);">
+                                    <span class="mt-2 shrink-0 w-1.5 h-1.5 rounded-full" style="background: var(--blue);"></span>
+                                    <span>{{ $item }}</span>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </x-anim-card>
+                </div>
             </aside>
         </div>
 
         @if (! empty($seo['faqs']))
-            <div>
+            <div
+                class="contact-reveal"
+                style="--reveal-delay: 120ms"
+                x-data="{ shown: false }"
+                x-intersect:enter.once="shown = true"
+                :class="shown && 'is-revealed'"
+            >
                 <h2 class="text-xl font-display mb-4" style="font-weight: 600; color: var(--text-primary);">
                     Frequently asked questions
                 </h2>
