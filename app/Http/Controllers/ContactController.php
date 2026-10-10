@@ -41,7 +41,7 @@ class ContactController extends Controller
 
             return back()
                 ->withInput()
-                ->with('contact_error', 'Sorry — the message could not be sent right now. Please email me directly or try again later.');
+                ->with('contact_error', 'Sorry. The message could not be sent right now. Please email me directly or try again later.');
         }
 
         return redirect()

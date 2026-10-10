@@ -96,4 +96,4 @@ Reusable Blade components:
 
 1. Live: [robots.txt](https://madhusudantimalsina.com.np/robots.txt) and [sitemap.xml](https://madhusudantimalsina.com.np/sitemap.xml)
 2. Submit the sitemap in [Google Search Console](https://search.google.com/search-console)
-3. Keep **Madhusudan Timalsina**, **Backend Developer**, and **Smart Sarks** identical on the site, LinkedIn and GitHub
+3. Keep **Madhusudan Timalsina**, **Backend Developer** and **Smart Sarks** identical on the site, LinkedIn and GitHub
