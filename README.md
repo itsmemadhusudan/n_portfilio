@@ -64,9 +64,33 @@ config/portfolio.php                         content, SEO, social links
 app/Http/Controllers/PortfolioController.php pages
 resources/views/layouts/portfolio.blade.php  layout + schema
 resources/views/portfolio/                   pages & partials
-resources/css/app.css                        theme
+resources/views/components/                  reusable UI (card, button, …)
+resources/css/app.css                        cyberpunk neon theme tokens
 docs/                                        static export for GitHub Pages
 ```
+
+## Design system (cyberpunk neon)
+
+Tokens live in `resources/css/app.css` (`@theme` + `:root`) — Tailwind v4 CSS-first config (no `tailwind.config.js`).
+
+| Token | Value |
+| --- | --- |
+| Page / section / surface | `#0a0a1f` / `#0f0f2d` / `#14143a` |
+| Accent gradient | `#8b3dff` → `#3b82f6` |
+| Neon cyan / violet | `#22d3ee` / `#a855f7` |
+| Text | `#e8e8f5` primary, `#9a9ac0` muted |
+| Radius | `6px` |
+| Glow | `0 0 18px rgba(139,61,255,.25)` |
+| Fonts | JetBrains Mono (headings/logo), Inter (body) |
+
+Reusable Blade components:
+
+- `x-card` — neon-bordered surface
+- `x-button` — solid gradient or ghost neon outline
+- `x-section-title` — eyebrow + title + optional subtitle
+- `x-stat-card` — icon + monospace value + label
+- `x-page-header` — inner-page H1 block
+- `x-icon` — inline SVG icons
 
 ## SEO checklist
 

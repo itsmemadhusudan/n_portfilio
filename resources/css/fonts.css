@@ -1,49 +1,49 @@
-/* Self-hosted latin subsets — font-display: optional limits CLS from late font swap. */
+/* Self-hosted latin subsets — font-display: swap for faster text paint. */
 
 @font-face {
-    font-family: 'Sora';
+    font-family: 'JetBrains Mono';
     font-style: normal;
-    font-display: optional;
-    font-weight: 600;
-    src: url('@fontsource/sora/files/sora-latin-600-normal.woff2') format('woff2');
-}
-
-@font-face {
-    font-family: 'Sora';
-    font-style: normal;
-    font-display: optional;
-    font-weight: 700;
-    src: url('@fontsource/sora/files/sora-latin-700-normal.woff2') format('woff2');
-}
-
-@font-face {
-    font-family: 'Sora';
-    font-style: normal;
-    font-display: optional;
-    font-weight: 800;
-    src: url('@fontsource/sora/files/sora-latin-800-normal.woff2') format('woff2');
-}
-
-@font-face {
-    font-family: 'Plus Jakarta Sans';
-    font-style: normal;
-    font-display: optional;
-    font-weight: 400;
-    src: url('@fontsource/plus-jakarta-sans/files/plus-jakarta-sans-latin-400-normal.woff2') format('woff2');
-}
-
-@font-face {
-    font-family: 'Plus Jakarta Sans';
-    font-style: normal;
-    font-display: optional;
+    font-display: swap;
     font-weight: 500;
-    src: url('@fontsource/plus-jakarta-sans/files/plus-jakarta-sans-latin-500-normal.woff2') format('woff2');
+    src: url('@fontsource/jetbrains-mono/files/jetbrains-mono-latin-500-normal.woff2') format('woff2');
 }
 
 @font-face {
-    font-family: 'Plus Jakarta Sans';
+    font-family: 'JetBrains Mono';
     font-style: normal;
-    font-display: optional;
+    font-display: swap;
     font-weight: 600;
-    src: url('@fontsource/plus-jakarta-sans/files/plus-jakarta-sans-latin-600-normal.woff2') format('woff2');
+    src: url('@fontsource/jetbrains-mono/files/jetbrains-mono-latin-600-normal.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'JetBrains Mono';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 700;
+    src: url('@fontsource/jetbrains-mono/files/jetbrains-mono-latin-700-normal.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 400;
+    src: url('@fontsource/inter/files/inter-latin-400-normal.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 500;
+    src: url('@fontsource/inter/files/inter-latin-500-normal.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-display: swap;
+    font-weight: 600;
+    src: url('@fontsource/inter/files/inter-latin-600-normal.woff2') format('woff2');
 }

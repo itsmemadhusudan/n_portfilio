@@ -1,19 +1,22 @@
 /* Above-the-fold styles inlined in <head> — keep in sync with app.css hero/frame/nav rules. */
 
 :root {
-    --surface-1: #1C1C1C;
-    --border: rgba(255, 255, 255, 0.08);
-    --border-strong: rgba(255, 255, 255, 0.18);
-    --text-primary: #F4F4F4;
-    --text-secondary: #B0B0B0;
-    --fill-accent: #FF5C00;
-    --on-accent: #FFFFFF;
-    --bg-accent: rgba(255, 92, 0, 0.14);
-    --radius: 10px;
-    --radius-pill: 999px;
-    --bg: #0E0E0E;
+    --bg: #0a0a1f;
+    --section: #0f0f2d;
+    --surface-1: #14143a;
+    --border: rgba(168, 85, 247, 0.28);
+    --text-primary: #e8e8f5;
+    --text-secondary: #9a9ac0;
+    --fill-accent: #8b3dff;
+    --on-accent: #ffffff;
+    --neon-cyan: #22d3ee;
+    --neon-violet: #a855f7;
+    --neon-glow: 0 0 18px rgba(139, 61, 255, 0.25);
+    --accent-gradient: linear-gradient(135deg, #8b3dff 0%, #3b82f6 100%);
+    --radius: 6px;
     --content-max: 1440px;
-    --font-display: 'Sora', ui-sans-serif, system-ui, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
 }
 
 body {
@@ -21,7 +24,7 @@ body {
     color: var(--text-primary);
     background: var(--bg);
     letter-spacing: -0.011em;
-    font-family: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+    font-family: var(--font-sans);
 }
 
 .page-wrap {
@@ -39,52 +42,23 @@ body {
     width: 100%;
     min-height: 100vh;
     margin: 0;
-    padding: 18px;
-    overflow: hidden;
-    background:
-        linear-gradient(135deg, rgba(255, 92, 0, 0.08), transparent 38%),
-        linear-gradient(-32deg, #1a1a1a 0%, #0c0c0c 46%, #161616 100%);
-}
-
-.site-frame::before,
-.site-frame::after {
-    content: '';
-    position: fixed;
-    pointer-events: none;
-    z-index: 0;
-}
-
-.site-frame::before {
-    width: 58vw;
-    height: 100vh;
-    top: -12vh;
-    left: -18vw;
-    background: linear-gradient(118deg, #2a2a2a 0%, #111 55%, transparent 100%);
-    transform: rotate(-28deg);
-    opacity: 0.9;
-}
-
-.site-frame::after {
-    width: 50vw;
-    height: 95vh;
-    top: -8vh;
-    right: -22vw;
-    background: linear-gradient(300deg, #2f2f2f 0%, #0f0f0f 60%, transparent 100%);
-    transform: rotate(18deg);
-    opacity: 0.75;
+    padding: 0;
+    overflow-x: hidden;
+    background-color: var(--bg);
+    background-image:
+        radial-gradient(ellipse 80% 50% at 70% 10%, rgba(139, 61, 255, 0.22), transparent 55%),
+        linear-gradient(rgba(34, 211, 238, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(168, 85, 247, 0.04) 1px, transparent 1px);
+    background-size: auto, 48px 48px, 48px 48px;
 }
 
 .site-panel {
     position: relative;
     z-index: 1;
-    background: rgba(18, 18, 18, 0.94);
-    border: 1px solid var(--border-strong);
-    border-radius: 28px;
     display: flex;
     flex-direction: column;
-    min-height: calc(100vh - 36px);
-    overflow: hidden;
-    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+    min-height: 100vh;
+    background: transparent;
 }
 
 main {
@@ -97,88 +71,79 @@ main {
     position: sticky;
     top: 0;
     z-index: 50;
-    background: color-mix(in srgb, #141414 82%, transparent);
+    background: color-mix(in srgb, #0a0a1f 72%, transparent);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(168, 85, 247, 0.2);
 }
 
 .site-nav__bar {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
+    display: flex;
     align-items: center;
-    gap: 1.25rem;
+    justify-content: space-between;
+    gap: 16px;
     max-width: var(--content-max);
     margin: 0 auto;
-    padding: 22px 24px 10px;
-    width: 100%;
+    padding: 14px 24px;
 }
 
 .site-nav__brand {
-    font-family: var(--font-display);
-    font-size: 22px;
-    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35em;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 1.05rem;
     letter-spacing: 0.04em;
-    color: var(--fill-accent);
+    color: var(--text-primary);
     text-decoration: none;
-    white-space: nowrap;
-    text-transform: uppercase;
+}
+
+.site-nav__brand-braces {
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
 .site-nav__links {
     display: none;
-    align-items: center;
-    justify-content: center;
-    gap: 22px;
-}
-
-.site-nav__link {
-    font-size: 13px;
-    color: var(--text-secondary);
-    text-decoration: none;
-    white-space: nowrap;
-}
-
-.site-nav__link.is-active {
-    color: var(--fill-accent);
-    font-weight: 600;
-}
-
-.site-nav__actions {
-    display: flex;
-    align-items: center;
-    gap: 10px;
 }
 
 .site-nav__cta {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 40px;
-    padding: 0 22px;
-    border-radius: var(--radius-pill);
-    background: var(--fill-accent);
-    color: var(--on-accent);
-    font-size: 13px;
-    font-weight: 600;
-    text-decoration: none;
+    display: none;
 }
 
 .site-nav__toggle {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 2.25rem;
-    height: 2.25rem;
+    width: 40px;
+    height: 40px;
     border-radius: var(--radius);
-    border: 0.5px solid var(--border);
+    border: 1px solid var(--border);
+    background: var(--surface-1);
     color: var(--text-primary);
-    background: transparent;
-    cursor: pointer;
 }
 
 @media (min-width: 900px) {
     .site-nav__links {
         display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .site-nav__cta {
+        display: inline-flex;
+        font-family: var(--font-mono);
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--on-accent);
+        text-decoration: none;
+        padding: 10px 18px;
+        border-radius: var(--radius);
+        background: var(--accent-gradient);
+        box-shadow: var(--neon-glow);
     }
 
     .site-nav__toggle {
@@ -188,93 +153,34 @@ main {
 
 .hero {
     display: grid;
-    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    padding-top: 2.5rem;
+    padding-bottom: 2rem;
     align-items: center;
-    gap: 1.25rem;
-    padding: 12px 0 32px;
-    text-align: left;
-    min-height: calc(100vh - 110px);
-}
-
-.hero-copy {
-    position: relative;
-    z-index: 3;
-    max-width: 38rem;
-}
-
-.hero-kicker {
-    margin: 0 0 8px;
-    font-size: 18px;
-    color: var(--text-secondary);
-    font-weight: 400;
-}
-
-.hero-name {
-    margin: 0 0 6px;
-    font-family: var(--font-display);
-    font-size: clamp(2.1rem, 4.4vw, 3.35rem);
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    color: #ececec;
-    line-height: 1.08;
-}
-
-.hero-role {
-    margin: 0 0 26px;
-    font-family: var(--font-display);
-    font-size: clamp(2.6rem, 6.4vw, 4.6rem);
-    font-weight: 800;
-    letter-spacing: -0.045em;
-    line-height: 0.92;
-    color: var(--fill-accent);
-    text-shadow: 0 0 48px rgba(255, 92, 0, 0.38);
-}
-
-.hero__visual {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    align-self: stretch;
-}
-
-.hero-portrait {
-    position: relative;
-    width: min(72vw, 296px);
-    aspect-ratio: 1;
-    flex-shrink: 0;
-}
-
-.hero-portrait picture,
-.hero-portrait__img {
-    display: block;
-    width: 100%;
-    height: 100%;
-}
-
-.hero-portrait__img {
-    object-fit: cover;
-    object-position: center 12%;
-    border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    background: #0d1117;
 }
 
 @media (min-width: 900px) {
     .hero {
-        grid-template-columns: minmax(0, 1.05fr) minmax(300px, 0.95fr);
-        gap: 1rem 2.5rem;
-        padding: 8px 0 0;
-        min-height: calc(100vh - 96px);
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 3rem;
+        padding-top: 3.5rem;
     }
+}
 
-    .hero-portrait {
-        width: 420px;
-        margin-left: auto;
-        margin-right: 0;
-    }
+.hero-headline {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: clamp(1.65rem, 4vw, 2.6rem);
+    line-height: 1.2;
+    color: var(--text-primary);
+    margin: 0 0 1rem;
+}
+
+.text-gradient {
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
 }
 
 [x-cloak] {

@@ -1,8 +1,31 @@
+@php
+    $headline = $portfolio['headline'] ?? '';
+    $words = preg_split('/\s+/', trim($headline)) ?: [];
+    $mid = (int) ceil(count($words) / 2);
+    $lineOne = implode(' ', array_slice($words, 0, $mid));
+    $lineTwo = implode(' ', array_slice($words, $mid));
+@endphp
+
 <header class="hero page-wrap">
-    <div class="hero-copy">
-        <p class="hero-kicker">Hi I am</p>
-        <h1 class="hero-name">{{ $portfolio['full_name'] }}</h1>
-        <p class="hero-role">{{ $portfolio['title'] }}</p>
+    <div class="hero-copy hero-enter">
+        <p class="hero-kicker">{{ $portfolio['title'] }}</p>
+        <h1 class="hero-headline">
+            <span class="hero-headline__line">{{ $lineOne }}</span>
+            @if ($lineTwo !== '')
+                <span class="hero-headline__line text-gradient">{{ $lineTwo }}</span>
+            @endif
+        </h1>
+        <p class="hero-bio">{{ $portfolio['bio'] }}</p>
+
+        <div class="hero-actions">
+            <x-button :href="route('contact')" variant="solid">Hire Me</x-button>
+            @if (! empty($portfolio['cv']))
+                <x-button :href="$portfolio['cv']" variant="ghost" :external="true">
+                    <x-icon name="download" :size="16" />
+                    Download CV
+                </x-button>
+            @endif
+        </div>
 
         <div class="hero-social" aria-label="Social links">
             <a
@@ -45,47 +68,45 @@
             </a>
         </div>
 
-        <div class="hero-actions">
-            <a href="{{ route('contact') }}" class="btn-pill btn-pill--solid">Hire Me</a>
-            @if (! empty($portfolio['cv']))
-                <a href="{{ $portfolio['cv'] }}" class="btn-pill btn-pill--ghost" download>Download CV</a>
-            @else
-                <a href="{{ route('about') }}" class="btn-pill btn-pill--ghost">Download CV</a>
-            @endif
-        </div>
-
-        <div class="hero-stats" aria-label="Career highlights">
-            @foreach ($portfolio['stats'] as $stat)
-                <div class="hero-stats__item">
-                    <span class="hero-stats__value">
-                        {{ $stat['value'] }}
-                        @if (! empty($stat['suffix']))
-                            <span class="hero-stats__suffix">{{ $stat['suffix'] }}</span>
-                        @endif
-                    </span>
-                    <span class="hero-stats__label">{{ $stat['label'] }}</span>
-                </div>
-            @endforeach
-        </div>
+        @if (! empty($portfolio['badge']))
+            <p class="hero-badge">
+                <span class="hero-badge__dot" aria-hidden="true"></span>
+                {{ $portfolio['badge'] }}
+            </p>
+        @endif
     </div>
 
-    <div class="hero__visual">
-        <div class="hero-portrait">
-            <picture>
-                <source srcset="{{ asset('images/bgimage.webp') }}" type="image/webp">
-                <img
-                    src="{{ asset('images/bgimage-avatar.jpg') }}"
-                    alt="{{ $portfolio['full_name'] }}, Backend Developer at Smart Sarks"
-                    title="{{ $portfolio['full_name'] }} — Backend Developer"
-                    class="hero-portrait__img"
-                    width="360"
-                    height="360"
-                    sizes="(min-width: 900px) 360px, 72vw"
-                    fetchpriority="high"
-                    decoding="async"
-                    loading="eager"
-                >
-            </picture>
+    <div class="hero__visual hero-enter hero-enter--delay" aria-hidden="false">
+        <div class="portrait-ring">
+            <div class="portrait-ring__orbit" aria-hidden="true"></div>
+            <div class="portrait-ring__text" aria-hidden="true">
+                <svg viewBox="0 0 200 200">
+                    <defs>
+                        <path id="portrait-circle" d="M 100,100 m -78,0 a 78,78 0 1,1 156,0 a 78,78 0 1,1 -156,0" />
+                    </defs>
+                    <text>
+                        <textPath href="#portrait-circle" startOffset="0%">
+                            BACKEND · API · DATABASE · SYSTEMS · CODE ·
+                        </textPath>
+                    </text>
+                </svg>
+            </div>
+            <div class="portrait-ring__img-wrap">
+                <picture>
+                    <source srcset="{{ asset('images/bgimage.webp') }}" type="image/webp">
+                    <img
+                        src="{{ asset('images/bgimage-avatar.jpg') }}"
+                        alt="{{ $portfolio['full_name'] }}, Backend Developer at Smart Sarks"
+                        title="{{ $portfolio['full_name'] }} — Backend Developer"
+                        width="360"
+                        height="360"
+                        sizes="(min-width: 900px) 280px, 72vw"
+                        fetchpriority="high"
+                        decoding="async"
+                        loading="eager"
+                    >
+                </picture>
+            </div>
         </div>
     </div>
 </header>

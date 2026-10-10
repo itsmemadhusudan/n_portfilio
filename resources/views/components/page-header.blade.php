@@ -2,21 +2,21 @@
     'eyebrow' => null,
     'title',
     'subtitle' => null,
-    'accent' => 'var(--text-accent)',
+    'accent' => 'var(--neon-cyan)',
 ])
 
-<div class="page-wrap pt-12 pb-6">
+<header class="page-wrap pt-12 pb-6">
     @if ($eyebrow)
         <span class="section-label" style="color: {{ $accent }}; display: block;">
             {{ $eyebrow }}
         </span>
     @endif
-    <h1 class="text-3xl sm:text-4xl mt-1 font-display" style="font-weight: 600; color: var(--text-primary);">
+    <h1 class="section-title text-3xl sm:text-4xl">
         {{ $title }}
     </h1>
     @if ($subtitle)
-        <p class="mt-3 max-w-2xl text-[15px] leading-relaxed" style="color: var(--text-secondary);">
+        <p class="section-title__sub">
             {{ $subtitle }}
         </p>
     @endif
-</div>
+</header>

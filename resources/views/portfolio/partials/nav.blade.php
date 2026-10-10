@@ -1,7 +1,8 @@
 <header class="site-nav" x-data="{ open: false }">
     <div class="site-nav__bar">
-        <a href="{{ route('home') }}" class="site-nav__brand">
-            {{ $portfolio['brand_mark'] ?? 'MT' }}
+        <a href="{{ route('home') }}" class="site-nav__brand" aria-label="{{ $portfolio['full_name'] }} home">
+            <span class="site-nav__brand-braces">{ }</span>
+            <span>MT.DEV</span>
         </a>
 
         <nav class="site-nav__links" aria-label="Main">
@@ -24,6 +25,7 @@
                 class="site-nav__toggle"
                 @click="open = !open"
                 :aria-expanded="open.toString()"
+                aria-controls="mobile-nav"
                 aria-label="Toggle navigation menu"
             >
                 <svg x-show="!open" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -36,18 +38,20 @@
         </div>
     </div>
 
-    <div x-show="open" x-cloak x-transition class="site-nav__mobile">
+    <div id="mobile-nav" x-show="open" x-cloak x-transition class="site-nav__mobile">
         <div class="site-nav__mobile-panel">
             @foreach ($portfolio['nav'] as $item)
                 @php $active = request()->routeIs($item['route']); @endphp
                 <a
                     href="{{ route($item['route']) }}"
                     class="site-nav__link site-nav__link--block {{ $active ? 'is-active' : '' }}"
+                    @if ($active) aria-current="page" @endif
+                    @click="open = false"
                 >
                     {{ $item['label'] }}
                 </a>
             @endforeach
-            <a href="{{ route('contact') }}" class="site-nav__cta site-nav__cta--block">Hire Me</a>
+            <a href="{{ route('contact') }}" class="site-nav__cta site-nav__cta--block" @click="open = false">Hire Me</a>
         </div>
     </div>
 </header>

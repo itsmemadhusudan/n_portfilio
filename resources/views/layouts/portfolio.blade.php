@@ -150,10 +150,10 @@
         @vite(['resources/js/app.js'])
     @endif
 </head>
-<body
-    class="min-h-screen w-full antialiased"
-    style="font-family: 'Plus Jakarta Sans', sans-serif; color: var(--text-primary);"
->
+<body class="min-h-screen w-full antialiased">
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-3 focus:py-2 focus:bg-[var(--surface-1)] focus:text-[var(--text-primary)] focus:rounded-[6px]">
+        Skip to content
+    </a>
     <div class="site-frame">
         <div class="site-panel">
             @include('portfolio.partials.nav')
@@ -164,6 +164,17 @@
 
             <footer class="site-footer" role="contentinfo">
                 <div class="site-footer__inner">
+                    <a href="{{ route('home') }}" class="site-footer__brand" aria-label="{{ $portfolio['full_name'] }} home">
+                        <span class="site-footer__brand-braces">{ }</span> MT.DEV
+                    </a>
+
+                    <nav class="site-footer__links" aria-label="Footer">
+                        @foreach ($portfolio['nav'] as $item)
+                            <a href="{{ route($item['route']) }}">{{ $item['label'] }}</a>
+                        @endforeach
+                        <a href="{{ route('contact') }}">Contact</a>
+                    </nav>
+
                     <div class="site-footer__social">
                         <a
                             href="{{ $portfolio['social']['linkedin'] }}"

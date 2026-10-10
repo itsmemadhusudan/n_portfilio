@@ -5,12 +5,10 @@
         eyebrow="Contact"
         :title="$seo['h1']"
         :subtitle="$portfolio['contact']['blurb']"
-        accent="var(--mint)"
     />
 
     <section class="page-wrap pb-10">
         <div class="contact-layout mb-10">
-            {{-- Primary: message form --}}
             <div
                 class="contact-layout__main contact-reveal"
                 style="--reveal-delay: 0ms"
@@ -19,7 +17,7 @@
                 :class="shown && 'is-revealed'"
             >
                 @if (! empty($portfolio['contact']['form_enabled']))
-                    <x-anim-card padding="p-6 sm:p-8" class="contact-form-card" data-no-magnetic>
+                    <x-card padding="p-6 sm:p-8" class="contact-form-card">
                         <h2 class="text-xl font-display mb-2" style="font-weight: 600; color: var(--text-primary);">
                             {{ $portfolio['contact']['form_title'] }}
                         </h2>
@@ -32,7 +30,7 @@
                                 <p class="contact-alert contact-alert--success mb-4">
                                     {{ session('contact_success') }}
                                 </p>
-                                <a href="{{ route('contact') }}#contact-form" class="btn-pill btn-pill--ghost">
+                                <a href="{{ route('contact') }}#contact-form" class="btn-neon btn-neon--ghost">
                                     Send another message
                                 </a>
                             </div>
@@ -139,7 +137,7 @@
                                 <div class="contact-form__actions">
                                     <button
                                         type="submit"
-                                        class="btn-pill btn-pill--solid"
+                                        class="btn-neon btn-neon--solid"
                                         :disabled="sending"
                                         :aria-busy="sending"
                                     >
@@ -155,11 +153,23 @@
                                 </div>
                             </form>
                         @endif
-                    </x-anim-card>
+                    </x-card>
+                @else
+                    <x-card padding="p-6 sm:p-8">
+                        <h2 class="text-xl font-display mb-2" style="font-weight: 600; color: var(--text-primary);">
+                            Reach out directly
+                        </h2>
+                        <p class="text-sm leading-relaxed mb-6" style="color: var(--text-secondary);">
+                            {{ $portfolio['contact']['availability'] }}
+                        </p>
+                        <div class="flex flex-wrap gap-3">
+                            <x-button :href="$portfolio['email_href']" variant="solid" :external="true">Email me</x-button>
+                            <x-button :href="$portfolio['phone_href']" variant="ghost" :external="true">WhatsApp</x-button>
+                        </div>
+                    </x-card>
                 @endif
             </div>
 
-            {{-- Side: reach me + role --}}
             <aside class="contact-layout__aside">
                 <div
                     class="contact-reveal"
@@ -168,15 +178,10 @@
                     x-intersect:enter.once="shown = true"
                     :class="shown && 'is-revealed'"
                 >
-                    <x-anim-card padding="p-5">
+                    <x-card padding="p-5">
                         <p class="section-label mb-3">Reach me directly</p>
                         <div class="contact-channels">
-                            <a
-                                href="{{ $portfolio['email_href'] }}"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="contact-channel"
-                            >
+                            <a href="{{ $portfolio['email_href'] }}" target="_blank" rel="noopener noreferrer" class="contact-channel">
                                 <span class="contact-channel__icon" aria-hidden="true">
                                     <x-icon name="mail" :size="16" />
                                 </span>
@@ -185,12 +190,7 @@
                                     <span class="contact-channel__value">{{ $portfolio['email'] }}</span>
                                 </span>
                             </a>
-                            <a
-                                href="{{ $portfolio['phone_href'] }}"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="contact-channel"
-                            >
+                            <a href="{{ $portfolio['phone_href'] }}" target="_blank" rel="noopener noreferrer" class="contact-channel">
                                 <span class="contact-channel__icon" aria-hidden="true">
                                     <x-icon name="phone" :size="16" />
                                 </span>
@@ -199,12 +199,7 @@
                                     <span class="contact-channel__value">{{ $portfolio['phone'] }}</span>
                                 </span>
                             </a>
-                            <a
-                                href="{{ $portfolio['social']['linkedin'] }}"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="contact-channel"
-                            >
+                            <a href="{{ $portfolio['social']['linkedin'] }}" target="_blank" rel="noopener noreferrer" class="contact-channel">
                                 <span class="contact-channel__icon" aria-hidden="true">
                                     <x-icon name="linkedin" :size="16" />
                                 </span>
@@ -214,12 +209,7 @@
                                 </span>
                             </a>
                             @if (! empty($portfolio['social']['github']))
-                                <a
-                                    href="{{ $portfolio['social']['github'] }}"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    class="contact-channel"
-                                >
+                                <a href="{{ $portfolio['social']['github'] }}" target="_blank" rel="noopener noreferrer" class="contact-channel">
                                     <span class="contact-channel__icon" aria-hidden="true">
                                         <x-icon name="github" :size="16" />
                                     </span>
@@ -230,7 +220,7 @@
                                 </a>
                             @endif
                         </div>
-                    </x-anim-card>
+                    </x-card>
                 </div>
 
                 <div
@@ -240,18 +230,18 @@
                     x-intersect:enter.once="shown = true"
                     :class="shown && 'is-revealed'"
                 >
-                    <x-anim-card padding="p-5">
+                    <x-card padding="p-5">
                         <p class="section-label">{{ $portfolio['contact']['current_role']['duration'] }}</p>
                         <p class="font-display text-lg mt-1" style="font-weight: 600; color: var(--text-primary);">
                             {{ $portfolio['contact']['current_role']['role'] }}
                         </p>
-                        <p class="text-sm mt-1" style="color: var(--text-accent);">
+                        <p class="text-sm mt-1" style="color: var(--neon-cyan);">
                             {{ $portfolio['contact']['current_role']['company'] }} · {{ $portfolio['location'] }}
                         </p>
                         <p class="text-sm mt-3 leading-relaxed" style="color: var(--text-secondary);">
                             {{ $portfolio['contact']['availability'] }}
                         </p>
-                    </x-anim-card>
+                    </x-card>
                 </div>
 
                 <div
@@ -261,19 +251,19 @@
                     x-intersect:enter.once="shown = true"
                     :class="shown && 'is-revealed'"
                 >
-                    <x-anim-card padding="p-5">
+                    <x-card padding="p-5">
                         <h2 class="text-base font-display mb-3" style="font-weight: 600; color: var(--text-primary);">
                             Good conversation topics
                         </h2>
                         <ul class="space-y-2.5">
                             @foreach ($portfolio['contact']['topics'] as $item)
                                 <li class="text-sm flex gap-2" style="color: var(--text-secondary);">
-                                    <span class="mt-2 shrink-0 w-1.5 h-1.5 rounded-full" style="background: var(--blue);"></span>
+                                    <span class="mt-2 shrink-0 w-1.5 h-1.5 rounded-full" style="background: var(--neon-cyan);"></span>
                                     <span>{{ $item }}</span>
                                 </li>
                             @endforeach
                         </ul>
-                    </x-anim-card>
+                    </x-card>
                 </div>
             </aside>
         </div>
@@ -286,15 +276,13 @@
                 x-intersect:enter.once="shown = true"
                 :class="shown && 'is-revealed'"
             >
-                <h2 class="text-xl font-display mb-4" style="font-weight: 600; color: var(--text-primary);">
-                    Frequently asked questions
-                </h2>
+                <x-section-title title="Frequently asked questions" />
                 <div class="grid sm:grid-cols-2 gap-3">
                     @foreach ($seo['faqs'] as $faq)
-                        <x-anim-card padding="p-4">
-                            <h3 class="font-medium mb-2 text-[13px]" style="color: var(--text-primary);">{{ $faq['question'] }}</h3>
+                        <x-card padding="p-4">
+                            <h3 class="font-medium mb-2 text-[13px] font-display" style="color: var(--text-primary);">{{ $faq['question'] }}</h3>
                             <p class="text-xs leading-relaxed" style="color: var(--text-secondary);">{{ $faq['answer'] }}</p>
-                        </x-anim-card>
+                        </x-card>
                     @endforeach
                 </div>
             </div>
