@@ -1,14 +1,16 @@
 <x-mail::message>
-# New contact message
+# New contact form submission
 
-You have a new message from **{{ $senderName }}**.
+Someone submitted the portfolio contact form. Full details below.
 
 **Name:** {{ $senderName }}  
 **Email:** {{ $senderEmail }}  
 **Subject:** {{ $subjectLine }}
 
-**Message:**
+**Message:**  
 {{ $bodyMessage }}
+
+You can reply directly to this email to respond to **{{ $senderName }}**.
 
 —
 Madhusudan Timalsina  

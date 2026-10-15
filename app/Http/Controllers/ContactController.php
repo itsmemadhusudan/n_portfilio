@@ -19,12 +19,14 @@ class ContactController extends Controller
             ? $data['subject']
             : 'New message from '.$data['name'];
 
-        $to = config('mail.contact_to') ?: config('portfolio.email');
+        // Always deliver the filled form data to this inbox.
+        $ownerEmail = 'timmadh@gmail.com';
+        $visitorEmail = $data['email'];
 
         try {
             $ownerMail = new ContactMessageReceived(
                 senderName: $data['name'],
-                senderEmail: $data['email'],
+                senderEmail: $visitorEmail,
                 subjectLine: $subject,
                 bodyMessage: $data['message'],
             );
@@ -35,22 +37,25 @@ class ContactController extends Controller
                 bodyMessage: $data['message'],
             );
 
+            // 1) Full form data → your inbox
             $mailjet->send(
-                to: ['email' => $to, 'name' => config('mail.from.name')],
-                subject: $ownerMail->envelope()->subject ?? ('Portfolio contact: '.$subject),
+                to: ['email' => $ownerEmail, 'name' => 'Madhusudan Timalsina'],
+                subject: 'New portfolio contact from '.$data['name'].' — '.$subject,
                 html: $ownerMail->render(),
-                replyTo: ['email' => $data['email'], 'name' => $data['name']],
+                replyTo: ['email' => $visitorEmail, 'name' => $data['name']],
             );
 
+            // 2) Thank-you confirmation → the person who filled the form
             $mailjet->send(
-                to: ['email' => $data['email'], 'name' => $data['name']],
-                subject: $confirmMail->envelope()->subject ?? 'Thanks for reaching out',
+                to: ['email' => $visitorEmail, 'name' => $data['name']],
+                subject: $confirmMail->envelope()->subject ?? 'Thanks for reaching out | Madhusudan Timalsina',
                 html: $confirmMail->render(),
             );
 
             Log::info('Contact form mail sent via Mailjet', [
-                'to_owner' => $to,
-                'to_visitor' => $data['email'],
+                'to_owner' => $ownerEmail,
+                'to_visitor' => $visitorEmail,
+                'subject' => $subject,
             ]);
         } catch (Throwable $e) {
             Log::error('Contact form mail failed', [

@@ -129,6 +129,6 @@ return [
     |
     */
 
-    'contact_to' => 'timmadh@gmail.com',
+    'contact_to' => 'timmadh@gmail.com', // owner inbox for contact form submissions
 
 ];
