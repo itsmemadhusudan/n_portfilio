@@ -5,14 +5,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ContactRequest;
 use App\Mail\ContactMessageConfirmation;
 use App\Mail\ContactMessageReceived;
+use App\Services\MailjetMailer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 use Throwable;
 
 class ContactController extends Controller
 {
-    public function store(ContactRequest $request): RedirectResponse
+    public function store(ContactRequest $request, MailjetMailer $mailjet): RedirectResponse
     {
         $data = $request->validated();
         $subject = filled($data['subject'] ?? null)
@@ -22,18 +22,36 @@ class ContactController extends Controller
         $to = config('mail.contact_to') ?: config('portfolio.email');
 
         try {
-            Mail::to($to)->send(new ContactMessageReceived(
+            $ownerMail = new ContactMessageReceived(
                 senderName: $data['name'],
                 senderEmail: $data['email'],
                 subjectLine: $subject,
                 bodyMessage: $data['message'],
-            ));
+            );
 
-            Mail::to($data['email'])->send(new ContactMessageConfirmation(
+            $confirmMail = new ContactMessageConfirmation(
                 senderName: $data['name'],
                 subjectLine: $subject,
                 bodyMessage: $data['message'],
-            ));
+            );
+
+            $mailjet->send(
+                to: ['email' => $to, 'name' => config('mail.from.name')],
+                subject: $ownerMail->envelope()->subject ?? ('Portfolio contact: '.$subject),
+                html: $ownerMail->render(),
+                replyTo: ['email' => $data['email'], 'name' => $data['name']],
+            );
+
+            $mailjet->send(
+                to: ['email' => $data['email'], 'name' => $data['name']],
+                subject: $confirmMail->envelope()->subject ?? 'Thanks for reaching out',
+                html: $confirmMail->render(),
+            );
+
+            Log::info('Contact form mail sent via Mailjet', [
+                'to_owner' => $to,
+                'to_visitor' => $data['email'],
+            ]);
         } catch (Throwable $e) {
             Log::error('Contact form mail failed', [
                 'error' => $e->getMessage(),

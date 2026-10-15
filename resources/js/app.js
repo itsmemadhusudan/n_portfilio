@@ -3,6 +3,61 @@ import intersect from '@alpinejs/intersect';
 
 Alpine.plugin(intersect);
 
+document.addEventListener('alpine:init', () => {
+    Alpine.data('projectFilters', (projects = []) => ({
+        projects,
+        type: 'all',
+        tech: [],
+        typeOptions: [
+            { value: 'all', label: 'All' },
+            { value: 'backend', label: 'Backend' },
+            { value: 'frontend', label: 'Frontend' },
+            { value: 'web', label: 'Web apps' },
+            { value: 'api', label: 'API' },
+            { value: 'data-automation', label: 'Data' },
+        ],
+        init() {
+            const params = new URLSearchParams(window.location.search);
+            this.type = params.get('type') || 'all';
+            const techParam = params.get('tech');
+            this.tech = techParam ? techParam.split(',').map((t) => t.trim()).filter(Boolean) : [];
+        },
+        get visibleCount() {
+            return this.projects.filter((p) => this.matches(p.type || '', p.tech || [])).length;
+        },
+        setType(value) {
+            this.type = value;
+            this.syncUrl();
+        },
+        toggleTech(slug) {
+            if (this.tech.includes(slug)) {
+                this.tech = this.tech.filter((t) => t !== slug);
+            } else {
+                this.tech = [...this.tech, slug];
+            }
+            this.syncUrl();
+        },
+        matches(projectType, projectTech) {
+            const typeOk = this.type === 'all' || projectType === this.type;
+            const techOk = this.tech.length === 0 || this.tech.every((t) => projectTech.includes(t));
+
+            return typeOk && techOk;
+        },
+        syncUrl() {
+            const params = new URLSearchParams();
+            if (this.type && this.type !== 'all') {
+                params.set('type', this.type);
+            }
+            if (this.tech.length) {
+                params.set('tech', this.tech.join(','));
+            }
+            const qs = params.toString();
+            const url = qs ? `${window.location.pathname}?${qs}` : window.location.pathname;
+            history.replaceState(null, '', url);
+        },
+    }));
+});
+
 window.Alpine = Alpine;
 Alpine.start();
 

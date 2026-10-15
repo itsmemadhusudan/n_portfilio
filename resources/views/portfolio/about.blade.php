@@ -15,7 +15,6 @@
                 x-intersect:enter.once="shown = true"
                 :class="shown && 'is-revealed'"
             >
-                <h2 class="about-name">{{ $portfolio['full_name'] }}</h2>
                 @foreach ($portfolio['about_story'] as $paragraph)
                     <p class="text-[15px] leading-relaxed mb-4 last:mb-0" style="color: var(--text-secondary);">{{ $paragraph }}</p>
                 @endforeach
@@ -38,9 +37,11 @@
                     <a href="{{ $portfolio['email_href'] }}" target="_blank" rel="noopener noreferrer" class="contact-chip" aria-label="Send an email via Gmail">
                         <x-icon name="mail" :size="18" />
                     </a>
+                    @if (! empty($portfolio['phone_href']))
                     <a href="{{ $portfolio['phone_href'] }}" target="_blank" rel="noopener noreferrer" class="contact-chip" aria-label="Chat on WhatsApp">
                         <x-icon name="phone" :size="18" />
                     </a>
+                    @endif
                     <a href="{{ $portfolio['social']['linkedin'] }}" target="_blank" rel="noopener noreferrer" class="contact-chip" aria-label="LinkedIn profile">
                         <x-icon name="linkedin" :size="18" />
                     </a>
@@ -63,7 +64,7 @@
                     <img
                         class="about-photo__img"
                         src="{{ asset('images/about.jpg') }}"
-                        alt="{{ $portfolio['full_name'] }}, Backend Developer"
+                        alt="{{ $portfolio['full_name'] }}, {{ $portfolio['title'] }}"
                         width="320"
                         height="400"
                         loading="lazy"

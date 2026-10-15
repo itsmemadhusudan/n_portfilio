@@ -1,15 +1,19 @@
 <x-mail::message>
 # Thanks, {{ $senderName }}
 
-I received your message and will get back to you within 24-48 hours.
+Thank you for getting in touch. I have received your message and will reply within 24–48 hours.
 
-**Your subject:** {{ $subjectLine }}
+**Subject:** {{ $subjectLine }}
 
-**Your message:** 
+**Your message:**
 {{ $bodyMessage }}
 
-Madhusudan Timalsina
-Backend Developer at Smart Sarks
+If you need to add anything in the meantime, simply reply to this email.
+
+Best regards,  
+Madhusudan Timalsina  
+Backend Developer  
+Lalitpur, Nepal
 
 [{{ config('portfolio.seo.site_url') }}]({{ config('portfolio.seo.site_url') }})
 </x-mail::message>

@@ -72,12 +72,22 @@
                 'jobTitle' => $portfolio['title'],
                 'description' => $portfolio['bio'],
                 'email' => 'mailto:'.$portfolio['email'],
-                'telephone' => $portfolio['phone'],
                 'address' => [
                     '@type' => 'PostalAddress',
                     'addressCountry' => 'NP',
-                    'addressLocality' => $portfolio['location'],
+                    'addressLocality' => 'Lalitpur',
+                    'addressRegion' => 'Bagmati',
                 ],
+                'areaServed' => array_map(function ($place) {
+                    if ($place === 'Remote') {
+                        return 'Remote';
+                    }
+                    if (in_array($place, ['Nepal'], true)) {
+                        return ['@type' => 'Country', 'name' => $place];
+                    }
+
+                    return ['@type' => 'City', 'name' => $place];
+                }, $seo['area_served'] ?? ($portfolio['seo']['area_served'] ?? ['Lalitpur', 'Nepal', 'Remote'])),
                 'worksFor' => [
                     '@type' => 'Organization',
                     'name' => $portfolio['contact']['current_role']['company'],
@@ -86,7 +96,7 @@
                     '@type' => 'CollegeOrUniversity',
                     'name' => 'Apex College',
                 ],
-                'knowsAbout' => $portfolio['backend_stack'],
+                'knowsAbout' => $seo['knows_about'] ?? ($portfolio['seo']['knows_about'] ?? $portfolio['backend_stack']),
                 'sameAs' => array_values(array_filter([
                     $portfolio['social']['linkedin'] ?? null,
                     $portfolio['social']['github'] ?? null,
@@ -208,6 +218,7 @@
                         >
                             <x-icon name="mail" :size="18" />
                         </a>
+                        @if (! empty($portfolio['phone_href']))
                         <a
                             href="{{ $portfolio['phone_href'] }}"
                             target="_blank"
@@ -218,11 +229,16 @@
                         >
                             <x-icon name="phone" :size="18" />
                         </a>
+                        @endif
                     </div>
-                    <p class="site-footer__copy">{{ $portfolio['footer'] }}</p>
+                    <p class="site-footer__copy">
+                        {{ $portfolio['footer'] }}
+                        · <a href="{{ route('contact') }}">Hire a developer</a>
+                    </p>
                 </div>
             </footer>
         </div>
     </div>
+    @stack('scripts')
 </body>
 </html>

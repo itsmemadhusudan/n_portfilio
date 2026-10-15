@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\Turnstile;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ContactRequest extends FormRequest
@@ -19,6 +20,7 @@ class ContactRequest extends FormRequest
             'subject' => ['nullable', 'string', 'max:160'],
             'message' => ['required', 'string', 'min:10', 'max:5000'],
             'website' => ['nullable', 'max:0'], // honeypot
+            'cf-turnstile-response' => ['required', 'string', new Turnstile],
         ];
     }
 
@@ -27,6 +29,7 @@ class ContactRequest extends FormRequest
         return [
             'website.max' => 'Unable to send this message.',
             'message.min' => 'Please write at least a short message (10+ characters).',
+            'cf-turnstile-response.required' => 'Please complete the captcha verification.',
         ];
     }
 }

@@ -22,6 +22,7 @@
                     Email
                 </x-anim-btn>
 
+                @if (! empty($portfolio['phone_href']))
                 <x-anim-btn
                     :href="$portfolio['phone_href']"
                     variant="ghost"
@@ -31,6 +32,7 @@
                     <x-icon name="phone" :size="16" />
                     WhatsApp
                 </x-anim-btn>
+                @endif
 
                 <x-anim-btn :href="$portfolio['social']['linkedin']" variant="ghost" :external="true">
                     <x-icon name="linkedin" :size="16" />
