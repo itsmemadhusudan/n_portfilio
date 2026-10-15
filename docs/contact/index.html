@@ -167,29 +167,129 @@
  :class="shown && 'is-revealed'"
  >
   <div
-        class="neon-card hover-lift"
+        class="neon-card hover-lift contact-form-card"
 >
     <div class="neon-card__inner p-6 sm:p-8">
         <h2 class="text-xl font-display mb-2" style="font-weight: 600; color: var(--text-primary);">
- Reach out directly
+ Send a message
  </h2>
  <p class="text-sm leading-relaxed mb-6" style="color: var(--text-secondary);">
- Working as a developer at Smart Sarks since last year. Still available for hire for freelance and remote developer conversations, usually respond within 24-48 hours.
+ Tell me about your project or question. You’ll get a confirmation email and I’ll reply from my inbox within 24-48 hours.
  </p>
- <div class="flex flex-wrap gap-3">
- <a
-        href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=timmadh@gmail.com"
-         target="_blank" rel="noopener noreferrer"         class="btn-neon btn-neon--solid"
-    >
-        Email me
-    </a>
-  <a
-        href="https://wa.me/9779861333037"
-         target="_blank" rel="noopener noreferrer"         class="btn-neon btn-neon--ghost"
-    >
-        WhatsApp
-    </a>
+
+  
+ <form
+ id="contact-form"
+ action="https://formsubmit.co/ajax/timmadh@gmail.com"
+ method="POST"
+ class="contact-form"
+ novalidate
+ x-data="contactForm(JSON.parse('{\u0022static\u0022:true,\u0022endpoint\u0022:\u0022https:\\\/\\\/formsubmit.co\\\/ajax\\\/timmadh@gmail.com\u0022,\u0022success\u0022:\u0022Thanks. Your message is on its way. Check your inbox for a confirmation email.\u0022,\u0022autoresponse\u0022:\u0022Thanks for getting in touch.\\n\\nI have received your message and will reply within 24-48 hours.\\n\\nBest regards,\\nMadhusudan Timalsina\\nBackend Developer\\nLalitpur, Nepal\\nhttps:\\\/\\\/madhusudantimalsina.com.np\u0022}'))"
+ @submit.prevent="submit"
+ >
+ 
+ <div class="contact-form__honeypot" aria-hidden="true">
+ <label for="website">Website</label>
+ <input
+ type="text"
+ id="website"
+ name="_gotcha"
+ tabindex="-1"
+ autocomplete="off"
+ value=""
+ >
+ </div>
+
+ <div class="contact-form__grid">
+ <div class="contact-form__field">
+ <label for="contact-name">Name</label>
+ <input
+ id="contact-name"
+ type="text"
+ name="name"
+ value=""
+ required
+ maxlength="120"
+ autocomplete="name"
+ placeholder="Your name"
+ x-model="name"
+ >
   </div>
+
+ <div class="contact-form__field">
+ <label for="contact-email">Email</label>
+ <input
+ id="contact-email"
+ type="email"
+ name="email"
+ value=""
+ required
+ maxlength="255"
+ autocomplete="email"
+ placeholder="you@example.com"
+ x-model="email"
+ >
+  </div>
+ </div>
+
+ <div class="contact-form__field">
+ <label for="contact-subject">Subject <span class="contact-form__optional">(optional)</span></label>
+ <input
+ id="contact-subject"
+ type="text"
+ name="subject"
+ value=""
+ maxlength="160"
+ placeholder="What's your subject?"
+ x-model="subject"
+ >
+  </div>
+
+ <div class="contact-form__field">
+ <label for="contact-message">Message</label>
+ <textarea
+ id="contact-message"
+ name="message"
+ rows="5"
+ required
+ maxlength="5000"
+ placeholder="What are you building and how can I help?"
+ x-model="message"
+ ></textarea>
+  </div>
+
+ <div class="contact-form__field contact-form__captcha">
+ <div
+ class="cf-turnstile"
+ data-sitekey="0x4AAAAAAFXRmG-DdwRA9r-2"
+ data-theme="dark"
+ data-size="flexible"
+ data-callback="onTurnstileSuccess"
+ ></div>
+  <p class="contact-form__error" x-show="captchaError" x-cloak x-text="captchaError"></p>
+ </div>
+
+ <p class="contact-alert contact-alert--success mb-4" x-show="done" x-cloak x-text="successMessage"></p>
+ <p class="contact-alert contact-alert--error mb-4" x-show="error" x-cloak x-text="error"></p>
+
+ <div class="contact-form__actions" x-show="!done">
+ <button
+ type="submit"
+ class="btn-neon btn-neon--solid"
+ :disabled="sending"
+ :aria-busy="sending"
+ >
+ <span x-show="!sending">Send message</span>
+ <span x-cloak x-show="sending" class="contact-form__sending">
+ <span class="contact-form__spinner" aria-hidden="true"></span>
+ Sending…
+ </span>
+ </button>
+ <p class="contact-form__note">
+ Confirmation goes to your inbox · reply within 24-48 hours
+ </p>
+ </div>
+ </form>
     </div>
 </div>
   </div>
@@ -306,7 +406,7 @@
  </div>
 
  <div
- class="contact-reveal"
+ class="contact-reveal mt-4"
  style="--reveal-delay: 140ms"
  x-data="{ shown: false }"
  x-intersect:enter.once="shown = true"
@@ -316,62 +416,73 @@
         class="neon-card hover-lift"
 >
     <div class="neon-card__inner p-5">
-        <p class="section-label">Since last year</p>
- <p class="font-display text-lg mt-1" style="font-weight: 600; color: var(--text-primary);">
+        <p class="section-label mb-2">Since last year</p>
+ <p class="font-display text-base mb-1" style="font-weight: 600; color: var(--text-primary);">
  Developer
  </p>
- <p class="text-sm mt-1" style="color: var(--neon-cyan);">
+ <p class="text-sm mb-3" style="color: var(--neon-cyan);">
  Smart Sarks · Lalitpur, Nepal
  </p>
- <p class="text-sm mt-3 leading-relaxed" style="color: var(--text-secondary);">
+ <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">
  Working as a developer at Smart Sarks since last year. Still available for hire for freelance and remote developer conversations, usually respond within 24-48 hours.
  </p>
-    </div>
-</div>
- </div>
-
- <div
- class="contact-reveal"
- style="--reveal-delay: 200ms"
- x-data="{ shown: false }"
- x-intersect:enter.once="shown = true"
- :class="shown && 'is-revealed'"
- >
- <div
-        class="neon-card hover-lift"
->
-    <div class="neon-card__inner p-5">
-        <h2 class="text-base font-display mb-3" style="font-weight: 600; color: var(--text-primary);">
- Good conversation topics
- </h2>
- <ul class="space-y-2.5">
-  <li class="text-sm flex gap-2" style="color: var(--text-secondary);">
- <span class="mt-2 shrink-0 w-1.5 h-1.5 rounded-full" style="background: var(--neon-cyan);"></span>
- <span>REST API development and Laravel applications</span>
- </li>
-  <li class="text-sm flex gap-2" style="color: var(--text-secondary);">
- <span class="mt-2 shrink-0 w-1.5 h-1.5 rounded-full" style="background: var(--neon-cyan);"></span>
- <span>React / Vue frontend development for existing APIs</span>
- </li>
-  <li class="text-sm flex gap-2" style="color: var(--text-secondary);">
- <span class="mt-2 shrink-0 w-1.5 h-1.5 rounded-full" style="background: var(--neon-cyan);"></span>
- <span>Database design for a new product</span>
- </li>
-  <li class="text-sm flex gap-2" style="color: var(--text-secondary);">
- <span class="mt-2 shrink-0 w-1.5 h-1.5 rounded-full" style="background: var(--neon-cyan);"></span>
- <span>Authentication and authorization, CRUD modules and admin tools</span>
- </li>
-  <li class="text-sm flex gap-2" style="color: var(--text-secondary);">
- <span class="mt-2 shrink-0 w-1.5 h-1.5 rounded-full" style="background: var(--neon-cyan);"></span>
- <span>Freelance web development alongside current work</span>
- </li>
-  </ul>
     </div>
 </div>
  </div>
  </aside>
  </div>
 
+  <div class="page-wrap mb-10">
+ <h2 class="section-title text-xl mb-4">Good conversation topics</h2>
+ <ul class="grid sm:grid-cols-2 gap-2">
+  <li>
+ <div
+        class="neon-card hover-lift"
+>
+    <div class="neon-card__inner px-4 py-3">
+        <p class="text-sm" style="color: var(--text-secondary);">REST API development and Laravel applications</p>
+    </div>
+</div>
+ </li>
+  <li>
+ <div
+        class="neon-card hover-lift"
+>
+    <div class="neon-card__inner px-4 py-3">
+        <p class="text-sm" style="color: var(--text-secondary);">React / Vue frontend development for existing APIs</p>
+    </div>
+</div>
+ </li>
+  <li>
+ <div
+        class="neon-card hover-lift"
+>
+    <div class="neon-card__inner px-4 py-3">
+        <p class="text-sm" style="color: var(--text-secondary);">Database design for a new product</p>
+    </div>
+</div>
+ </li>
+  <li>
+ <div
+        class="neon-card hover-lift"
+>
+    <div class="neon-card__inner px-4 py-3">
+        <p class="text-sm" style="color: var(--text-secondary);">Authentication and authorization, CRUD modules and admin tools</p>
+    </div>
+</div>
+ </li>
+  <li>
+ <div
+        class="neon-card hover-lift"
+>
+    <div class="neon-card__inner px-4 py-3">
+        <p class="text-sm" style="color: var(--text-secondary);">Freelance web development alongside current work</p>
+    </div>
+</div>
+ </li>
+  </ul>
+ </div>
+ 
   <div
  class="contact-reveal"
  style="--reveal-delay: 120ms"
@@ -558,5 +669,88 @@
         </div>
     </div>
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script>
+ window.onTurnstileSuccess = function (token) {
+ window.__turnstileToken = token;
+ document.dispatchEvent(new CustomEvent('turnstile-success', { detail: token }));
+ };
+
+ document.addEventListener('alpine:init', () => {
+ Alpine.data('contactForm', (config) => ({
+ static: !!config.static,
+ endpoint: config.endpoint,
+ successMessage: config.success,
+ autoresponse: config.autoresponse || '',
+ name: '',
+ email: '',
+ subject: '',
+ message: '',
+ sending: false,
+ done: false,
+ error: '',
+ captchaError: '',
+ turnstileToken: '',
+ init() {
+ document.addEventListener('turnstile-success', (e) => {
+ this.turnstileToken = e.detail || window.__turnstileToken || '';
+ this.captchaError = '';
+ });
+ },
+ async submit() {
+ this.error = '';
+ this.captchaError = '';
+ this.turnstileToken = this.turnstileToken || window.__turnstileToken || '';
+
+ if (! this.turnstileToken) {
+ this.captchaError = 'Please complete the captcha verification.';
+ return;
+ }
+
+ if (this.message.trim().length < 10) {
+ this.error = 'Please write at least a short message (10+ characters).';
+ return;
+ }
+
+ this.sending = true;
+
+ try {
+            if (this.static) {
+              const response = await fetch(this.endpoint, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json',
+                },
+                body: JSON.stringify({
+                  name: this.name,
+                  email: this.email,
+                  subject: this.subject || 'Portfolio contact',
+                  message: this.message,
+                  _subject: 'New portfolio contact from ' + this.name,
+                  _template: 'table',
+                  _autoresponse: this.autoresponse,
+                  'cf-turnstile-response': this.turnstileToken,
+                }),
+              });
+
+              if (! response.ok) {
+                throw new Error('Unable to send right now.');
+              }
+
+              this.done = true;
+            } else {
+              // Native submit bypasses Alpine prevent; Turnstile already injected its token field.
+              HTMLFormElement.prototype.submit.call(this.$el);
+              return;
+            }
+ } catch (e) {
+ this.error = 'Sorry. The message could not be sent right now. Please email me directly or try again later.';
+ } finally {
+ this.sending = false;
+ }
+ },
+ }));
+ });
+</script>
 </body>
 </html>

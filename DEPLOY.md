@@ -17,9 +17,11 @@ The export writes:
 - Project case studies: `/projects/{slug}/`
 - Stack pages: `/stack/{slug}/`
 
-Contact form is disabled in the static export (needs PHP + mail).
+Contact form stays visible on GitHub Pages and posts through [FormSubmit](https://formsubmit.co) to `timmadh@gmail.com` (no PHP on Pages). The first submission sends an activation email — open it and click **Activate Form** once.
 
-## PHP host (live contact form)
+Local / PHP hosts still use Laravel + Mailjet as before.
+
+## PHP host (live contact form + Mailjet)
 
 1. Point the web root at `public/`
 2. Copy `.env.production.example` → `.env` (mail/contact are already hardcoded in config)
