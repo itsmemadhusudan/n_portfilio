@@ -10,7 +10,10 @@ use Illuminate\Support\Facades\Facade;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Vite;
+use Illuminate\Support\MessageBag;
+use Illuminate\Support\ViewErrorBag;
 
 class ExportStaticSite extends Command
 {
@@ -52,8 +55,15 @@ class ExportStaticSite extends Command
             URL::forceScheme('https');
         }
 
-        // Contact form needs a live PHP host; hide it in the static export.
-        config(['portfolio.contact.form_enabled' => false]);
+        // GitHub Pages cannot run PHP/Mailjet. Keep the form visible and post via FormSubmit.
+        config([
+            'portfolio.contact.form_enabled' => true,
+            'portfolio.contact.form_static' => true,
+            'portfolio.contact.form_action' => config('portfolio.contact.form_static_endpoint'),
+        ]);
+
+        // Blade @error needs an error bag; static rendering has no session.
+        View::share('errors', new ViewErrorBag(new MessageBag([])));
 
         // A running "npm run dev" leaves public/hot behind, which would otherwise
         // point the exported pages at the local Vite server instead of the build.

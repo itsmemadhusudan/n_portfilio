@@ -1,5 +1,11 @@
 @extends('layouts.portfolio')
 
+@php
+    $formStatic = ! empty($portfolio['contact']['form_static']);
+    $formAction = $portfolio['contact']['form_action'] ?? null;
+    $formAction = $formAction ?: route('contact.store');
+@endphp
+
 @section('content')
  <x-page-header
  eyebrow="Contact"
@@ -43,24 +49,31 @@
 
  <form
  id="contact-form"
- action="{{ route('contact.store') }}"
+ action="{{ $formAction }}"
  method="POST"
  class="contact-form"
  novalidate
- x-data="{ sending: false }"
- @submit="sending = true"
+ x-data="contactForm(@js([
+     'static' => $formStatic,
+     'endpoint' => $formAction,
+     'success' => $portfolio['contact']['form_success'],
+     'autoresponse' => $portfolio['contact']['form_autoresponse'] ?? '',
+ ]))"
+ @submit.prevent="submit"
  >
+ @unless ($formStatic)
  @csrf
+ @endunless
 
  <div class="contact-form__honeypot" aria-hidden="true">
  <label for="website">Website</label>
  <input
  type="text"
  id="website"
- name="website"
+ name="{{ $formStatic ? '_gotcha' : 'website' }}"
  tabindex="-1"
  autocomplete="off"
- value="{{ old('website') }}"
+ value=""
  >
  </div>
 
@@ -76,6 +89,7 @@
  maxlength="120"
  autocomplete="name"
  placeholder="Your name"
+ x-model="name"
  >
  @error('name')
  <span class="contact-form__error">{{ $message }}</span>
@@ -93,6 +107,7 @@
  maxlength="255"
  autocomplete="email"
  placeholder="you@example.com"
+ x-model="email"
  >
  @error('email')
  <span class="contact-form__error">{{ $message }}</span>
@@ -109,6 +124,7 @@
  value="{{ old('subject') }}"
  maxlength="160"
  placeholder="What's your subject?"
+ x-model="subject"
  >
  @error('subject')
  <span class="contact-form__error">{{ $message }}</span>
@@ -124,6 +140,7 @@
  required
  maxlength="5000"
  placeholder="What are you building and how can I help?"
+ x-model="message"
  >{{ old('message') }}</textarea>
  @error('message')
  <span class="contact-form__error">{{ $message }}</span>
@@ -136,13 +153,18 @@
  data-sitekey="{{ config('services.turnstile.site_key') }}"
  data-theme="dark"
  data-size="flexible"
+ data-callback="onTurnstileSuccess"
  ></div>
  @error('cf-turnstile-response')
  <span class="contact-form__error">{{ $message }}</span>
  @enderror
+ <p class="contact-form__error" x-show="captchaError" x-cloak x-text="captchaError"></p>
  </div>
 
- <div class="contact-form__actions">
+ <p class="contact-alert contact-alert--success mb-4" x-show="done" x-cloak x-text="successMessage"></p>
+ <p class="contact-alert contact-alert--error mb-4" x-show="error" x-cloak x-text="error"></p>
+
+ <div class="contact-form__actions" x-show="!done">
  <button
  type="submit"
  class="btn-neon btn-neon--solid"
@@ -236,49 +258,42 @@
  </div>
 
  <div
- class="contact-reveal"
+ class="contact-reveal mt-4"
  style="--reveal-delay: 140ms"
  x-data="{ shown: false }"
  x-intersect:enter.once="shown = true"
  :class="shown && 'is-revealed'"
  >
  <x-card padding="p-5">
- <p class="section-label">{{ $portfolio['contact']['current_role']['duration'] }}</p>
- <p class="font-display text-lg mt-1" style="font-weight: 600; color: var(--text-primary);">
+ <p class="section-label mb-2">{{ $portfolio['contact']['current_role']['duration'] }}</p>
+ <p class="font-display text-base mb-1" style="font-weight: 600; color: var(--text-primary);">
  {{ $portfolio['contact']['current_role']['role'] }}
  </p>
- <p class="text-sm mt-1" style="color: var(--neon-cyan);">
+ <p class="text-sm mb-3" style="color: var(--neon-cyan);">
  {{ $portfolio['contact']['current_role']['company'] }} · {{ $portfolio['location'] }}
  </p>
- <p class="text-sm mt-3 leading-relaxed" style="color: var(--text-secondary);">
+ <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">
  {{ $portfolio['contact']['availability'] }}
  </p>
  </x-card>
  </div>
+ </aside>
+ </div>
 
- <div
- class="contact-reveal"
- style="--reveal-delay: 200ms"
- x-data="{ shown: false }"
- x-intersect:enter.once="shown = true"
- :class="shown && 'is-revealed'"
- >
- <x-card padding="p-5">
- <h2 class="text-base font-display mb-3" style="font-weight: 600; color: var(--text-primary);">
- Good conversation topics
- </h2>
- <ul class="space-y-2.5">
- @foreach ($portfolio['contact']['topics'] as $item)
- <li class="text-sm flex gap-2" style="color: var(--text-secondary);">
- <span class="mt-2 shrink-0 w-1.5 h-1.5 rounded-full" style="background: var(--neon-cyan);"></span>
- <span>{{ $item }}</span>
+ @if (! empty($portfolio['contact']['topics']))
+ <div class="page-wrap mb-10">
+ <h2 class="section-title text-xl mb-4">Good conversation topics</h2>
+ <ul class="grid sm:grid-cols-2 gap-2">
+ @foreach ($portfolio['contact']['topics'] as $topic)
+ <li>
+ <x-card padding="px-4 py-3">
+ <p class="text-sm" style="color: var(--text-secondary);">{{ $topic }}</p>
+ </x-card>
  </li>
  @endforeach
  </ul>
- </x-card>
  </div>
- </aside>
- </div>
+ @endif
 
  @if (! empty($seo['faqs']))
  <div
@@ -304,4 +319,87 @@
 
 @push('scripts')
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+<script>
+ window.onTurnstileSuccess = function (token) {
+ window.__turnstileToken = token;
+ document.dispatchEvent(new CustomEvent('turnstile-success', { detail: token }));
+ };
+
+ document.addEventListener('alpine:init', () => {
+ Alpine.data('contactForm', (config) => ({
+ static: !!config.static,
+ endpoint: config.endpoint,
+ successMessage: config.success,
+ autoresponse: config.autoresponse || '',
+ name: '',
+ email: '',
+ subject: '',
+ message: '',
+ sending: false,
+ done: false,
+ error: '',
+ captchaError: '',
+ turnstileToken: '',
+ init() {
+ document.addEventListener('turnstile-success', (e) => {
+ this.turnstileToken = e.detail || window.__turnstileToken || '';
+ this.captchaError = '';
+ });
+ },
+ async submit() {
+ this.error = '';
+ this.captchaError = '';
+ this.turnstileToken = this.turnstileToken || window.__turnstileToken || '';
+
+ if (! this.turnstileToken) {
+ this.captchaError = 'Please complete the captcha verification.';
+ return;
+ }
+
+ if (this.message.trim().length < 10) {
+ this.error = 'Please write at least a short message (10+ characters).';
+ return;
+ }
+
+ this.sending = true;
+
+ try {
+            if (this.static) {
+              const response = await fetch(this.endpoint, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json',
+                },
+                body: JSON.stringify({
+                  name: this.name,
+                  email: this.email,
+                  subject: this.subject || 'Portfolio contact',
+                  message: this.message,
+                  _subject: 'New portfolio contact from ' + this.name,
+                  _template: 'table',
+                  _autoresponse: this.autoresponse,
+                  'cf-turnstile-response': this.turnstileToken,
+                }),
+              });
+
+              if (! response.ok) {
+                throw new Error('Unable to send right now.');
+              }
+
+              this.done = true;
+            } else {
+              // Native submit bypasses Alpine prevent; Turnstile already injected its token field.
+              HTMLFormElement.prototype.submit.call(this.$el);
+              return;
+            }
+ } catch (e) {
+ this.error = 'Sorry. The message could not be sent right now. Please email me directly or try again later.';
+ } finally {
+ this.sending = false;
+ }
+ },
+ }));
+ });
+</script>
 @endpush
