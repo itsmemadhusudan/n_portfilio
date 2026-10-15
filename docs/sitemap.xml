@@ -21,6 +21,26 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://madhusudantimalsina.com.np/projects/thrift-books</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://madhusudantimalsina.com.np/projects/yfasma</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://madhusudantimalsina.com.np/projects/swaad-sathi</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://madhusudantimalsina.com.np/projects/gym-app</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://madhusudantimalsina.com.np/education</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
@@ -30,4 +50,46 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/php</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/javascript</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/typescript</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/python</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/sql</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/html5</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/css3</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/laravel</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/nodejs</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/express</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/nestjs</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/fastapi</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/django</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/react</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/nextjs</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/vue</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/nuxt</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/tailwind</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/alpine</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/livewire</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/inertia</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/mysql</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/postgresql</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/mongodb</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/redis</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/sqlite</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/rest-api</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/graphql</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/jwt</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/oauth</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/sanctum</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/microservices</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/git</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/github</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/docker</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/cicd</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/linux</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/aws</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/postman</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/pest</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/phpunit</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/jest</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
 </urlset>

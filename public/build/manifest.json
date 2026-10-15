@@ -24,7 +24,7 @@
     "src": "node_modules/@fontsource/jetbrains-mono/files/jetbrains-mono-latin-700-normal.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/app-B7K5WwWc.css",
+    "file": "assets/app-B7FVmv-D.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -33,7 +33,7 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-BHt_6lEM.js",
+    "file": "assets/app-CS78KgCX.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true

@@ -14,7 +14,9 @@ return [
     |
     */
 
-    'default' => env('MAIL_MAILER', 'log'),
+    // Hardcoded Mailjet SMTP for the contact form (no MAIL_* required in .env).
+    // Tests may still override with MAIL_MAILER=array via phpunit.xml.
+    'default' => env('MAIL_MAILER', 'smtp'),
 
     /*
     |--------------------------------------------------------------------------
@@ -39,14 +41,15 @@ return [
 
         'smtp' => [
             'transport' => 'smtp',
-            'scheme' => env('MAIL_SCHEME'),
-            'url' => env('MAIL_URL'),
-            'host' => env('MAIL_HOST', '127.0.0.1'),
-            'port' => env('MAIL_PORT', 2525),
-            'username' => env('MAIL_USERNAME'),
-            'password' => env('MAIL_PASSWORD'),
-            'timeout' => null,
-            'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url((string) env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
+            'scheme' => 'smtp',
+            'url' => null,
+            'host' => 'in-v3.mailjet.com',
+            'port' => 587,
+            'username' => 'e8dd6259ba8e8b988006f13c80a5ec8f',
+            'password' => '3dcc6c2c3e843ae1d32ad3dae279d950',
+            'timeout' => 30,
+            // Avoid EHLO as 127.0.0.1 from APP_URL, which some SMTP relays mishandle.
+            'local_domain' => 'madhusudantimalsina.com.np',
         ],
 
         'ses' => [
@@ -111,8 +114,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', env('APP_NAME', 'Laravel')),
+        'address' => 'timmadh@gmail.com',
+        'name' => 'Madhusudan Timalsina',
     ],
 
     /*
@@ -126,6 +129,6 @@ return [
     |
     */
 
-    'contact_to' => env('MAIL_TO_ADDRESS', env('MAIL_FROM_ADDRESS')),
+    'contact_to' => 'timmadh@gmail.com', // owner inbox for contact form submissions
 
 ];

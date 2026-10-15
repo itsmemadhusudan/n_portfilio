@@ -8,6 +8,8 @@ Route::get('/', [PortfolioController::class, 'home'])->name('home');
 Route::get('/about', [PortfolioController::class, 'about'])->name('about');
 Route::get('/skills', [PortfolioController::class, 'skills'])->name('skills');
 Route::get('/projects', [PortfolioController::class, 'projects'])->name('projects');
+Route::get('/projects/{slug}', [PortfolioController::class, 'projectShow'])->name('projects.show');
+Route::get('/stack/{slug}', [PortfolioController::class, 'stackShow'])->name('stack.show');
 Route::get('/education', [PortfolioController::class, 'education'])->name('education');
 Route::get('/contact', [PortfolioController::class, 'contact'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])

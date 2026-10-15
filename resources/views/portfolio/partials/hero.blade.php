@@ -16,9 +16,25 @@
  @endif
  </h1>
  <p class="hero-bio">{{ $portfolio['bio'] }}</p>
+ @if (! empty($portfolio['tagline']))
+ <p class="hero-bio" style="margin-top: -0.5rem; opacity: 0.9;">{{ $portfolio['tagline'] }}</p>
+ @endif
+
+ @if (! empty($heroTech ?? []))
+ <div class="hero-tech" aria-label="Core technologies">
+ <div class="hero-tech__track">
+ @foreach (array_merge($heroTech, $heroTech) as $tech)
+ <span class="hero-tech__item">
+ <x-icon :name="$tech['icon'] ?? 'code'" :size="14" />
+ {{ $tech['name'] }}
+ </span>
+ @endforeach
+ </div>
+ </div>
+ @endif
 
  <div class="hero-actions">
- <x-button :href="route('contact')" variant="solid">Hire Me</x-button>
+ <x-button :href="route('contact')" variant="solid">Hire a developer</x-button>
  @if (! empty($portfolio['cv']))
  <x-button :href="$portfolio['cv']" variant="ghost" :external="true">
  <x-icon name="download" :size="16" />
@@ -57,6 +73,7 @@
  >
  <x-icon name="mail" :size="16" />
  </a>
+ @if (! empty($portfolio['phone_href']))
  <a
  href="{{ $portfolio['phone_href'] }}"
  target="_blank"
@@ -66,6 +83,7 @@
  >
  <x-icon name="phone" :size="16" />
  </a>
+ @endif
  </div>
 
  @if (! empty($portfolio['badge']))
@@ -86,7 +104,7 @@
  </defs>
  <text>
  <textPath href="#portrait-circle" startOffset="0%">
- BACKEND · API · DATABASE · SYSTEMS · CODE ·
+ DEVELOPER · DEVELOPER · DEVELOPER · DEVELOPER ·
  </textPath>
  </text>
  </svg>
@@ -96,8 +114,8 @@
  <source srcset="{{ asset('images/bgimage.webp') }}" type="image/webp">
  <img
  src="{{ asset('images/bgimage-avatar.jpg') }}"
- alt="{{ $portfolio['full_name'] }}, Backend Developer at Smart Sarks"
- title="{{ $portfolio['full_name'] }}, Backend Developer"
+ alt="{{ $portfolio['full_name'] }}, {{ $portfolio['title'] }} at Smart Sarks"
+ title="{{ $portfolio['full_name'] }}, {{ $portfolio['title'] }}"
  width="360"
  height="360"
  sizes="(min-width: 900px) 280px, 72vw"

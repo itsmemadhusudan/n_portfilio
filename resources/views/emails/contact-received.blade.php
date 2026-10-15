@@ -1,11 +1,19 @@
 <x-mail::message>
-# New portfolio message
+# New contact form submission
 
-**From:** {{ $senderName }} &lt;{{ $senderEmail }}&gt;  
+Someone submitted the portfolio contact form. Full details below.
+
+**Name:** {{ $senderName }}  
+**Email:** {{ $senderEmail }}  
 **Subject:** {{ $subjectLine }}
 
+**Message:**  
 {{ $bodyMessage }}
 
-Thanks,<br>
-{{ config('app.name') }}
+You can reply directly to this email to respond to **{{ $senderName }}**.
+
+—
+Madhusudan Timalsina  
+Backend Developer  
+Lalitpur, Nepal
 </x-mail::message>

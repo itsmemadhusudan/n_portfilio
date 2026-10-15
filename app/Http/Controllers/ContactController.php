@@ -5,35 +5,58 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ContactRequest;
 use App\Mail\ContactMessageConfirmation;
 use App\Mail\ContactMessageReceived;
+use App\Services\MailjetMailer;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Mail;
 use Throwable;
 
 class ContactController extends Controller
 {
-    public function store(ContactRequest $request): RedirectResponse
+    public function store(ContactRequest $request, MailjetMailer $mailjet): RedirectResponse
     {
         $data = $request->validated();
         $subject = filled($data['subject'] ?? null)
             ? $data['subject']
             : 'New message from '.$data['name'];
 
-        $to = config('mail.contact_to') ?: config('portfolio.email');
+        // Always deliver the filled form data to this inbox.
+        $ownerEmail = 'timmadh@gmail.com';
+        $visitorEmail = $data['email'];
 
         try {
-            Mail::to($to)->send(new ContactMessageReceived(
+            $ownerMail = new ContactMessageReceived(
                 senderName: $data['name'],
-                senderEmail: $data['email'],
+                senderEmail: $visitorEmail,
                 subjectLine: $subject,
                 bodyMessage: $data['message'],
-            ));
+            );
 
-            Mail::to($data['email'])->send(new ContactMessageConfirmation(
+            $confirmMail = new ContactMessageConfirmation(
                 senderName: $data['name'],
                 subjectLine: $subject,
                 bodyMessage: $data['message'],
-            ));
+            );
+
+            // 1) Full form data → your inbox
+            $mailjet->send(
+                to: ['email' => $ownerEmail, 'name' => 'Madhusudan Timalsina'],
+                subject: 'New portfolio contact from '.$data['name'].' — '.$subject,
+                html: $ownerMail->render(),
+                replyTo: ['email' => $visitorEmail, 'name' => $data['name']],
+            );
+
+            // 2) Thank-you confirmation → the person who filled the form
+            $mailjet->send(
+                to: ['email' => $visitorEmail, 'name' => $data['name']],
+                subject: $confirmMail->envelope()->subject ?? 'Thanks for reaching out | Madhusudan Timalsina',
+                html: $confirmMail->render(),
+            );
+
+            Log::info('Contact form mail sent via Mailjet', [
+                'to_owner' => $ownerEmail,
+                'to_visitor' => $visitorEmail,
+                'subject' => $subject,
+            ]);
         } catch (Throwable $e) {
             Log::error('Contact form mail failed', [
                 'error' => $e->getMessage(),

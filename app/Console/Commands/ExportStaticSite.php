@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Http\Controllers\PortfolioController;
+use App\Support\Portfolio;
 use Illuminate\Console\Command;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Facade;
@@ -76,6 +77,38 @@ class ExportStaticSite extends Command
             File::put($target, $controller->{$method}()->render());
 
             $this->components->twoColumnDetail($routeName, $this->relative($target));
+        }
+
+        foreach (Portfolio::projects() as $project) {
+            $slug = $project['slug'] ?? null;
+            if (! $slug) {
+                continue;
+            }
+
+            $path = 'projects/'.$slug;
+            $this->bindRequest($path, 'projects.show');
+
+            $target = $output.'/'.$path.'/index.html';
+            File::ensureDirectoryExists(dirname($target));
+            File::put($target, $controller->projectShow($slug)->render());
+
+            $this->components->twoColumnDetail('projects.'.$slug, $this->relative($target));
+        }
+
+        foreach (Portfolio::skills() as $skill) {
+            $slug = $skill['slug'] ?? null;
+            if (! $slug) {
+                continue;
+            }
+
+            $path = 'stack/'.$slug;
+            $this->bindRequest($path, 'stack.show');
+
+            $target = $output.'/'.$path.'/index.html';
+            File::ensureDirectoryExists(dirname($target));
+            File::put($target, $controller->stackShow($slug)->render());
+
+            $this->components->twoColumnDetail('stack.'.$slug, $this->relative($target));
         }
 
         File::copyDirectory(public_path('build'), $output.'/build');

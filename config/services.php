@@ -35,4 +35,21 @@ return [
         ],
     ],
 
+    /*
+    | Cloudflare Turnstile (contact form captcha). Hardcoded — no .env keys needed.
+    */
+    'turnstile' => [
+        'site_key' => '0x4AAAAAAFXRmG-DdwRA9r-2',
+        'secret_key' => '0x4AAAAAAFXRmNLMrdhaEyHuujo-KXaQjus',
+        'verify_url' => 'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+    ],
+
+    /*
+    | Mailjet API (contact form mail). Same credentials as SMTP username/password.
+    */
+    'mailjet' => [
+        'key' => 'e8dd6259ba8e8b988006f13c80a5ec8f',
+        'secret' => '3dcc6c2c3e843ae1d32ad3dae279d950',
+    ],
+
 ];

@@ -76,7 +76,6 @@
  maxlength="120"
  autocomplete="name"
  placeholder="Your name"
- :disabled="sending"
  >
  @error('name')
  <span class="contact-form__error">{{ $message }}</span>
@@ -94,7 +93,6 @@
  maxlength="255"
  autocomplete="email"
  placeholder="you@example.com"
- :disabled="sending"
  >
  @error('email')
  <span class="contact-form__error">{{ $message }}</span>
@@ -110,8 +108,7 @@
  name="subject"
  value="{{ old('subject') }}"
  maxlength="160"
- placeholder="Project idea, freelance work, collaboration…"
- :disabled="sending"
+ placeholder="What's your subject?"
  >
  @error('subject')
  <span class="contact-form__error">{{ $message }}</span>
@@ -127,9 +124,20 @@
  required
  maxlength="5000"
  placeholder="What are you building and how can I help?"
- :disabled="sending"
  >{{ old('message') }}</textarea>
  @error('message')
+ <span class="contact-form__error">{{ $message }}</span>
+ @enderror
+ </div>
+
+ <div class="contact-form__field contact-form__captcha">
+ <div
+ class="cf-turnstile"
+ data-sitekey="{{ config('services.turnstile.site_key') }}"
+ data-theme="dark"
+ data-size="flexible"
+ ></div>
+ @error('cf-turnstile-response')
  <span class="contact-form__error">{{ $message }}</span>
  @enderror
  </div>
@@ -164,7 +172,9 @@
  </p>
  <div class="flex flex-wrap gap-3">
  <x-button :href="$portfolio['email_href']" variant="solid" :external="true">Email me</x-button>
+ @if (! empty($portfolio['phone_href']))
  <x-button :href="$portfolio['phone_href']" variant="ghost" :external="true">WhatsApp</x-button>
+ @endif
  </div>
  </x-card>
  @endif
@@ -190,15 +200,17 @@
  <span class="contact-channel__value">{{ $portfolio['email'] }}</span>
  </span>
  </a>
+ @if (! empty($portfolio['phone_href']))
  <a href="{{ $portfolio['phone_href'] }}" target="_blank" rel="noopener noreferrer" class="contact-channel">
  <span class="contact-channel__icon" aria-hidden="true">
  <x-icon name="phone" :size="16" />
  </span>
  <span>
  <span class="contact-channel__label">WhatsApp</span>
- <span class="contact-channel__value">{{ $portfolio['phone'] }}</span>
+ <span class="contact-channel__value">Message on WhatsApp</span>
  </span>
  </a>
+ @endif
  <a href="{{ $portfolio['social']['linkedin'] }}" target="_blank" rel="noopener noreferrer" class="contact-channel">
  <span class="contact-channel__icon" aria-hidden="true">
  <x-icon name="linkedin" :size="16" />
@@ -289,3 +301,7 @@
  @endif
  </section>
 @endsection
+
+@push('scripts')
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+@endpush
