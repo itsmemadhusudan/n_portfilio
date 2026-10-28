@@ -479,11 +479,11 @@ return [
         'blurb' => 'Hire a web developer in Lalitpur, Nepal. Available for hire for freelance developer work across Laravel, React, Vue, Node.js, Python, REST API development and database design.',
         'availability' => 'Working as a developer at Smart Sarks since last year. Still available for hire for freelance and remote developer conversations, usually respond within 24-48 hours.',
         'form_enabled' => true,
-        // null = Laravel /contact route (local PHP). Static GitHub Pages export sets FormSubmit.
+        // null = Laravel /contact route (local PHP). Static GitHub Pages export uses the Worker URL.
         'form_action' => null,
         'form_static' => false,
-        // Classic FormSubmit POST (not /ajax/) — the AJAX API often hangs from GitHub Pages.
-        'form_static_endpoint' => 'https://formsubmit.co/timmadh@gmail.com',
+        // Cloudflare Worker (workers/contact-form) → Mailjet. Replace with your workers.dev URL after deploy.
+        'form_static_endpoint' => 'https://contact-form.YOUR_SUBDOMAIN.workers.dev',
         'form_title' => 'Send a message',
         'form_intro' => 'Tell me about your project or question. You’ll get a confirmation email and I’ll reply from my inbox within 24-48 hours.',
         'form_success' => 'Thanks. Your message is on its way. Check your inbox for a confirmation email.',

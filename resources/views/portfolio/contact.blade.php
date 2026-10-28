@@ -4,8 +4,7 @@
     $formStatic = ! empty($portfolio['contact']['form_static']);
     $formAction = $portfolio['contact']['form_action'] ?? null;
     $formAction = $formAction ?: route('contact.store');
-    $formNext = rtrim((string) ($portfolio['seo']['site_url'] ?? config('app.url')), '/').'/contact/?sent=1';
-    $formAutoresponse = $portfolio['contact']['form_autoresponse'] ?? '';
+    $workerEndpoint = $portfolio['contact']['form_static_endpoint'] ?? '';
 @endphp
 
 @section('content')
@@ -51,26 +50,19 @@
 
  <form
  id="contact-form"
- action="{{ $formAction }}"
+ action="{{ $formStatic ? '#' : $formAction }}"
  method="POST"
  class="contact-form"
  novalidate
  x-data="contactForm(@js([
      'static' => $formStatic,
+     'endpoint' => $workerEndpoint,
      'success' => $portfolio['contact']['form_success'],
  ]))"
  @submit.prevent="submit"
  >
  @unless ($formStatic)
  @csrf
- @else
- {{-- Classic FormSubmit POST (AJAX endpoint hangs / fails on Pages). --}}
- <input type="hidden" name="_next" value="{{ $formNext }}">
- <input type="hidden" name="_captcha" value="false">
- <input type="hidden" name="_template" value="table">
- <input type="hidden" name="_autoresponse" value="{{ $formAutoresponse }}">
- <input type="hidden" name="_subject" :value="'New portfolio contact from ' + (name || 'portfolio visitor')">
- <input type="hidden" name="_replyto" :value="email">
  @endunless
 
  <div class="contact-form__honeypot" aria-hidden="true">
@@ -78,10 +70,11 @@
  <input
  type="text"
  id="website"
- name="{{ $formStatic ? '_gotcha' : 'website' }}"
+ name="website"
  tabindex="-1"
  autocomplete="off"
  value=""
+ x-model="website"
  >
  </div>
 
@@ -191,7 +184,7 @@
  Confirmation goes to your inbox · reply within 24-48 hours
  </p>
  <p class="contact-form__note" x-cloak x-show="sending">
- Redirecting to confirmation…
+ Sending — usually under a few seconds…
  </p>
  </div>
 
@@ -347,27 +340,25 @@
  document.addEventListener('alpine:init', () => {
  Alpine.data('contactForm', (config) => ({
  static: !!config.static,
+ endpoint: config.endpoint || '',
  successMessage: config.success,
  name: '',
  email: '',
  subject: '',
  message: '',
+ website: '',
  sending: false,
  done: false,
  error: '',
  captchaError: '',
  turnstileToken: '',
  init() {
- if (new URLSearchParams(window.location.search).get('sent') === '1') {
- this.done = true;
- }
-
  document.addEventListener('turnstile-success', (e) => {
  this.turnstileToken = e.detail || window.__turnstileToken || '';
  this.captchaError = '';
  });
  },
- submit() {
+ async submit() {
  this.error = '';
  this.captchaError = '';
  this.turnstileToken = this.turnstileToken || window.__turnstileToken || '';
@@ -384,15 +375,46 @@
 
  this.sending = true;
 
+ try {
  if (this.static) {
- // Do not post the Turnstile token — FormSubmit would include it in the owner email.
- this.$el.querySelectorAll('[name="cf-turnstile-response"]').forEach((el) => el.remove());
- // Classic browser POST (FormSubmit AJAX often hangs or fails on GitHub Pages).
+ if (! this.endpoint || this.endpoint.includes('YOUR_SUBDOMAIN')) {
+ throw new Error('Contact Worker URL is not configured yet.');
+ }
+
+ // Captcha stays client-side only — never send the token to the Worker/email.
+ const response = await fetch(this.endpoint, {
+ method: 'POST',
+ headers: {
+ 'Content-Type': 'application/json',
+ 'Accept': 'application/json',
+ },
+ body: JSON.stringify({
+ name: this.name,
+ email: this.email,
+ subject: this.subject || 'Portfolio contact',
+ message: this.message,
+ website: this.website,
+ }),
+ });
+
+ const payload = await response.json().catch(() => ({}));
+ if (! response.ok || ! payload.ok) {
+ throw new Error(payload.message || 'Unable to send right now.');
+ }
+
+ this.done = true;
+ } else {
  HTMLFormElement.prototype.submit.call(this.$el);
  return;
  }
-
- HTMLFormElement.prototype.submit.call(this.$el);
+ } catch (e) {
+ const msg = e && e.message ? String(e.message) : '';
+ this.error = (msg.includes('Worker URL') || msg.includes('not configured'))
+ ? msg
+ : 'Sorry. The message could not be sent right now. Please email me directly or try again later.';
+ } finally {
+ this.sending = false;
+ }
  },
  }));
  });
