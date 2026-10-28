@@ -17,7 +17,7 @@ The export writes:
 - Project case studies: `/projects/{slug}/`
 - Stack pages: `/stack/{slug}/`
 
-Contact form stays visible on GitHub Pages and posts through [FormSubmit](https://formsubmit.co) to `timmadh@gmail.com` (no PHP on Pages). The first submission sends an activation email — open it and click **Activate Form** once.
+Contact form stays visible on GitHub Pages and uses a classic [FormSubmit](https://formsubmit.co) POST to `timmadh@gmail.com` (no PHP on Pages). After send, FormSubmit redirects back to `/contact/?sent=1`. The first submission sends an activation email — open it and click **Activate Form** once (check Spam).
 
 Local / PHP hosts still use Laravel + Mailjet as before.
 

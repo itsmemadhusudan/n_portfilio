@@ -482,7 +482,8 @@ return [
         // null = Laravel /contact route (local PHP). Static GitHub Pages export sets FormSubmit.
         'form_action' => null,
         'form_static' => false,
-        'form_static_endpoint' => 'https://formsubmit.co/ajax/timmadh@gmail.com',
+        // Classic FormSubmit POST (not /ajax/) — the AJAX API often hangs from GitHub Pages.
+        'form_static_endpoint' => 'https://formsubmit.co/timmadh@gmail.com',
         'form_title' => 'Send a message',
         'form_intro' => 'Tell me about your project or question. You’ll get a confirmation email and I’ll reply from my inbox within 24-48 hours.',
         'form_success' => 'Thanks. Your message is on its way. Check your inbox for a confirmation email.',

@@ -4,6 +4,8 @@
     $formStatic = ! empty($portfolio['contact']['form_static']);
     $formAction = $portfolio['contact']['form_action'] ?? null;
     $formAction = $formAction ?: route('contact.store');
+    $formNext = rtrim((string) ($portfolio['seo']['site_url'] ?? config('app.url')), '/').'/contact/?sent=1';
+    $formAutoresponse = $portfolio['contact']['form_autoresponse'] ?? '';
 @endphp
 
 @section('content')
@@ -55,14 +57,20 @@
  novalidate
  x-data="contactForm(@js([
      'static' => $formStatic,
-     'endpoint' => $formAction,
      'success' => $portfolio['contact']['form_success'],
-     'autoresponse' => $portfolio['contact']['form_autoresponse'] ?? '',
  ]))"
  @submit.prevent="submit"
  >
  @unless ($formStatic)
  @csrf
+ @else
+ {{-- Classic FormSubmit POST (AJAX endpoint hangs / fails on Pages). --}}
+ <input type="hidden" name="_next" value="{{ $formNext }}">
+ <input type="hidden" name="_captcha" value="false">
+ <input type="hidden" name="_template" value="table">
+ <input type="hidden" name="_autoresponse" value="{{ $formAutoresponse }}">
+ <input type="hidden" name="_subject" :value="'New portfolio contact from ' + (name || 'portfolio visitor')">
+ <input type="hidden" name="_replyto" :value="email">
  @endunless
 
  <div class="contact-form__honeypot" aria-hidden="true">
@@ -77,6 +85,7 @@
  >
  </div>
 
+ <div x-show="!done">
  <div class="contact-form__grid">
  <div class="contact-form__field">
  <label for="contact-name">Name</label>
@@ -160,6 +169,7 @@
  @enderror
  <p class="contact-form__error" x-show="captchaError" x-cloak x-text="captchaError"></p>
  </div>
+ </div>
 
  <p class="contact-alert contact-alert--success mb-4" x-show="done" x-cloak x-text="successMessage"></p>
  <p class="contact-alert contact-alert--error mb-4" x-show="error" x-cloak x-text="error"></p>
@@ -181,8 +191,14 @@
  Confirmation goes to your inbox · reply within 24-48 hours
  </p>
  <p class="contact-form__note" x-cloak x-show="sending">
- Sending — usually under a few seconds…
+ Redirecting to confirmation…
  </p>
+ </div>
+
+ <div class="contact-form__actions" x-cloak x-show="done">
+ <a href="{{ $formStatic ? url('/contact/') : route('contact') }}#contact-form" class="btn-neon btn-neon--ghost">
+ Send another message
+ </a>
  </div>
  </form>
  @endif
@@ -331,9 +347,7 @@
  document.addEventListener('alpine:init', () => {
  Alpine.data('contactForm', (config) => ({
  static: !!config.static,
- endpoint: config.endpoint,
  successMessage: config.success,
- autoresponse: config.autoresponse || '',
  name: '',
  email: '',
  subject: '',
@@ -344,12 +358,16 @@
  captchaError: '',
  turnstileToken: '',
  init() {
+ if (new URLSearchParams(window.location.search).get('sent') === '1') {
+ this.done = true;
+ }
+
  document.addEventListener('turnstile-success', (e) => {
  this.turnstileToken = e.detail || window.__turnstileToken || '';
  this.captchaError = '';
  });
  },
- async submit() {
+ submit() {
  this.error = '';
  this.captchaError = '';
  this.turnstileToken = this.turnstileToken || window.__turnstileToken || '';
@@ -366,58 +384,15 @@
 
  this.sending = true;
 
- try {
-            if (this.static) {
-              // Captcha is checked client-side only — never send the token to FormSubmit
-              // or it appears in the owner email as a form field.
-              // Keep the payload lean; FormSubmit is slower when it also builds a table template.
-              const controller = new AbortController();
-              const timeoutId = window.setTimeout(() => controller.abort(), 12000);
-
-              let response;
-              try {
-                response = await fetch(this.endpoint, {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                  },
-                  signal: controller.signal,
-                  body: JSON.stringify({
-                    name: this.name,
-                    email: this.email,
-                    subject: this.subject || 'Portfolio contact',
-                    message: this.message,
-                    _replyto: this.email,
-                    _subject: 'New portfolio contact from ' + this.name,
-                    _captcha: 'false',
-                    _autoresponse: this.autoresponse,
-                  }),
-                });
-              } finally {
-                window.clearTimeout(timeoutId);
-              }
-
-              const payload = await response.json().catch(() => ({}));
-              const ok = response.ok && String(payload.success) === 'true';
-
-              if (! ok) {
-                throw new Error(payload.message || 'Unable to send right now.');
-              }
-
-              this.done = true;
-            } else {
-              // Native submit bypasses Alpine prevent; Turnstile already injected its token field.
-              HTMLFormElement.prototype.submit.call(this.$el);
-              return;
-            }
- } catch (e) {
- this.error = e && e.name === 'AbortError'
-   ? 'Sending is taking too long. Please try again or email me directly.'
-   : 'Sorry. The message could not be sent right now. Please email me directly or try again later.';
- } finally {
- this.sending = false;
+ if (this.static) {
+ // Do not post the Turnstile token — FormSubmit would include it in the owner email.
+ this.$el.querySelectorAll('[name="cf-turnstile-response"]').forEach((el) => el.remove());
+ // Classic browser POST (FormSubmit AJAX often hangs or fails on GitHub Pages).
+ HTMLFormElement.prototype.submit.call(this.$el);
+ return;
  }
+
+ HTMLFormElement.prototype.submit.call(this.$el);
  },
  }));
  });
