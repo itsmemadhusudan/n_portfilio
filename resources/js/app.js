@@ -56,6 +56,43 @@ document.addEventListener('alpine:init', () => {
             history.replaceState(null, '', url);
         },
     }));
+
+    Alpine.data('heroTypewriter', (phrase = '') => ({
+        full: String(phrase || ''),
+        displayed: '',
+        done: false,
+        timer: null,
+        start() {
+            if (! this.full) {
+                this.done = true;
+                return;
+            }
+
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                this.displayed = this.full;
+                this.done = true;
+                return;
+            }
+
+            let i = 0;
+            const tick = () => {
+                i += 1;
+                this.displayed = this.full.slice(0, i);
+                if (i >= this.full.length) {
+                    this.done = true;
+                    return;
+                }
+                this.timer = window.setTimeout(tick, i < 3 ? 90 : 55);
+            };
+
+            this.timer = window.setTimeout(tick, 420);
+        },
+        destroy() {
+            if (this.timer) {
+                window.clearTimeout(this.timer);
+            }
+        },
+    }));
 });
 
 window.Alpine = Alpine;

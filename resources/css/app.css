@@ -588,6 +588,43 @@ main {
     display: block;
 }
 
+.hero-typewriter {
+    min-height: 1.2em;
+}
+
+.hero-typewriter__caret {
+    display: inline-block;
+    width: 0.08em;
+    height: 0.95em;
+    margin-left: 0.08em;
+    vertical-align: -0.05em;
+    background: var(--neon-cyan);
+    box-shadow: 0 0 10px color-mix(in srgb, var(--neon-cyan) 55%, transparent);
+    animation: heroCaretBlink 0.85s steps(1) infinite;
+}
+
+.hero-typewriter__caret.is-idle {
+    animation-duration: 1.15s;
+    opacity: 0.75;
+}
+
+@keyframes heroCaretBlink {
+    0%,
+    45% {
+        opacity: 1;
+    }
+    50%,
+    100% {
+        opacity: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .hero-typewriter__caret {
+        display: none;
+    }
+}
+
 .hero-bio {
     font-size: 0.98rem;
     line-height: 1.65;

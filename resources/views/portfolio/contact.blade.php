@@ -365,6 +365,8 @@
 
  try {
             if (this.static) {
+              // Captcha is checked client-side only — never send the token to FormSubmit
+              // or it appears in the owner email as a form field.
               const response = await fetch(this.endpoint, {
                 method: 'POST',
                 headers: {
@@ -376,15 +378,19 @@
                   email: this.email,
                   subject: this.subject || 'Portfolio contact',
                   message: this.message,
+                  _replyto: this.email,
                   _subject: 'New portfolio contact from ' + this.name,
                   _template: 'table',
+                  _captcha: 'false',
                   _autoresponse: this.autoresponse,
-                  'cf-turnstile-response': this.turnstileToken,
                 }),
               });
 
-              if (! response.ok) {
-                throw new Error('Unable to send right now.');
+              const payload = await response.json().catch(() => ({}));
+              const ok = response.ok && String(payload.success) === 'true';
+
+              if (! ok) {
+                throw new Error(payload.message || 'Unable to send right now.');
               }
 
               this.done = true;

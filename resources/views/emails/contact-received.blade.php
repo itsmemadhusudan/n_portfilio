@@ -11,9 +11,4 @@ Someone submitted the portfolio contact form. Full details below.
 {{ $bodyMessage }}
 
 You can reply directly to this email to respond to **{{ $senderName }}**.
-
-—
-Madhusudan Timalsina  
-Backend Developer  
-Lalitpur, Nepal
 </x-mail::message>
