@@ -12,6 +12,8 @@ class PortfolioPagesTest extends TestCase
 
         $response->assertOk();
         $response->assertSee('Developer building web', false);
+        $response->assertSee('applications and APIs', false);
+        $response->assertSee('heroTypewriter(', false);
         $response->assertDontSee('Full-stack', false);
         $response->assertSee('Madhusudan Timalsina | Developer', false);
         $response->assertDontSee('Backend Developer', false);

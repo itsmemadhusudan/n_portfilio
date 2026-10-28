@@ -48,7 +48,7 @@ class ContactController extends Controller
             // 2) Thank-you confirmation → the person who filled the form
             $mailjet->send(
                 to: ['email' => $visitorEmail, 'name' => $data['name']],
-                subject: $confirmMail->envelope()->subject ?? 'Thanks for reaching out | Madhusudan Timalsina',
+                subject: 'Thank you for your message | Madhusudan Timalsina',
                 html: $confirmMail->render(),
             );
 

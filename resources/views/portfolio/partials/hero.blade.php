@@ -12,7 +12,19 @@
  <h1 class="hero-headline">
  <span class="hero-headline__line">{{ $lineOne }}</span>
  @if ($lineTwo !== '')
- <span class="hero-headline__line text-gradient">{{ $lineTwo }}</span>
+ <span
+ class="hero-headline__line text-gradient hero-typewriter"
+ x-data="heroTypewriter(@js($lineTwo))"
+ x-init="start()"
+ >
+ <span class="sr-only">{{ $lineTwo }}</span>
+ <span class="hero-typewriter__text" aria-hidden="true" x-text="displayed">{{ $lineTwo }}</span><span
+ class="hero-typewriter__caret"
+ aria-hidden="true"
+ :class="done && 'is-idle'"
+ x-cloak
+ ></span>
+ </span>
  @endif
  </h1>
  <p class="hero-bio">{{ $portfolio['bio'] }}</p>
