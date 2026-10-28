@@ -19,6 +19,22 @@ class MailjetMailer
         string $text = '',
         ?array $replyTo = null,
     ): void {
+        $this->sendMany([[
+            'to' => $to,
+            'subject' => $subject,
+            'html' => $html,
+            'text' => $text,
+            'reply_to' => $replyTo,
+        ]]);
+    }
+
+    /**
+     * Send one or more messages in a single Mailjet API round-trip.
+     *
+     * @param  list<array{to: array{email: string, name?: string}, subject: string, html: string, text?: string, reply_to?: array{email: string, name?: string}|null}>  $messages
+     */
+    public function sendMany(array $messages): void
+    {
         $apiKey = config('services.mailjet.key');
         $apiSecret = config('services.mailjet.secret');
 
@@ -26,33 +42,43 @@ class MailjetMailer
             throw new RuntimeException('Mailjet API credentials are missing.');
         }
 
-        $message = [
-            'From' => [
-                'Email' => config('mail.from.address'),
-                'Name' => config('mail.from.name'),
-            ],
-            'To' => [[
-                'Email' => $to['email'],
-                'Name' => $to['name'] ?? $to['email'],
-            ]],
-            'Subject' => $subject,
-            'HTMLPart' => $html,
-            'TextPart' => $text !== '' ? $text : strip_tags($html),
-        ];
+        if ($messages === []) {
+            throw new RuntimeException('No Mailjet messages to send.');
+        }
 
-        if ($replyTo) {
-            $message['ReplyTo'] = [
-                'Email' => $replyTo['email'],
-                'Name' => $replyTo['name'] ?? $replyTo['email'],
+        $payload = [];
+        foreach ($messages as $item) {
+            $message = [
+                'From' => [
+                    'Email' => config('mail.from.address'),
+                    'Name' => config('mail.from.name'),
+                ],
+                'To' => [[
+                    'Email' => $item['to']['email'],
+                    'Name' => $item['to']['name'] ?? $item['to']['email'],
+                ]],
+                'Subject' => $item['subject'],
+                'HTMLPart' => $item['html'],
+                'TextPart' => ($item['text'] ?? '') !== '' ? $item['text'] : strip_tags($item['html']),
             ];
+
+            if (! empty($item['reply_to'])) {
+                $message['ReplyTo'] = [
+                    'Email' => $item['reply_to']['email'],
+                    'Name' => $item['reply_to']['name'] ?? $item['reply_to']['email'],
+                ];
+            }
+
+            $payload[] = $message;
         }
 
         $response = Http::withBasicAuth($apiKey, $apiSecret)
             ->acceptJson()
             ->asJson()
-            ->timeout(20)
+            ->timeout(12)
+            ->connectTimeout(4)
             ->post('https://api.mailjet.com/v3.1/send', [
-                'Messages' => [$message],
+                'Messages' => $payload,
             ]);
 
         if (! $response->successful()) {
@@ -64,13 +90,15 @@ class MailjetMailer
             throw new RuntimeException('Mailjet API request failed (HTTP '.$response->status().').');
         }
 
-        $status = data_get($response->json(), 'Messages.0.Status');
-        if ($status !== 'success') {
-            Log::error('Mailjet API rejected message', [
-                'response' => $response->json(),
-            ]);
+        foreach ($response->json('Messages') ?? [] as $index => $result) {
+            if (($result['Status'] ?? null) !== 'success') {
+                Log::error('Mailjet API rejected message', [
+                    'index' => $index,
+                    'response' => $result,
+                ]);
 
-            throw new RuntimeException('Mailjet rejected the message.');
+                throw new RuntimeException('Mailjet rejected the message.');
+            }
         }
     }
 }

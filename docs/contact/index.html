@@ -184,7 +184,7 @@
  method="POST"
  class="contact-form"
  novalidate
- x-data="contactForm(JSON.parse('{\u0022static\u0022:true,\u0022endpoint\u0022:\u0022https:\\\/\\\/formsubmit.co\\\/ajax\\\/timmadh@gmail.com\u0022,\u0022success\u0022:\u0022Thanks. Your message is on its way. Check your inbox for a confirmation email.\u0022,\u0022autoresponse\u0022:\u0022Thanks for getting in touch.\\n\\nThank you for your message. I have received it and will reply within 24-48 hours.\\n\\nBest regards,\\nMadhusudan Timalsina\\nDeveloper\\nLalitpur, Nepal\\nhttps:\\\/\\\/madhusudantimalsina.com.np\u0022}'))"
+ x-data="contactForm(JSON.parse('{\u0022static\u0022:true,\u0022endpoint\u0022:\u0022https:\\\/\\\/formsubmit.co\\\/ajax\\\/timmadh@gmail.com\u0022,\u0022success\u0022:\u0022Thanks. Your message is on its way. Check your inbox for a confirmation email.\u0022,\u0022autoresponse\u0022:\u0022Thank you for your message. I have received it and will reply within 24-48 hours.\\n\\nMadhusudan Timalsina\\nDeveloper \\u00b7 Lalitpur, Nepal\\nhttps:\\\/\\\/madhusudantimalsina.com.np\u0022}'))"
  @submit.prevent="submit"
  >
  
@@ -285,8 +285,11 @@
  Sending…
  </span>
  </button>
- <p class="contact-form__note">
+ <p class="contact-form__note" x-show="!sending">
  Confirmation goes to your inbox · reply within 24-48 hours
+ </p>
+ <p class="contact-form__note" x-cloak x-show="sending">
+ Sending — usually under a few seconds…
  </p>
  </div>
  </form>
@@ -717,24 +720,33 @@
             if (this.static) {
               // Captcha is checked client-side only — never send the token to FormSubmit
               // or it appears in the owner email as a form field.
-              const response = await fetch(this.endpoint, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Accept': 'application/json',
-                },
-                body: JSON.stringify({
-                  name: this.name,
-                  email: this.email,
-                  subject: this.subject || 'Portfolio contact',
-                  message: this.message,
-                  _replyto: this.email,
-                  _subject: 'New portfolio contact from ' + this.name,
-                  _template: 'table',
-                  _captcha: 'false',
-                  _autoresponse: this.autoresponse,
-                }),
-              });
+              // Keep the payload lean; FormSubmit is slower when it also builds a table template.
+              const controller = new AbortController();
+              const timeoutId = window.setTimeout(() => controller.abort(), 12000);
+
+              let response;
+              try {
+                response = await fetch(this.endpoint, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                  },
+                  signal: controller.signal,
+                  body: JSON.stringify({
+                    name: this.name,
+                    email: this.email,
+                    subject: this.subject || 'Portfolio contact',
+                    message: this.message,
+                    _replyto: this.email,
+                    _subject: 'New portfolio contact from ' + this.name,
+                    _captcha: 'false',
+                    _autoresponse: this.autoresponse,
+                  }),
+                });
+              } finally {
+                window.clearTimeout(timeoutId);
+              }
 
               const payload = await response.json().catch(() => ({}));
               const ok = response.ok && String(payload.success) === 'true';
@@ -750,7 +762,9 @@
               return;
             }
  } catch (e) {
- this.error = 'Sorry. The message could not be sent right now. Please email me directly or try again later.';
+ this.error = e && e.name === 'AbortError'
+   ? 'Sending is taking too long. Please try again or email me directly.'
+   : 'Sorry. The message could not be sent right now. Please email me directly or try again later.';
  } finally {
  this.sending = false;
  }

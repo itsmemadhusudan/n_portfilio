@@ -486,7 +486,7 @@ return [
         'form_title' => 'Send a message',
         'form_intro' => 'Tell me about your project or question. You’ll get a confirmation email and I’ll reply from my inbox within 24-48 hours.',
         'form_success' => 'Thanks. Your message is on its way. Check your inbox for a confirmation email.',
-        'form_autoresponse' => "Thanks for getting in touch.\n\nThank you for your message. I have received it and will reply within 24-48 hours.\n\nBest regards,\nMadhusudan Timalsina\nDeveloper\nLalitpur, Nepal\nhttps://madhusudantimalsina.com.np",
+        'form_autoresponse' => "Thank you for your message. I have received it and will reply within 24-48 hours.\n\nMadhusudan Timalsina\nDeveloper · Lalitpur, Nepal\nhttps://madhusudantimalsina.com.np",
         'current_role' => [
             'title' => 'Currently working',
             'company' => 'Smart Sarks',
