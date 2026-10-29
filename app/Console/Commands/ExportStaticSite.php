@@ -55,7 +55,7 @@ class ExportStaticSite extends Command
             URL::forceScheme('https');
         }
 
-        // GitHub Pages cannot run PHP. Keep the form visible; JS posts to the Cloudflare Worker.
+        // GitHub Pages cannot run PHP/Mailjet. Keep the form visible and post via FormSubmit.
         config([
             'portfolio.contact.form_enabled' => true,
             'portfolio.contact.form_static' => true,

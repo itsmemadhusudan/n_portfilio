@@ -17,14 +17,9 @@ The export writes:
 - Project case studies: `/projects/{slug}/`
 - Stack pages: `/stack/{slug}/`
 
-Contact form on GitHub Pages posts to a **Cloudflare Worker** that sends mail via Mailjet (keys stay in Worker secrets). See `workers/contact-form/README.md`.
+Contact form stays visible on GitHub Pages and posts through [FormSubmit](https://formsubmit.co) to `timmadh@gmail.com` (no PHP on Pages). The first submission sends an activation email — open it and click **Activate Form** once.
 
-1. Deploy `workers/contact-form/worker.js` in Cloudflare
-2. Add `MJ_KEY`, `MJ_SECRET`, `FROM_EMAIL`, `TO_EMAIL` secrets/vars
-3. Set `portfolio.contact.form_static_endpoint` to your Worker URL
-4. Re-export `docs/` and publish when ready
-
-Local / PHP hosts still use Laravel + Mailjet directly (no Worker needed).
+Local / PHP hosts still use Laravel + Mailjet as before.
 
 ## PHP host (live contact form + Mailjet)
 

@@ -37,20 +37,20 @@ class ContactController extends Controller
                 bodyMessage: $data['message'],
             );
 
-            // Owner + visitor confirmation in one Mailjet request (faster than two round-trips).
-            $mailjet->sendMany([
-                [
-                    'to' => ['email' => $ownerEmail, 'name' => 'Madhusudan Timalsina'],
-                    'subject' => 'New portfolio contact from '.$data['name'].' — '.$subject,
-                    'html' => $ownerMail->render(),
-                    'reply_to' => ['email' => $visitorEmail, 'name' => $data['name']],
-                ],
-                [
-                    'to' => ['email' => $visitorEmail, 'name' => $data['name']],
-                    'subject' => 'Thank you for your message | Madhusudan Timalsina',
-                    'html' => $confirmMail->render(),
-                ],
-            ]);
+            // 1) Full form data → your inbox
+            $mailjet->send(
+                to: ['email' => $ownerEmail, 'name' => 'Madhusudan Timalsina'],
+                subject: 'New portfolio contact from '.$data['name'].' — '.$subject,
+                html: $ownerMail->render(),
+                replyTo: ['email' => $visitorEmail, 'name' => $data['name']],
+            );
+
+            // 2) Thank-you confirmation → the person who filled the form
+            $mailjet->send(
+                to: ['email' => $visitorEmail, 'name' => $data['name']],
+                subject: $confirmMail->envelope()->subject ?? 'Thanks for reaching out | Madhusudan Timalsina',
+                html: $confirmMail->render(),
+            );
 
             Log::info('Contact form mail sent via Mailjet', [
                 'to_owner' => $ownerEmail,

@@ -180,11 +180,11 @@
   
  <form
  id="contact-form"
- action="#"
+ action="https://formsubmit.co/ajax/timmadh@gmail.com"
  method="POST"
  class="contact-form"
  novalidate
- x-data="contactForm(JSON.parse('{\u0022static\u0022:true,\u0022endpoint\u0022:\u0022https:\\\/\\\/contact-form.YOUR_SUBDOMAIN.workers.dev\u0022,\u0022success\u0022:\u0022Thanks. Your message is on its way. Check your inbox for a confirmation email.\u0022}'))"
+ x-data="contactForm(JSON.parse('{\u0022static\u0022:true,\u0022endpoint\u0022:\u0022https:\\\/\\\/formsubmit.co\\\/ajax\\\/timmadh@gmail.com\u0022,\u0022success\u0022:\u0022Thanks. Your message is on its way. Check your inbox for a confirmation email.\u0022,\u0022autoresponse\u0022:\u0022Thanks for getting in touch.\\n\\nI have received your message and will reply within 24-48 hours.\\n\\nBest regards,\\nMadhusudan Timalsina\\nBackend Developer\\nLalitpur, Nepal\\nhttps:\\\/\\\/madhusudantimalsina.com.np\u0022}'))"
  @submit.prevent="submit"
  >
  
@@ -193,15 +193,13 @@
  <input
  type="text"
  id="website"
- name="website"
+ name="_gotcha"
  tabindex="-1"
  autocomplete="off"
  value=""
- x-model="website"
  >
  </div>
 
- <div x-show="!done">
  <div class="contact-form__grid">
  <div class="contact-form__field">
  <label for="contact-name">Name</label>
@@ -270,7 +268,6 @@
  ></div>
   <p class="contact-form__error" x-show="captchaError" x-cloak x-text="captchaError"></p>
  </div>
- </div>
 
  <p class="contact-alert contact-alert--success mb-4" x-show="done" x-cloak x-text="successMessage"></p>
  <p class="contact-alert contact-alert--error mb-4" x-show="error" x-cloak x-text="error"></p>
@@ -288,18 +285,9 @@
  Sending…
  </span>
  </button>
- <p class="contact-form__note" x-show="!sending">
+ <p class="contact-form__note">
  Confirmation goes to your inbox · reply within 24-48 hours
  </p>
- <p class="contact-form__note" x-cloak x-show="sending">
- Sending — usually under a few seconds…
- </p>
- </div>
-
- <div class="contact-form__actions" x-cloak x-show="done">
- <a href="https://madhusudantimalsina.com.np/contact#contact-form" class="btn-neon btn-neon--ghost">
- Send another message
- </a>
  </div>
  </form>
     </div>
@@ -690,13 +678,13 @@
  document.addEventListener('alpine:init', () => {
  Alpine.data('contactForm', (config) => ({
  static: !!config.static,
- endpoint: config.endpoint || '',
+ endpoint: config.endpoint,
  successMessage: config.success,
+ autoresponse: config.autoresponse || '',
  name: '',
  email: '',
  subject: '',
  message: '',
- website: '',
  sending: false,
  done: false,
  error: '',
@@ -726,42 +714,37 @@
  this.sending = true;
 
  try {
- if (this.static) {
- if (! this.endpoint || this.endpoint.includes('YOUR_SUBDOMAIN')) {
- throw new Error('Contact Worker URL is not configured yet.');
- }
+            if (this.static) {
+              const response = await fetch(this.endpoint, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Accept': 'application/json',
+                },
+                body: JSON.stringify({
+                  name: this.name,
+                  email: this.email,
+                  subject: this.subject || 'Portfolio contact',
+                  message: this.message,
+                  _subject: 'New portfolio contact from ' + this.name,
+                  _template: 'table',
+                  _autoresponse: this.autoresponse,
+                  'cf-turnstile-response': this.turnstileToken,
+                }),
+              });
 
- // Captcha stays client-side only — never send the token to the Worker/email.
- const response = await fetch(this.endpoint, {
- method: 'POST',
- headers: {
- 'Content-Type': 'application/json',
- 'Accept': 'application/json',
- },
- body: JSON.stringify({
- name: this.name,
- email: this.email,
- subject: this.subject || 'Portfolio contact',
- message: this.message,
- website: this.website,
- }),
- });
+              if (! response.ok) {
+                throw new Error('Unable to send right now.');
+              }
 
- const payload = await response.json().catch(() => ({}));
- if (! response.ok || ! payload.ok) {
- throw new Error(payload.message || 'Unable to send right now.');
- }
-
- this.done = true;
- } else {
- HTMLFormElement.prototype.submit.call(this.$el);
- return;
- }
+              this.done = true;
+            } else {
+              // Native submit bypasses Alpine prevent; Turnstile already injected its token field.
+              HTMLFormElement.prototype.submit.call(this.$el);
+              return;
+            }
  } catch (e) {
- const msg = e && e.message ? String(e.message) : '';
- this.error = (msg.includes('Worker URL') || msg.includes('not configured'))
- ? msg
- : 'Sorry. The message could not be sent right now. Please email me directly or try again later.';
+ this.error = 'Sorry. The message could not be sent right now. Please email me directly or try again later.';
  } finally {
  this.sending = false;
  }

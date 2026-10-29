@@ -37,7 +37,7 @@ class ContactFormTest extends TestCase
         $response->assertRedirect(route('contact').'#contact-form');
         $response->assertSessionHas('contact_success');
 
-        Http::assertSentCount(2); // 1 turnstile + 1 batched Mailjet (owner + visitor)
+        Http::assertSentCount(3); // 1 turnstile + 2 mailjet
     }
 
     public function test_contact_form_rejects_honeypot_bots(): void

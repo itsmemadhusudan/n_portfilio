@@ -479,15 +479,14 @@ return [
         'blurb' => 'Hire a web developer in Lalitpur, Nepal. Available for hire for freelance developer work across Laravel, React, Vue, Node.js, Python, REST API development and database design.',
         'availability' => 'Working as a developer at Smart Sarks since last year. Still available for hire for freelance and remote developer conversations, usually respond within 24-48 hours.',
         'form_enabled' => true,
-        // null = Laravel /contact route (local PHP). Static GitHub Pages export uses the Worker URL.
+        // null = Laravel /contact route (local PHP). Static GitHub Pages export sets FormSubmit.
         'form_action' => null,
         'form_static' => false,
-        // Cloudflare Worker (workers/contact-form) → Mailjet. Replace with your workers.dev URL after deploy.
-        'form_static_endpoint' => 'https://contact-form.YOUR_SUBDOMAIN.workers.dev',
+        'form_static_endpoint' => 'https://formsubmit.co/ajax/timmadh@gmail.com',
         'form_title' => 'Send a message',
         'form_intro' => 'Tell me about your project or question. You’ll get a confirmation email and I’ll reply from my inbox within 24-48 hours.',
         'form_success' => 'Thanks. Your message is on its way. Check your inbox for a confirmation email.',
-        'form_autoresponse' => "Thank you for your message. I have received it and will reply within 24-48 hours.\n\nMadhusudan Timalsina\nDeveloper · Lalitpur, Nepal\nhttps://madhusudantimalsina.com.np",
+        'form_autoresponse' => "Thanks for getting in touch.\n\nI have received your message and will reply within 24-48 hours.\n\nBest regards,\nMadhusudan Timalsina\nBackend Developer\nLalitpur, Nepal\nhttps://madhusudantimalsina.com.np",
         'current_role' => [
             'title' => 'Currently working',
             'company' => 'Smart Sarks',

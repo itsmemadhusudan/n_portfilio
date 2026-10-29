@@ -21,7 +21,7 @@ class ContactMessageConfirmation extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Thank you for your message | Madhusudan Timalsina',
+            subject: 'Thanks for reaching out | Madhusudan Timalsina',
         );
     }
 
