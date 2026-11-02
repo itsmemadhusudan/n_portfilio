@@ -56,43 +56,6 @@ document.addEventListener('alpine:init', () => {
             history.replaceState(null, '', url);
         },
     }));
-
-    Alpine.data('heroTypewriter', (phrase = '') => ({
-        full: String(phrase || ''),
-        displayed: '',
-        done: false,
-        timer: null,
-        start() {
-            if (! this.full) {
-                this.done = true;
-                return;
-            }
-
-            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-                this.displayed = this.full;
-                this.done = true;
-                return;
-            }
-
-            let i = 0;
-            const tick = () => {
-                i += 1;
-                this.displayed = this.full.slice(0, i);
-                if (i >= this.full.length) {
-                    this.done = true;
-                    return;
-                }
-                this.timer = window.setTimeout(tick, i < 3 ? 90 : 55);
-            };
-
-            this.timer = window.setTimeout(tick, 420);
-        },
-        destroy() {
-            if (this.timer) {
-                window.clearTimeout(this.timer);
-            }
-        },
-    }));
 });
 
 window.Alpine = Alpine;
@@ -102,16 +65,57 @@ function prefersReducedMotion() {
     return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
-function initScrollReveals() {
+function shouldSkipWebGL() {
     if (prefersReducedMotion()) {
-        document.querySelectorAll('.reveal, .contact-reveal').forEach((el) => {
-            el.classList.add('is-revealed');
+        return true;
+    }
+
+    const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+    if (conn && (conn.saveData || /2g/.test(conn.effectiveType || ''))) {
+        return true;
+    }
+
+    // Low-end / mobile: keep CSS space only (smooth first load)
+    if (window.matchMedia('(max-width: 720px)').matches) {
+        return true;
+    }
+
+    if (typeof navigator.hardwareConcurrency === 'number' && navigator.hardwareConcurrency > 0 && navigator.hardwareConcurrency <= 2) {
+        return true;
+    }
+
+    if (typeof navigator.deviceMemory === 'number' && navigator.deviceMemory > 0 && navigator.deviceMemory <= 4) {
+        return true;
+    }
+
+    return false;
+}
+
+function initScrollReveals() {
+    const nodes = document.querySelectorAll('.reveal, .contact-reveal');
+
+    document.querySelectorAll(
+        '.stats-code__stats, .feature-grid, .projects-grid, .skills-grid, .stack-grid, .about-grid, .education-list, .achievements-grid',
+    ).forEach((group) => {
+        [...group.children].forEach((child, i) => {
+            if (child.matches('.reveal, .contact-reveal') || child.querySelector('.reveal')) {
+                const target = child.matches('.reveal, .contact-reveal')
+                    ? child
+                    : child.querySelector('.reveal');
+                if (target && ! target.style.getPropertyValue('--reveal-delay')) {
+                    target.style.setProperty('--reveal-delay', `${Math.min(i, 6) * 50}ms`);
+                }
+            }
         });
+    });
+
+    if (prefersReducedMotion()) {
+        nodes.forEach((el) => el.classList.add('is-revealed'));
         return;
     }
 
     if (! ('IntersectionObserver' in window)) {
-        document.querySelectorAll('.reveal').forEach((el) => el.classList.add('is-revealed'));
+        nodes.forEach((el) => el.classList.add('is-revealed'));
         return;
     }
 
@@ -124,9 +128,14 @@ function initScrollReveals() {
                 }
             });
         },
-        { rootMargin: '0px 0px -8% 0px', threshold: 0.08 },
+        { rootMargin: '0px 0px -4% 0px', threshold: 0.08 },
     );
 
+    nodes.forEach((el) => {
+        if (! el.hasAttribute('x-data') || el.classList.contains('contact-reveal')) {
+            observer.observe(el);
+        }
+    });
     document.querySelectorAll('.reveal:not([x-data])').forEach((el) => observer.observe(el));
 }
 
@@ -140,9 +149,81 @@ function initHeroEntrance() {
     }
 }
 
+function initNavScroll() {
+    const nav = document.querySelector('.site-nav');
+    if (! nav) {
+        return;
+    }
+
+    let ticking = false;
+    const onScroll = () => {
+        if (ticking) {
+            return;
+        }
+        ticking = true;
+        requestAnimationFrame(() => {
+            nav.classList.toggle('is-scrolled', window.scrollY > 18);
+            ticking = false;
+        });
+    };
+
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+}
+
+function startPlanetWhenIdle(canvas) {
+    let started = false;
+
+    const start = () => {
+        if (started) {
+            return;
+        }
+        started = true;
+        import('./planet/scene')
+            .then(({ initPlanetScene }) => initPlanetScene(canvas))
+            .catch((err) => console.error('Planet scene failed to load', err));
+    };
+
+    // Wait until the page has fully loaded, then only when the browser is idle
+    // (or after a short timeout / first interaction) so first paint stays smooth.
+    const schedule = () => {
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(start, { timeout: 2500 });
+        } else {
+            setTimeout(start, 1200);
+        }
+    };
+
+    if (document.readyState === 'complete') {
+        schedule();
+    } else {
+        window.addEventListener('load', schedule, { once: true });
+    }
+
+    // If the user scrolls/taps sooner, upgrade then (still after a tiny yield)
+    const onInteract = () => {
+        setTimeout(start, 100);
+    };
+    window.addEventListener('scroll', onInteract, { once: true, passive: true });
+    window.addEventListener('pointerdown', onInteract, { once: true, passive: true });
+}
+
 function boot() {
     initHeroEntrance();
     initScrollReveals();
+    initNavScroll();
+
+    const canvas = document.querySelector('.planet-canvas');
+    if (! canvas) {
+        return;
+    }
+
+    if (shouldSkipWebGL()) {
+        canvas.remove();
+        return;
+    }
+
+    startPlanetWhenIdle(canvas);
 }
 
 if (document.readyState === 'loading') {

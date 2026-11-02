@@ -12,19 +12,7 @@
  <h1 class="hero-headline">
  <span class="hero-headline__line">{{ $lineOne }}</span>
  @if ($lineTwo !== '')
- <span
- class="hero-headline__line text-gradient hero-typewriter"
- x-data="heroTypewriter(@js($lineTwo))"
- x-init="start()"
- >
- <span class="sr-only">{{ $lineTwo }}</span>
- <span class="hero-typewriter__text" aria-hidden="true" x-text="displayed">{{ $lineTwo }}</span><span
- class="hero-typewriter__caret"
- aria-hidden="true"
- :class="done && 'is-idle'"
- x-cloak
- ></span>
- </span>
+ <span class="hero-headline__line text-gradient">{{ $lineTwo }}</span>
  @endif
  </h1>
  <p class="hero-bio">{{ $portfolio['bio'] }}</p>
@@ -35,11 +23,11 @@
  @if (! empty($heroTech ?? []))
  <div class="hero-tech" aria-label="Core technologies">
  <div class="hero-tech__track">
- @foreach (array_merge($heroTech, $heroTech) as $tech)
- <span class="hero-tech__item">
+ @foreach ($heroTech as $tech)
+ <a href="{{ route('stack.show', $tech['slug']) }}" class="hero-tech__item">
  <x-icon :name="$tech['icon'] ?? 'code'" :size="14" />
  {{ $tech['name'] }}
- </span>
+ </a>
  @endforeach
  </div>
  </div>

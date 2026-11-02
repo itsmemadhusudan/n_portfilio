@@ -10,7 +10,7 @@
     <section class="page-wrap pb-10">
         <x-section-title
             title="PHP, Laravel, React, Vue.js and Node.js developer skills"
-            subtitle="Tap a skill to open related projects. Learning badges mark technologies I am actively building with."
+            subtitle="Tap a skill to open its guide and related projects — PHP, Node.js, Express, NestJS, Django, PostgreSQL, and more."
         />
         @include('portfolio.partials.skills-tabs', [
             'skillsByCategory' => $skillsByCategory,

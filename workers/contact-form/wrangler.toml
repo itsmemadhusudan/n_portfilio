@@ -1,0 +1,10 @@
+name = "portfolio-contact"
+main = "worker.js"
+compatibility_date = "2024-11-01"
+
+# Non-secret defaults. Mailjet API keys are set as secrets (or temp vars for preview deploy).
+[vars]
+FROM_EMAIL = "timmadh@gmail.com"
+TO_EMAIL = "timmadh@gmail.com"
+FROM_NAME = "Madhusudan Timalsina"
+ALLOWED_ORIGIN = "https://madhusudantimalsina.com.np"

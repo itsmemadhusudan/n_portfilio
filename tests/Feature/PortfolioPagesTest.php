@@ -64,6 +64,46 @@ class PortfolioPagesTest extends TestCase
         $response->assertSee('Yfasma', false);
     }
 
+    public function test_php_stack_guide_renders_seo_content(): void
+    {
+        $response = $this->get('/stack/php');
+
+        $response->assertOk();
+        $response->assertSee('PHP developer guide', false);
+        $response->assertSee('Popular PHP frameworks', false);
+        $response->assertSee('Laravel', false);
+        $response->assertSee('PHP Developer Guide', false);
+        $response->assertSee('FAQPage', false);
+    }
+
+    public function test_backend_stack_guides_render(): void
+    {
+        foreach (['nodejs', 'express', 'nestjs', 'django', 'postgresql', 'laravel', 'react', 'vue'] as $slug) {
+            $response = $this->get('/stack/'.$slug);
+            $response->assertOk();
+            $response->assertSee('FAQPage', false);
+            $response->assertSee('TechArticle', false);
+            $response->assertSee('developer guide', false);
+        }
+
+        $this->get('/stack/nodejs')->assertSee('Node.js developer guide', false);
+        $this->get('/stack/express')->assertSee('Express.js developer guide', false);
+        $this->get('/stack/nestjs')->assertSee('NestJS developer guide', false);
+        $this->get('/stack/django')->assertSee('Django developer guide', false);
+        $this->get('/stack/postgresql')->assertSee('PostgreSQL developer guide', false);
+        $this->get('/stack/laravel')->assertSee('Laravel developer guide', false);
+    }
+
+    public function test_every_skill_stack_page_has_guide_content(): void
+    {
+        $response = $this->get('/stack/docker');
+
+        $response->assertOk();
+        $response->assertSee('Docker developer guide', false);
+        $response->assertSee('What is Docker?', false);
+        $response->assertSee('Related stack', false);
+    }
+
     public function test_stack_show_returns_404_for_unknown_skill(): void
     {
         $this->get('/stack/does-not-exist')->assertNotFound();
