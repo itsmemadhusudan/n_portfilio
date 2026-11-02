@@ -600,7 +600,7 @@ return [
         'image' => '/images/bgimage-avatar.jpg',
         'image_alt' => 'Madhusudan Timalsina, web developer in Lalitpur, Nepal',
         'locale' => 'en_US',
-        'theme_color' => '#0a0a1f',
+        'theme_color' => '#04060f',
         'pages' => [
             'home' => [
                 'path' => '/',

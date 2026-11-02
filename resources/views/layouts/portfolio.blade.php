@@ -41,7 +41,6 @@
     <link rel="icon" href="{{ asset('favicon.png') }}" type="image/png">
     <link rel="apple-touch-icon" href="{{ asset('favicon.png') }}">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="{{ $seo['site_url'] }}/sitemap.xml">
-
     @php
         $personId = $seo['site_url'].'/#person';
         $websiteId = $seo['site_url'].'/#website';
@@ -128,7 +127,7 @@
             ],
         ];
 
-        if ($pageKey === 'contact' && ! empty($seo['faqs'])) {
+        if (! empty($seo['faqs']) && ($pageKey === 'contact' || str_starts_with($seo['path'] ?? '', '/stack/'))) {
             $graph[] = [
                 '@type' => 'FAQPage',
                 '@id' => $seo['canonical'].'#faq',
@@ -140,6 +139,19 @@
                         'text' => $faq['answer'],
                     ],
                 ], $seo['faqs']),
+            ];
+        }
+
+        if (str_starts_with($seo['path'] ?? '', '/stack/') && ! empty($seo['h1'])) {
+            $graph[] = [
+                '@type' => 'TechArticle',
+                '@id' => $seo['canonical'].'#article',
+                'headline' => $seo['h1'],
+                'description' => $seo['description'],
+                'author' => ['@id' => $personId],
+                'publisher' => ['@id' => $personId],
+                'mainEntityOfPage' => $seo['canonical'],
+                'inLanguage' => 'en',
             ];
         }
 
@@ -161,6 +173,11 @@
     @endif
 </head>
 <body class="min-h-screen w-full antialiased">
+    <div class="space-fallback" aria-hidden="true">
+        <div class="space-fallback__stars"></div>
+        <div class="space-fallback__glow"></div>
+    </div>
+    <canvas class="planet-canvas" aria-hidden="true"></canvas>
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-3 focus:py-2 focus:bg-[var(--surface-1)] focus:text-[var(--text-primary)] focus:rounded-[6px]">
         Skip to content
     </a>

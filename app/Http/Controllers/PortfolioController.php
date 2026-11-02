@@ -69,18 +69,26 @@ class PortfolioController extends Controller
         }
 
         $projects = Portfolio::projectsForSkill($slug);
+        $guide = Portfolio::stackGuideForSkill($skill);
         $name = $skill['name'];
+        $skillMap = Portfolio::skillMap();
+        $relatedSkills = Portfolio::relatedSkillsFor($skill);
+
+        $seoOverride = [
+            'title' => $guide['seo_title'],
+            'description' => $guide['seo_description'],
+            'path' => '/stack/'.$slug,
+            'h1' => $guide['h1'],
+            'faqs' => $guide['faqs'] ?? [],
+        ];
 
         return $this->page('portfolio.stack-show', 'skills', [
             'skill' => $skill,
             'projects' => $projects,
-            'skillMap' => Portfolio::skillMap(),
-        ], [
-            'title' => $name.' developer projects | Madhusudan Timalsina',
-            'description' => $name.' developer projects from Madhusudan Timalsina, a web developer in Lalitpur, Nepal. Filter my developer portfolio by '.$name.'.',
-            'path' => '/stack/'.$slug,
-            'h1' => $name.' developer projects',
-        ]);
+            'guide' => $guide,
+            'relatedSkills' => $relatedSkills,
+            'skillMap' => $skillMap,
+        ], $seoOverride);
     }
 
     public function education(): View
@@ -124,7 +132,7 @@ class PortfolioController extends Controller
                 'locale' => $seo['locale'] ?? 'en_US',
                 'theme_color' => $seo['theme_color'] ?? '#0a0a1f',
                 'twitter' => $seo['twitter'] ?? null,
-                'faqs' => $seo['faqs'] ?? [],
+                'faqs' => $seoOverride['faqs'] ?? ($seo['faqs'] ?? []),
                 'knows_about' => $seo['knows_about'] ?? [],
                 'area_served' => $seo['area_served'] ?? [],
             ],
