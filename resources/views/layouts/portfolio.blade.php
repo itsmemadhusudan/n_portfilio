@@ -172,12 +172,14 @@
         @vite(['resources/js/app.js'])
     @endif
 </head>
-<body class="min-h-screen w-full antialiased">
+<body class="min-h-screen w-full antialiased" data-page="{{ $pageKey }}">
     <div class="space-fallback" aria-hidden="true">
         <div class="space-fallback__stars"></div>
         <div class="space-fallback__glow"></div>
     </div>
-    <canvas class="planet-canvas" aria-hidden="true"></canvas>
+    @if ($pageKey === 'home')
+        <canvas class="planet-canvas" aria-hidden="true"></canvas>
+    @endif
     <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-3 focus:py-2 focus:bg-[var(--surface-1)] focus:text-[var(--text-primary)] focus:rounded-[6px]">
         Skip to content
     </a>

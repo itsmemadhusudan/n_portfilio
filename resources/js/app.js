@@ -184,13 +184,12 @@ function startPlanetWhenIdle(canvas) {
             .catch((err) => console.error('Planet scene failed to load', err));
     };
 
-    // Wait until the page has fully loaded, then only when the browser is idle
-    // (or after a short timeout / first interaction) so first paint stays smooth.
+    // Keep first paint CSS-only; upgrade Earth after load + idle.
     const schedule = () => {
         if ('requestIdleCallback' in window) {
-            requestIdleCallback(start, { timeout: 2500 });
+            requestIdleCallback(start, { timeout: 3200 });
         } else {
-            setTimeout(start, 1200);
+            setTimeout(start, 1600);
         }
     };
 
@@ -200,10 +199,7 @@ function startPlanetWhenIdle(canvas) {
         window.addEventListener('load', schedule, { once: true });
     }
 
-    // If the user scrolls/taps sooner, upgrade then (still after a tiny yield)
-    const onInteract = () => {
-        setTimeout(start, 100);
-    };
+    const onInteract = () => setTimeout(start, 120);
     window.addEventListener('scroll', onInteract, { once: true, passive: true });
     window.addEventListener('pointerdown', onInteract, { once: true, passive: true });
 }
@@ -213,6 +209,7 @@ function boot() {
     initScrollReveals();
     initNavScroll();
 
+    // WebGL planet is home-only (canvas omitted on other pages)
     const canvas = document.querySelector('.planet-canvas');
     if (! canvas) {
         return;

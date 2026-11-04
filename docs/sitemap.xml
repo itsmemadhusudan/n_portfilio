@@ -50,7 +50,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-  <url><loc>https://madhusudantimalsina.com.np/stack/php</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/php</loc><changefreq>weekly</changefreq><priority>0.85</priority></url>
   <url><loc>https://madhusudantimalsina.com.np/stack/javascript</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://madhusudantimalsina.com.np/stack/typescript</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://madhusudantimalsina.com.np/stack/python</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
@@ -58,11 +58,11 @@
   <url><loc>https://madhusudantimalsina.com.np/stack/html5</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://madhusudantimalsina.com.np/stack/css3</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://madhusudantimalsina.com.np/stack/laravel</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
-  <url><loc>https://madhusudantimalsina.com.np/stack/nodejs</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://madhusudantimalsina.com.np/stack/express</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://madhusudantimalsina.com.np/stack/nestjs</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/nodejs</loc><changefreq>weekly</changefreq><priority>0.85</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/express</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/nestjs</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://madhusudantimalsina.com.np/stack/fastapi</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
-  <url><loc>https://madhusudantimalsina.com.np/stack/django</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/django</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
   <url><loc>https://madhusudantimalsina.com.np/stack/react</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://madhusudantimalsina.com.np/stack/nextjs</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://madhusudantimalsina.com.np/stack/vue</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
@@ -72,7 +72,7 @@
   <url><loc>https://madhusudantimalsina.com.np/stack/livewire</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://madhusudantimalsina.com.np/stack/inertia</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://madhusudantimalsina.com.np/stack/mysql</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
-  <url><loc>https://madhusudantimalsina.com.np/stack/postgresql</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://madhusudantimalsina.com.np/stack/postgresql</loc><changefreq>weekly</changefreq><priority>0.85</priority></url>
   <url><loc>https://madhusudantimalsina.com.np/stack/mongodb</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://madhusudantimalsina.com.np/stack/redis</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
   <url><loc>https://madhusudantimalsina.com.np/stack/sqlite</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>

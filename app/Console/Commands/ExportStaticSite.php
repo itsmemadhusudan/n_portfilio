@@ -122,11 +122,17 @@ class ExportStaticSite extends Command
         }
 
         File::copyDirectory(public_path('build'), $output.'/build');
-        $this->components->twoColumnDetail('assets', $this->relative($output.'/build'));
+        $this->components->twoColumnDetail('build', $this->relative($output.'/build'));
 
         if (File::isDirectory(public_path('images'))) {
             File::copyDirectory(public_path('images'), $output.'/images');
             $this->components->twoColumnDetail('images', $this->relative($output.'/images'));
+        }
+
+        // Planet textures and other static assets used by the WebGL landing scene
+        if (File::isDirectory(public_path('assets'))) {
+            File::copyDirectory(public_path('assets'), $output.'/assets');
+            $this->components->twoColumnDetail('assets', $this->relative($output.'/assets'));
         }
 
         foreach (self::COPIED_FILES as $file) {
