@@ -9,6 +9,7 @@ foreach ($files as $path => [$maxW, $q]) {
     $info = getimagesize($path);
     if (! $info) {
         echo "fail {$path}\n";
+
         continue;
     }
 

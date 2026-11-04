@@ -10,25 +10,39 @@ I build web applications across PHP, Laravel, React, Vue, Python and Node.js —
 
 ## What's in this repo
 
-Laravel + Blade + Tailwind CSS + Alpine.js portfolio. **All content lives in `config/portfolio.php`** (skills, projects, SEO, bios). No Filament/admin panel and no portfolio database tables.
+Laravel + Blade + Tailwind CSS + Alpine.js portfolio with a deep-space landing (deferred Three.js Earth on the home page only). **Content lives in config** — no admin panel and no portfolio database.
+
+| Source | Purpose |
+| --- | --- |
+| `config/portfolio.php` | Skills, projects, SEO, bios, nav, contact |
+| `config/stack-guides.php` | Long-form stack / SEO guides (PHP, Laravel, Node, …) |
 
 | Route | Page |
 | --- | --- |
-| `/` | Home |
+| `/` | Home (hero + planet backdrop) |
 | `/about` | About |
-| `/skills` | Skills (category tabs) |
+| `/skills` | Skills (category tabs → stack pages) |
 | `/projects` | Projects (Alpine type/tech filters) |
 | `/projects/{slug}` | Project case study |
-| `/stack/{slug}` | Projects for a skill |
+| `/stack/{slug}` | Skill stack guide + related projects |
 | `/education` | Education |
 | `/contact` | Contact |
 
-## Edit content (no admin)
+Every skill has a `/stack/{slug}` page: custom guide when defined in `stack-guides.php`, otherwise a generated fallback.
 
-1. Change `config/portfolio.php` — `skills[]`, `projects[]`, SEO, copy
-2. `npm run build`
-3. `php artisan site:export --base=https://madhusudantimalsina.com.np`
-4. Commit and push (including `docs/` for GitHub Pages)
+## Edit content
+
+1. Change `config/portfolio.php` and/or `config/stack-guides.php`
+2. `pnpm run build` (or `npm run build`)
+3. **Re-export static Pages site** (required for GitHub Pages to update):
+
+```bash
+php artisan site:export --base=https://madhusudantimalsina.com.np
+```
+
+4. Commit **including `docs/`** and push `main`
+
+GitHub Pages serves **`main` → `/docs`**. Editing Laravel views alone does **not** update the live site until you re-run `site:export` and push `docs/`.
 
 Skill fields: `name`, `slug`, `category`, `icon`, `proficiency` (`expert`|`proficient`|`learning`), `featured`, `sort_order`.
 
@@ -38,76 +52,81 @@ Project fields: `name`, `slug`, `summary`, `problem`, `solution`, `result`, `typ
 
 ```bash
 composer install
-npm install
+pnpm install          # or: npm install
 cp .env.example .env
 php artisan key:generate
-php artisan serve   # terminal 1
-npm run dev         # terminal 2
+php artisan serve     # terminal 1
+pnpm run dev          # terminal 2 (Vite)
 ```
 
 Open http://127.0.0.1:8000.
 
-### Contact form (Mailjet SMTP)
+### Contact form
 
-The `/contact` form emails you the message and sends the visitor a confirmation. Mailjet SMTP, from/to addresses, and form enablement are hardcoded in `config/mail.php` and `config/portfolio.php` (no mail keys needed in `.env`).
-
-Keep `QUEUE_CONNECTION=sync` so mail sends immediately. Static GitHub Pages export turns the form off via `site:export`.
+- **Local / PHP host:** Laravel + Mailjet (`config/mail.php`, `config/portfolio.php`). Keep `QUEUE_CONNECTION=sync`.
+- **GitHub Pages:** static export keeps the form and posts via [FormSubmit](https://formsubmit.co) (no PHP on Pages).
 
 Never commit `.env` — only `.env.example` / `.env.production.example`.
 
 ## Build & publish
 
-See [DEPLOY.md](DEPLOY.md) for full steps.
+Full steps: [DEPLOY.md](DEPLOY.md).
 
 ```bash
-npm run build
+pnpm run build
 php artisan site:export --base=https://madhusudantimalsina.com.np
 ```
 
-That updates `docs/` for GitHub Pages (branch `main`, folder `/docs`). `--base` must match the live domain.
+`--base` must match the live domain. Export copies:
 
-PHP host instead of Pages: point the web root at `public/`, copy `.env.production.example` → `.env`, run `php artisan key:generate`, then `composer deploy`. No database required for portfolio content.
+- HTML for all portfolio + stack + project pages
+- `public/build/` → `docs/build/`
+- `public/images/` → `docs/images/`
+- `public/assets/` → `docs/assets/` (Earth textures for the landing WebGL scene)
+- `CNAME`, `.nojekyll`, sitemap, robots, headers
+
+Optional: compress planet textures before build:
+
+```bash
+php scripts/compress-planet-textures.php
+```
+
+PHP host instead of Pages: point the web root at `public/`, copy `.env.production.example` → `.env`, `php artisan key:generate`, then `composer deploy`. No database required for portfolio content.
 
 ## Project layout
 
 ```
 config/portfolio.php                         content, SEO, skills, projects
-app/Support/Portfolio.php                    helpers over config
+config/stack-guides.php                      stack guide articles + FAQs
+app/Support/Portfolio.php                    helpers + guide fallbacks
 app/Http/Controllers/PortfolioController.php pages
 app/Console/Commands/ExportStaticSite.php    static export → docs/
-resources/views/layouts/portfolio.blade.php  layout + schema
+resources/views/layouts/portfolio.blade.php  layout + schema + space bg
 resources/views/portfolio/                   pages & partials
-resources/views/components/                  reusable UI (card, button, skill-badge, …)
-resources/css/app.css                        cyberpunk neon theme tokens
-docs/                                        static export for GitHub Pages
+resources/js/app.js                          Alpine + deferred planet boot
+resources/js/planet/scene.js                 lightweight Three.js Earth
+resources/css/app.css                        deep-space + mint theme
+public/assets/planet/                        Earth day/night/cloud maps
+docs/                                        GitHub Pages publish folder
+workers/contact-form/                        optional Cloudflare Worker mail
 ```
 
-## Design system (cyberpunk neon)
+## Design (deep space + mint)
 
-Tokens live in `resources/css/app.css` (`@theme` + `:root`) — Tailwind v4 CSS-first config (no `tailwind.config.js`).
+Tokens live in `resources/css/app.css` (Tailwind v4 CSS-first — no `tailwind.config.js`).
 
-| Token | Value |
-| --- | --- |
-| Page / section / surface | `#0a0a1f` / `#0f0f2d` / `#14143a` |
-| Accent gradient | `#8b3dff` → `#3b82f6` |
-| Neon cyan / violet | `#22d3ee` / `#a855f7` |
-| Text | `#e8e8f5` primary, `#9a9ac0` muted |
-| Radius | `6px` |
-| Glow | `0 0 18px rgba(139,61,255,.25)` |
-| Fonts | JetBrains Mono (headings/logo), Inter (body) |
-
-Reusable Blade components:
-
-- `x-card` — neon-bordered surface
-- `x-button` — solid gradient or ghost neon outline
-- `x-section-title` — eyebrow + title + optional subtitle
-- `x-stat-card` — icon + monospace value + label
-- `x-page-header` — inner-page H1 block
-- `x-skill-badge` — skill chip with optional Learning label
-- `x-icon` — inline SVG icons
+- Dark space background with CSS starfield fallback, then deferred WebGL Earth on **home only**
+- Mint accent CTAs; Inter + JetBrains Mono
+- First paint stays CSS-only; Three.js loads after idle / interaction
+- Mobile / low-end / reduced-motion skip WebGL
 
 ## SEO checklist
 
 1. Live: [robots.txt](https://madhusudantimalsina.com.np/robots.txt) and [sitemap.xml](https://madhusudantimalsina.com.np/sitemap.xml)
 2. Submit the sitemap in [Google Search Console](https://search.google.com/search-console)
 3. Keep **Madhusudan Timalsina**, **Developer** and **Smart Sarks** identical on the site, LinkedIn and GitHub
+4. Stack guides expose `FAQPage` / `TechArticle` JSON-LD where configured
+
+## CI
+
+GitHub Actions (`.github/workflows/ci.yml`) runs Pint and `php artisan test` on push/PR to `main`.
