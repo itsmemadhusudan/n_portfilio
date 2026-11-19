@@ -1,41 +1,38 @@
-@extends('layouts.portfolio')
+@extends('layouts.app')
 
 @section('content')
     <x-page-header
-        eyebrow="{{ $guide['eyebrow'] ?? 'Technology' }}"
+        :eyebrow="$guide['eyebrow'] ?? 'Technology'"
         :title="$seo['h1']"
         :subtitle="$guide['subtitle'] ?? ('Projects and notes tagged with '.$skill['name'].($skill['proficiency'] === 'learning' ? ' (currently learning)' : '').'.')"
     />
 
-    <section class="page-wrap pb-10 stack-guide">
-        <div class="mb-6 flex flex-wrap items-center gap-3">
-            <x-skill-badge
-                :name="$skill['name']"
-                :slug="$skill['slug']"
-                :proficiency="$skill['proficiency'] ?? 'proficient'"
-                :icon="$skill['icon'] ?? 'code'"
-            />
-            <p class="text-sm" style="color: var(--text-secondary);">
-                Proficiency: <strong style="color: var(--text-primary);">{{ ucfirst($skill['proficiency'] ?? 'proficient') }}</strong>
-                · Category: {{ $portfolio['skill_categories'][$skill['category']] ?? $skill['category'] }}
-            </p>
-        </div>
+    <section class="page-body stack-guide">
+        <div class="container">
+            <div class="chip-row" style="margin-bottom:1.25rem">
+                <x-skill-badge
+                    :name="$skill['name']"
+                    :slug="$skill['slug']"
+                    :proficiency="$skill['proficiency'] ?? 'proficient'"
+                />
+                <span class="muted">
+                    Proficiency: <strong style="color:var(--text-dark)">{{ ucfirst($skill['proficiency'] ?? 'proficient') }}</strong>
+                    · {{ $portfolio['skill_categories'][$skill['category']] ?? $skill['category'] }}
+                </span>
+            </div>
 
-        @if (! empty($guide))
-            <article class="stack-guide__article neon-card mb-8">
-                <div class="neon-card__inner p-6 sm:p-8">
+            @if (! empty($guide))
+                <article class="ui-card" style="margin-bottom:1.5rem">
                     @if (! empty($guide['intro']))
-                        <p class="stack-guide__lead">{{ $guide['intro'] }}</p>
+                        <p class="muted" style="font-size:1.05rem">{{ $guide['intro'] }}</p>
                     @endif
 
                     @foreach ($guide['sections'] ?? [] as $section)
-                        <section class="stack-guide__section">
+                        <section>
                             <h2>{{ $section['heading'] }}</h2>
-
                             @foreach ($section['body'] ?? [] as $paragraph)
                                 <p>{{ $paragraph }}</p>
                             @endforeach
-
                             @if (! empty($section['bullets']))
                                 <ul>
                                     @foreach ($section['bullets'] as $bullet)
@@ -43,23 +40,20 @@
                                     @endforeach
                                 </ul>
                             @endif
-
                             @if (! empty($section['frameworks']))
-                                <div class="stack-guide__frameworks">
+                                <div class="card-grid" style="margin-top:1rem">
                                     @foreach ($section['frameworks'] as $framework)
-                                        <div class="stack-guide__framework">
-                                            <div class="stack-guide__framework-top">
+                                        <div class="ui-card">
+                                            <h3>
                                                 @if (! empty($framework['slug']))
-                                                    <a href="{{ route('stack.show', $framework['slug']) }}" class="stack-guide__framework-name">
-                                                        {{ $framework['name'] }}
-                                                    </a>
+                                                    <a href="{{ route('stack.show', $framework['slug']) }}">{{ $framework['name'] }}</a>
                                                 @else
-                                                    <span class="stack-guide__framework-name">{{ $framework['name'] }}</span>
+                                                    {{ $framework['name'] }}
                                                 @endif
-                                                @if (! empty($framework['level']))
-                                                    <span class="stack-guide__framework-level">{{ $framework['level'] }}</span>
-                                                @endif
-                                            </div>
+                                            </h3>
+                                            @if (! empty($framework['level']))
+                                                <p class="eyebrow">{{ $framework['level'] }}</p>
+                                            @endif
                                             <p>{{ $framework['desc'] }}</p>
                                         </div>
                                     @endforeach
@@ -67,66 +61,58 @@
                             @endif
                         </section>
                     @endforeach
-                </div>
-            </article>
+                </article>
 
-            @if (! empty($relatedSkills))
-                <div class="mb-8">
-                    <h2 class="section-label mb-3">Related stack</h2>
-                    <div class="flex flex-wrap gap-2">
-                        @foreach ($relatedSkills as $related)
-                            <x-skill-badge
-                                :name="$related['name']"
-                                :slug="$related['slug']"
-                                :proficiency="$related['proficiency'] ?? 'proficient'"
-                                :icon="$related['icon'] ?? 'code'"
-                                :href="route('stack.show', $related['slug'])"
-                            />
-                        @endforeach
+                @if (! empty($relatedSkills))
+                    <div style="margin-bottom:1.5rem">
+                        <h2 class="section-title" style="font-size:1.2rem">Related stack</h2>
+                        <div class="chip-row" style="margin-top:.75rem">
+                            @foreach ($relatedSkills as $related)
+                                <x-skill-badge
+                                    :name="$related['name']"
+                                    :slug="$related['slug']"
+                                    :proficiency="$related['proficiency'] ?? 'proficient'"
+                                />
+                            @endforeach
+                        </div>
                     </div>
+                @endif
+
+                @if (! empty($guide['faqs']))
+                    <div style="margin-bottom:2rem">
+                        <h2 class="section-title" style="font-size:1.2rem">{{ $skill['name'] }} FAQ</h2>
+                        <div class="card-grid" style="margin-top:1rem">
+                            @foreach ($guide['faqs'] as $faq)
+                                <details class="ui-card">
+                                    <summary style="cursor:pointer;font-weight:700">{{ $faq['question'] }}</summary>
+                                    <p style="margin-top:.75rem">{{ $faq['answer'] }}</p>
+                                </details>
+                            @endforeach
+                        </div>
+                    </div>
+                @endif
+            @endif
+
+            <h2 class="section-title" style="font-size:1.2rem">{{ $skill['name'] }} projects</h2>
+            <p class="muted" style="margin:.5rem 0 1rem">Real work tagged with {{ $skill['name'] }} from this portfolio.</p>
+
+            @if (count($projects))
+                <div class="card-grid card-grid--3">
+                    @foreach ($projects as $project)
+                        @include('portfolio.partials.project-card', ['project' => $project, 'skillMap' => $skillMap])
+                    @endforeach
+                </div>
+            @else
+                <div class="ui-card">
+                    <p>No public projects tagged with {{ $skill['name'] }} yet — the guide above still covers how I approach this technology.</p>
                 </div>
             @endif
 
-            @if (! empty($guide['faqs']))
-                <div class="mb-10">
-                    <h2 class="section-label mb-4">{{ $skill['name'] }} FAQ</h2>
-                    <div class="stack-guide__faqs">
-                        @foreach ($guide['faqs'] as $faq)
-                            <details class="stack-guide__faq neon-card">
-                                <summary>{{ $faq['question'] }}</summary>
-                                <p>{{ $faq['answer'] }}</p>
-                            </details>
-                        @endforeach
-                    </div>
-                </div>
-            @endif
-        @endif
-
-        <div class="mb-4">
-            <h2 class="section-label mb-2">{{ $skill['name'] }} projects</h2>
-            <p class="text-sm mb-4" style="color: var(--text-secondary);">
-                Real work tagged with {{ $skill['name'] }} from this portfolio.
-            </p>
-        </div>
-
-        @if (count($projects))
-            <div class="project-grid">
-                @foreach ($projects as $project)
-                    @include('portfolio.partials.project-card', ['project' => $project, 'skillMap' => $skillMap])
-                @endforeach
+            <div class="about-actions" style="margin-top:1.75rem">
+                <x-button :href="route('contact')" variant="primary">{{ $guide['cta_label'] ?? ('Hire a '.$skill['name'].' developer') }}</x-button>
+                <x-button :href="route('projects', ['tech' => $skill['slug']])" variant="ghost">Filter all projects</x-button>
+                <x-button :href="route('skills')" variant="ghost">Back to skills</x-button>
             </div>
-        @else
-            <x-card padding="p-6">
-                <p class="text-sm" style="color: var(--text-secondary);">
-                    No public projects tagged with {{ $skill['name'] }} yet — the guide above still covers how I approach this technology.
-                </p>
-            </x-card>
-        @endif
-
-        <div class="mt-8 flex flex-wrap gap-3">
-            <x-button :href="route('contact')" variant="solid">{{ $guide['cta_label'] ?? ('Hire a '.$skill['name'].' developer') }}</x-button>
-            <x-button :href="route('projects', ['tech' => $skill['slug']])" variant="ghost">Filter all projects</x-button>
-            <x-button :href="route('skills')" variant="ghost">Back to skills</x-button>
         </div>
     </section>
 @endsection

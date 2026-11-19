@@ -4,14 +4,24 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="google-site-verification" content="K8Ai_OXXDW3Ph4PMbheHyoZ1G1vXbPonnIAcqas9Yh4" />
+    <script>
+        (() => {
+            try {
+                const saved = localStorage.getItem('theme');
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                if (saved === 'dark' || (!saved && prefersDark)) {
+                    document.documentElement.classList.add('dark');
+                }
+            } catch (_) {}
+        })();
+    </script>
         <title>JWT Developer Guide — APIs | Madhusudan Timalsina</title>
     <meta name="description" content="Learn about JWT for web development: what it is, when to use it, practical guidance, and projects by Madhusudan Timalsina, a developer in Lalitpur, Nepal.">
             <meta name="keywords" content="developer, web developer, software developer, backend developer, frontend developer, website developer, application developer, web application developer, API developer, developer portfolio, web developer portfolio, software developer portfolio, portfolio website for developers, hire a developer, hire a web developer, developer for hire, freelance developer, freelance web developer, remote developer, available for hire, PHP developer, Laravel developer, React developer, Vue.js developer, Next.js developer, Node.js developer, Python developer, JavaScript developer, TypeScript developer, React and Laravel developer, Laravel and Vue.js developer, Node.js and React developer, Next.js and Node.js developer, PHP and JavaScript developer, web application development, custom web development, REST API development, API integration, database design, e-commerce development, responsive web design, backend development, frontend development, authentication and authorization, developer in Nepal, developer in Lalitpur, web developer in Nepal, Laravel developer in Nepal, remote developer from Nepal, freelance developer Nepal, Madhusudan Timalsina, Smart Sarks, Apex College BCIS">
         <meta name="author" content="Madhusudan Timalsina">
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
-    <meta name="googlebot" content="index, follow">
-    <meta name="theme-color" content="#04060f">
-    <meta name="color-scheme" content="dark">
+    <meta name="theme-color" content="#0F3A3F">
+    <meta name="color-scheme" content="light dark">
     <link rel="canonical" href="https://madhusudantimalsina.com.np/stack/jwt">
 
     <meta property="og:type" content="profile">
@@ -20,743 +30,293 @@
     <meta property="og:url" content="https://madhusudantimalsina.com.np/stack/jwt">
     <meta property="og:title" content="JWT Developer Guide — APIs | Madhusudan Timalsina">
     <meta property="og:description" content="Learn about JWT for web development: what it is, when to use it, practical guidance, and projects by Madhusudan Timalsina, a developer in Lalitpur, Nepal.">
-    <meta property="og:image" content="https://madhusudantimalsina.com.np/images/bgimage-avatar.jpg">
+    <meta property="og:image" content="https://madhusudantimalsina.com.np/images/portrait.jpg">
     <meta property="og:image:alt" content="Madhusudan Timalsina, web developer in Lalitpur, Nepal">
 
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="JWT Developer Guide — APIs | Madhusudan Timalsina">
     <meta name="twitter:description" content="Learn about JWT for web development: what it is, when to use it, practical guidance, and projects by Madhusudan Timalsina, a developer in Lalitpur, Nepal.">
-    <meta name="twitter:image" content="https://madhusudantimalsina.com.np/images/bgimage-avatar.jpg">
+    <meta name="twitter:image" content="https://madhusudantimalsina.com.np/images/portrait.jpg">
     <meta name="twitter:image:alt" content="Madhusudan Timalsina, web developer in Lalitpur, Nepal">
-    
-    <link rel="icon" href="https://madhusudantimalsina.com.np/favicon.png" type="image/png">
-    <link rel="apple-touch-icon" href="https://madhusudantimalsina.com.np/favicon.png">
+
+    <link rel="icon" href="https://madhusudantimalsina.com.np/images/logo/logo-icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="https://madhusudantimalsina.com.np/images/logo/logo-icon.svg">
     <link rel="sitemap" type="application/xml" title="Sitemap" href="https://madhusudantimalsina.com.np/sitemap.xml">
-        <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://madhusudantimalsina.com.np/#person","name":"Madhusudan Timalsina","url":"https://madhusudantimalsina.com.np/","image":"https://madhusudantimalsina.com.np/images/bgimage-avatar.jpg","jobTitle":"Developer","description":"Developer at Smart Sarks and React and Laravel developer for hire. I build web apps and REST APIs with PHP, Laravel, React, Vue.js, Next.js, Node.js and Python, with clear database design and authentication flows for production products.","email":"mailto:timmadh@gmail.com","address":{"@type":"PostalAddress","addressCountry":"NP","addressLocality":"Lalitpur","addressRegion":"Bagmati"},"areaServed":[{"@type":"City","name":"Lalitpur"},{"@type":"City","name":"Kathmandu"},{"@type":"Country","name":"Nepal"},"Remote"],"worksFor":{"@type":"Organization","name":"Smart Sarks"},"alumniOf":{"@type":"CollegeOrUniversity","name":"Apex College"},"knowsAbout":["PHP","Laravel","React","Vue.js","Next.js","Python","Node.js","JavaScript","TypeScript","REST API","MySQL","PostgreSQL","Database design","Web application development"],"sameAs":["https://www.linkedin.com/in/madhusudan-timalsina-75a910183/","https://github.com/itsmemadhusudan"]},{"@type":"WebSite","@id":"https://madhusudantimalsina.com.np/#website","url":"https://madhusudantimalsina.com.np/","name":"Madhusudan Timalsina","description":"Learn about JWT for web development: what it is, when to use it, practical guidance, and projects by Madhusudan Timalsina, a developer in Lalitpur, Nepal.","publisher":{"@id":"https://madhusudantimalsina.com.np/#person"},"inLanguage":"en"},{"@type":"WebPage","@id":"https://madhusudantimalsina.com.np/stack/jwt#webpage","url":"https://madhusudantimalsina.com.np/stack/jwt","name":"JWT Developer Guide — APIs | Madhusudan Timalsina","description":"Learn about JWT for web development: what it is, when to use it, practical guidance, and projects by Madhusudan Timalsina, a developer in Lalitpur, Nepal.","isPartOf":{"@id":"https://madhusudantimalsina.com.np/#website"},"about":{"@id":"https://madhusudantimalsina.com.np/#person"},"inLanguage":"en"},{"@type":"BreadcrumbList","@id":"https://madhusudantimalsina.com.np/stack/jwt#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://madhusudantimalsina.com.np/"},{"@type":"ListItem","position":2,"name":"JWT developer guide","item":"https://madhusudantimalsina.com.np/stack/jwt"}]},{"@type":"FAQPage","@id":"https://madhusudantimalsina.com.np/stack/jwt#faq","mainEntity":[{"@type":"Question","name":"What is JWT used for?","acceptedAnswer":{"@type":"Answer","text":"JWT is used in web development as a API or integration approach for connecting clients and services. It helps teams build and maintain application features more effectively."}},{"@type":"Question","name":"Do you work with JWT?","acceptedAnswer":{"@type":"Answer","text":"Yes. JWT is part of my skill set (proficient). See related projects on this page or contact me for freelance work."}},{"@type":"Question","name":"Where can I see JWT in your portfolio?","acceptedAnswer":{"@type":"Answer","text":"Scroll to the projects section on this page for work tagged with JWT, or filter the projects list by this technology."}}]},{"@type":"TechArticle","@id":"https://madhusudantimalsina.com.np/stack/jwt#article","headline":"JWT developer guide","description":"Learn about JWT for web development: what it is, when to use it, practical guidance, and projects by Madhusudan Timalsina, a developer in Lalitpur, Nepal.","author":{"@id":"https://madhusudantimalsina.com.np/#person"},"publisher":{"@id":"https://madhusudantimalsina.com.np/#person"},"mainEntityOfPage":"https://madhusudantimalsina.com.np/stack/jwt","inLanguage":"en"}]}</script>
 
-                <style>/* Above-the-fold styles inlined in <head> — keep in sync with app.css hero/frame/nav rules. */
+        <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Person","@id":"https://madhusudantimalsina.com.np/#person","name":"Madhusudan Timalsina","url":"https://madhusudantimalsina.com.np/","image":"https://madhusudantimalsina.com.np/images/portrait.jpg","jobTitle":"Developer","description":"Developer at Smart Sarks and React and Laravel developer for hire. I build web apps and REST APIs with PHP, Laravel, React, Vue.js, Next.js, Node.js and Python, with clear database design and authentication flows for production products.","email":"mailto:timmadh@gmail.com","address":{"@type":"PostalAddress","addressCountry":"NP","addressLocality":"Lalitpur","addressRegion":"Bagmati"},"areaServed":[{"@type":"City","name":"Lalitpur"},{"@type":"City","name":"Kathmandu"},{"@type":"Country","name":"Nepal"},"Remote"],"worksFor":{"@type":"Organization","name":"Smart Sarks"},"alumniOf":{"@type":"CollegeOrUniversity","name":"Apex College"},"knowsAbout":["PHP","Laravel","React","Vue.js","Next.js","Python","Node.js","JavaScript","TypeScript","REST API","MySQL","PostgreSQL","Database design","Web application development"],"sameAs":["https://www.linkedin.com/in/madhusudan-timalsina-75a910183/","https://github.com/itsmemadhusudan"]},{"@type":"WebSite","@id":"https://madhusudantimalsina.com.np/#website","url":"https://madhusudantimalsina.com.np/","name":"Madhusudan Timalsina","description":"Learn about JWT for web development: what it is, when to use it, practical guidance, and projects by Madhusudan Timalsina, a developer in Lalitpur, Nepal.","publisher":{"@id":"https://madhusudantimalsina.com.np/#person"},"inLanguage":"en"},{"@type":"WebPage","@id":"https://madhusudantimalsina.com.np/stack/jwt#webpage","url":"https://madhusudantimalsina.com.np/stack/jwt","name":"JWT Developer Guide — APIs | Madhusudan Timalsina","description":"Learn about JWT for web development: what it is, when to use it, practical guidance, and projects by Madhusudan Timalsina, a developer in Lalitpur, Nepal.","isPartOf":{"@id":"https://madhusudantimalsina.com.np/#website"},"about":{"@id":"https://madhusudantimalsina.com.np/#person"},"inLanguage":"en"},{"@type":"BreadcrumbList","@id":"https://madhusudantimalsina.com.np/stack/jwt#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://madhusudantimalsina.com.np/"},{"@type":"ListItem","position":2,"name":"JWT developer guide","item":"https://madhusudantimalsina.com.np/stack/jwt"}]},{"@type":"FAQPage","@id":"https://madhusudantimalsina.com.np/stack/jwt#faq","mainEntity":[{"@type":"Question","name":"What is JWT used for?","acceptedAnswer":{"@type":"Answer","text":"JWT is used in web development as a API or integration approach for connecting clients and services. It helps teams build and maintain application features more effectively."}},{"@type":"Question","name":"Do you work with JWT?","acceptedAnswer":{"@type":"Answer","text":"Yes. JWT is part of my skill set (proficient). See related projects on this page or contact me for freelance work."}},{"@type":"Question","name":"Where can I see JWT in your portfolio?","acceptedAnswer":{"@type":"Answer","text":"Scroll to the projects section on this page for work tagged with JWT, or filter the projects list by this technology."}}]},{"@type":"TechArticle","@id":"https://madhusudantimalsina.com.np/stack/jwt#article","headline":"JWT developer guide","description":"Learn about JWT for web development: what it is, when to use it, practical guidance, and projects by Madhusudan Timalsina, a developer in Lalitpur, Nepal.","author":{"@id":"https://madhusudantimalsina.com.np/#person"},"publisher":{"@id":"https://madhusudantimalsina.com.np/#person"},"mainEntityOfPage":"https://madhusudantimalsina.com.np/stack/jwt","inLanguage":"en"}]}</script>
 
-:root {
-    --bg: #04060f;
-    --section: #060a18;
-    --surface-1: rgba(16, 24, 48, 0.72);
-    --border: rgba(150, 175, 230, 0.14);
-    --text-primary: #f3f6ff;
-    --text-secondary: #9aa6c4;
-    --fill-accent: #5df0a8;
-    --on-accent: #032018;
-    --neon-cyan: #5df0a8;
-    --neon-violet: #2fd38a;
-    --neon-glow: 0 0 18px rgba(93, 240, 168, 0.28);
-    --accent-gradient: linear-gradient(180deg, #5df0a8 0%, #2fd38a 100%);
-    --radius: 6px;
-    --content-max: 1440px;
-    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
-}
-
-body {
-    margin: 0;
-    color: var(--text-primary);
-    background: var(--bg);
-    letter-spacing: -0.011em;
-    font-family: var(--font-sans);
-}
-
-.page-wrap {
-    width: 100%;
-    max-width: var(--content-max);
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 24px;
-    padding-right: 24px;
-}
-
-.space-fallback {
-    position: fixed;
-    inset: 0;
-    z-index: 0;
-    pointer-events: none;
-    background:
-        radial-gradient(ellipse 70% 55% at 50% 115%, rgba(58, 108, 255, 0.28), transparent 55%),
-        #040a1e;
-}
-
-.planet-canvas {
-    position: fixed;
-    inset: 0;
-    width: 100vw;
-    height: 100vh;
-    display: block;
-    z-index: 0;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.2s linear;
-}
-
-.planet-canvas.is-ready {
-    opacity: 1;
-}
-
-.site-frame {
-    position: relative;
-    z-index: 1;
-    width: 100%;
-    min-height: 100vh;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-    background: transparent;
-}
-
-.site-panel {
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background: transparent;
-}
-
-main {
-    position: relative;
-    z-index: 1;
-    flex: 1;
-}
-
-.site-nav {
-    position: sticky;
-    top: 0;
-    z-index: 50;
-    background: color-mix(in srgb, #04060f 72%, transparent);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--border);
-}
-
-.site-nav__bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 16px;
-    max-width: var(--content-max);
-    margin: 0 auto;
-    padding: 14px 24px;
-}
-
-.site-nav__brand {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35em;
-    font-family: var(--font-mono);
-    font-weight: 700;
-    font-size: 1.05rem;
-    letter-spacing: 0.04em;
-    color: var(--text-primary);
-    text-decoration: none;
-}
-
-.site-nav__brand-braces {
-    background: var(--accent-gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-}
-
-.site-nav__links {
-    display: none;
-    align-items: center;
-    gap: 4px;
-}
-
-@media (min-width: 900px) {
-    .site-nav__links {
-        display: flex;
-    }
-}
-
-.site-nav__link {
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    letter-spacing: 0.02em;
-    color: var(--text-secondary);
-    text-decoration: none;
-    padding: 0.45rem 0.75rem;
-    border-radius: 999px;
-    border: 1px solid transparent;
-}
-
-.site-nav__link.is-active {
-    color: var(--text-primary);
-    border-color: var(--border-strong, var(--border));
-    background: rgba(93, 240, 168, 0.1);
-}
-
-.btn,
-.anim-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    font-family: var(--font-mono);
-    font-size: 0.85rem;
-    font-weight: 600;
-    padding: 0.7rem 1.15rem;
-    border-radius: 999px;
-    text-decoration: none;
-    border: 1px solid transparent;
-    cursor: pointer;
-}
-
-.btn--solid,
-.anim-btn--solid {
-    color: var(--on-accent);
-    background: var(--accent-gradient);
-    box-shadow: var(--neon-glow);
-}
-
-.hero {
-    display: grid;
-    gap: 2rem;
-    padding-top: 2.5rem;
-    padding-bottom: 2rem;
-}
-
-@media (min-width: 960px) {
-    .hero {
-        grid-template-columns: 1.15fr 0.85fr;
-        align-items: center;
-        min-height: calc(100vh - 72px);
-        padding-top: 1rem;
-    }
-}
-
-.hero-kicker {
-    font-family: var(--font-mono);
-    font-size: 0.75rem;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--neon-cyan);
-    margin: 0 0 0.85rem;
-}
-
-.hero-headline {
-    font-size: clamp(1.85rem, 4.2vw, 3.15rem);
-    font-weight: 800;
-    line-height: 1.08;
-    letter-spacing: -0.03em;
-    margin: 0 0 1rem;
-}
-
-.hero-bio {
-    color: var(--text-secondary);
-    font-size: 1rem;
-    line-height: 1.65;
-    max-width: 36rem;
-    margin: 0 0 1.25rem;
-}
-
-.text-gradient {
-    background: var(--accent-gradient);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-}
+                <style>:root{--primary:#0b8a6f;--hero-bg:#0f3a3f;--header-h:78px;--font:'DM Sans',system-ui,sans-serif}
+*{box-sizing:border-box}body{margin:0;font-family:var(--font);background:#fff;color:#3b3f45}
+.site-header{position:fixed;inset:0 0 auto;z-index:50;height:var(--header-h)}
+.hero{min-height:100vh;background:var(--hero-bg);color:#fff;padding-top:calc(var(--header-h) + 2rem)}
+.brand{display:inline-flex;align-items:center;gap:.55rem;color:#fff;font-weight:700}
 </style>
-        <link rel="preload" as="style" href="https://madhusudantimalsina.com.np/build/assets/app-CpOCZveP.css" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://madhusudantimalsina.com.np/build/assets/app-CpOCZveP.css"></noscript>
-        <link rel="modulepreload" as="script" href="https://madhusudantimalsina.com.np/build/assets/app-BHX9Gnr1.js" /><script type="module" src="https://madhusudantimalsina.com.np/build/assets/app-BHX9Gnr1.js"></script>    </head>
-<body class="min-h-screen w-full antialiased" data-page="skills">
-    <div class="space-fallback" aria-hidden="true">
-        <div class="space-fallback__stars"></div>
-        <div class="space-fallback__glow"></div>
-    </div>
-        <a href="#main-content" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[100] focus:px-3 focus:py-2 focus:bg-[var(--surface-1)] focus:text-[var(--text-primary)] focus:rounded-[6px]">
-        Skip to content
-    </a>
-    <div class="site-frame">
-        <div class="site-panel">
-            <header class="site-nav" x-data="{ open: false }">
-    <div class="site-nav__bar">
-        <a href="https://madhusudantimalsina.com.np" class="site-nav__brand" aria-label="Madhusudan Timalsina home">
-            <span class="site-nav__brand-braces">{ }</span>
-            <span>MT.DEV</span>
+        <link rel="preload" as="style" href="https://madhusudantimalsina.com.np/build/assets/app-e5IzmjGj.css" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://madhusudantimalsina.com.np/build/assets/app-e5IzmjGj.css"></noscript>
+        <link rel="modulepreload" as="script" href="https://madhusudantimalsina.com.np/build/assets/app-Cz3PpOZF.js" /><script type="module" src="https://madhusudantimalsina.com.np/build/assets/app-Cz3PpOZF.js"></script>    </head>
+<body data-page="skills">
+    <a href="#main-content" class="sr-only focus:not-sr-only">Skip to content</a>
+    <header class="site-header is-solid" data-site-header>
+    <div class="container site-header__inner">
+        <a href="https://madhusudantimalsina.com.np" class="brand" aria-label="Madhusudan Timalsina home">
+            <img
+                class="brand__logo brand__logo--full"
+                src="https://madhusudantimalsina.com.np/images/logo/logo-light.svg"
+                alt="Madhusudan Timalsina"
+                width="240"
+                height="40"
+            >
+            <img
+                class="brand__logo brand__logo--icon"
+                src="https://madhusudantimalsina.com.np/images/logo/logo-icon.svg"
+                alt="Madhusudan Timalsina"
+                width="40"
+                height="40"
+            >
         </a>
 
-        <nav class="site-nav__links" aria-label="Main">
-                                            <a
-                    href="https://madhusudantimalsina.com.np"
-                    class="site-nav__link "
-                                    >
-                    Home
-                </a>
-                                            <a
-                    href="https://madhusudantimalsina.com.np/about"
-                    class="site-nav__link "
-                                    >
-                    About
-                </a>
-                                            <a
-                    href="https://madhusudantimalsina.com.np/skills"
-                    class="site-nav__link "
-                                    >
-                    Skills
-                </a>
-                                            <a
-                    href="https://madhusudantimalsina.com.np/projects"
-                    class="site-nav__link "
-                                    >
-                    Projects
-                </a>
-                                            <a
-                    href="https://madhusudantimalsina.com.np/education"
-                    class="site-nav__link "
-                                    >
-                    Education
-                </a>
-                    </nav>
+        <nav class="nav-desktop" aria-label="Primary">
+                                                <a class="nav-link " href="https://madhusudantimalsina.com.np">Home</a>
+                                                                <a class="nav-link " href="/#about">About</a>
+                                                                <a class="nav-link " href="/#services">Services</a>
+                                                                <div class="nav-item" data-dropdown>
+                        <button type="button" class="nav-link" aria-expanded="false" aria-haspopup="true">
+                            Stack
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <div class="nav-item__menu" role="menu">
+                                                            <a role="menuitem" href="https://madhusudantimalsina.com.np/stack/php">PHP</a>
+                                                            <a role="menuitem" href="https://madhusudantimalsina.com.np/stack/laravel">Laravel</a>
+                                                            <a role="menuitem" href="https://madhusudantimalsina.com.np/stack/react">React</a>
+                                                            <a role="menuitem" href="https://madhusudantimalsina.com.np/stack/nodejs">Node.js</a>
+                                                            <a role="menuitem" href="https://madhusudantimalsina.com.np/skills">All skills</a>
+                                                    </div>
+                    </div>
+                                                                <div class="nav-item" data-dropdown>
+                        <button type="button" class="nav-link" aria-expanded="false" aria-haspopup="true">
+                            Pages
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+                        </button>
+                        <div class="nav-item__menu" role="menu">
+                                                            <a role="menuitem" href="https://madhusudantimalsina.com.np/projects">Projects</a>
+                                                            <a role="menuitem" href="https://madhusudantimalsina.com.np/skills">Skills</a>
+                                                            <a role="menuitem" href="https://madhusudantimalsina.com.np/education">Education</a>
+                                                            <a role="menuitem" href="https://madhusudantimalsina.com.np/about">About</a>
+                                                    </div>
+                    </div>
+                                                                <a class="nav-link " href="https://madhusudantimalsina.com.np/contact">Contact</a>
+                                    </nav>
 
-        <div class="site-nav__actions">
-            <a href="https://madhusudantimalsina.com.np/contact" class="site-nav__cta">Hire Me</a>
-            <button
-                type="button"
-                class="site-nav__toggle"
-                @click="open = !open"
-                :aria-expanded="open.toString()"
-                aria-controls="mobile-nav"
-                aria-label="Toggle navigation menu"
-            >
-                <svg x-show="!open" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="18" y2="18"/>
-                </svg>
-                <svg x-show="open" x-cloak xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
-                </svg>
+        <div class="header-actions">
+            <a href="https://madhusudantimalsina.com.np/contact" class="btn btn--primary btn--hire">Hire Me</a>
+            <button type="button" class="icon-btn" data-search-open aria-label="Open search">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
             </button>
-        </div>
-    </div>
-
-    <div id="mobile-nav" x-show="open" x-cloak x-transition class="site-nav__mobile">
-        <div class="site-nav__mobile-panel">
-                                            <a
-                    href="https://madhusudantimalsina.com.np"
-                    class="site-nav__link site-nav__link--block "
-                                        @click="open = false"
-                >
-                    Home
-                </a>
-                                            <a
-                    href="https://madhusudantimalsina.com.np/about"
-                    class="site-nav__link site-nav__link--block "
-                                        @click="open = false"
-                >
-                    About
-                </a>
-                                            <a
-                    href="https://madhusudantimalsina.com.np/skills"
-                    class="site-nav__link site-nav__link--block "
-                                        @click="open = false"
-                >
-                    Skills
-                </a>
-                                            <a
-                    href="https://madhusudantimalsina.com.np/projects"
-                    class="site-nav__link site-nav__link--block "
-                                        @click="open = false"
-                >
-                    Projects
-                </a>
-                                            <a
-                    href="https://madhusudantimalsina.com.np/education"
-                    class="site-nav__link site-nav__link--block "
-                                        @click="open = false"
-                >
-                    Education
-                </a>
-                        <a href="https://madhusudantimalsina.com.np/contact" class="site-nav__cta site-nav__cta--block" @click="open = false">Hire Me</a>
+            <button type="button" class="icon-btn" data-theme-toggle aria-label="Toggle dark mode">
+                <svg data-icon-moon viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 14.5A8.5 8.5 0 1 1 9.5 3 7 7 0 0 0 21 14.5z"/></svg>
+                <svg data-icon-sun viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" hidden><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+            </button>
+            <button type="button" class="icon-btn nav-toggle" data-nav-toggle aria-expanded="false" aria-controls="mobile-nav" aria-label="Open menu">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+            </button>
         </div>
     </div>
 </header>
 
-            <main id="main-content">
-                    <header class="page-wrap pt-12 pb-6">
-            <span class="section-label" style="color: var(--neon-cyan); display: block;">
-            JWT guide
-        </span>
-        <h1 class="section-title text-3xl sm:text-4xl">
-        JWT developer guide
-    </h1>
-            <p class="section-title__sub">
-            Overview of JWT as a API or integration approach for connecting clients and services, how I use it at proficient proficiency, and related projects from this portfolio.
-        </p>
-    </header>
+<div id="mobile-nav" class="mobile-panel" data-mobile-panel hidden>
+                        <a href="https://madhusudantimalsina.com.np">Home</a>
+                                <a href="/#about">About</a>
+                                <a href="/#services">Services</a>
+                                <button type="button" class="mobile-acc" data-mobile-acc aria-expanded="false">
+                Stack
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="mobile-panel__sub">
+                                    <a href="https://madhusudantimalsina.com.np/stack/php">PHP</a>
+                                    <a href="https://madhusudantimalsina.com.np/stack/laravel">Laravel</a>
+                                    <a href="https://madhusudantimalsina.com.np/stack/react">React</a>
+                                    <a href="https://madhusudantimalsina.com.np/stack/nodejs">Node.js</a>
+                                    <a href="https://madhusudantimalsina.com.np/skills">All skills</a>
+                            </div>
+                                <button type="button" class="mobile-acc" data-mobile-acc aria-expanded="false">
+                Pages
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="mobile-panel__sub">
+                                    <a href="https://madhusudantimalsina.com.np/projects">Projects</a>
+                                    <a href="https://madhusudantimalsina.com.np/skills">Skills</a>
+                                    <a href="https://madhusudantimalsina.com.np/education">Education</a>
+                                    <a href="https://madhusudantimalsina.com.np/about">About</a>
+                            </div>
+                                <a href="https://madhusudantimalsina.com.np/contact">Contact</a>
+                <div style="margin-top: 1.25rem">
+        <a href="https://madhusudantimalsina.com.np/contact" class="btn btn--primary" style="width:100%">Hire Me</a>
+    </div>
+</div>
+    <main id="main-content">
+            <section class="page-hero">
+    <div class="container">
+                    <p class="eyebrow" style="color: rgba(255,255,255,0.7)">JWT guide</p>
+                <h1>JWT developer guide</h1>
+                    <p>Overview of JWT as a API or integration approach for connecting clients and services, how I use it at proficient proficiency, and related projects from this portfolio.</p>
+            </div>
+</section>
 
-    <section class="page-wrap pb-10 stack-guide">
-        <div class="mb-6 flex flex-wrap items-center gap-3">
-            <span
-        class="skill-badge"
->
-    <span class="skill-badge__icon" aria-hidden="true">
-        <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="14"
-    height="14"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    class=""
-    aria-hidden="true"
->
-    <polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/>
-</svg>
-    </span>
-    <span class="skill-badge__name">JWT</span>
-    </span>
-            <p class="text-sm" style="color: var(--text-secondary);">
-                Proficiency: <strong style="color: var(--text-primary);">Proficient</strong>
-                · Category: APIs
-            </p>
-        </div>
+    <section class="page-body stack-guide">
+        <div class="container">
+            <div class="chip-row" style="margin-bottom:1.25rem">
+                <a href="https://madhusudantimalsina.com.np/stack/jwt" class="chip" >
+        JWT
+            </a>
+                <span class="muted">
+                    Proficiency: <strong style="color:var(--text-dark)">Proficient</strong>
+                    · APIs
+                </span>
+            </div>
 
-                    <article class="stack-guide__article neon-card mb-8">
-                <div class="neon-card__inner p-6 sm:p-8">
-                                            <p class="stack-guide__lead">JWT is a API or integration approach for connecting clients and services. On this page you will find a practical overview, how I apply it in real work, and projects tagged with JWT.</p>
+                            <article class="ui-card" style="margin-bottom:1.5rem">
+                                            <p class="muted" style="font-size:1.05rem">JWT is a API or integration approach for connecting clients and services. On this page you will find a practical overview, how I apply it in real work, and projects tagged with JWT.</p>
                     
-                                            <section class="stack-guide__section">
+                                            <section>
                             <h2>What is JWT?</h2>
-
                                                             <p>JWT sits in the APIs part of a modern web stack. Developers reach for it when they need reliable building blocks for products users actually ship.</p>
                                                             <p>Whether you are learning JWT or hiring someone who knows it, the goal is the same: clear architecture, maintainable code, and features that hold up in production.</p>
-                            
-                            
-                                                    </section>
-                                            <section class="stack-guide__section">
+                                                                                                            </section>
+                                            <section>
                             <h2>How I use JWT</h2>
-
                                                             <p>I use JWT when designing or integrating APIs so clients get clear, secure contracts.</p>
                                                             <p>My current proficiency with JWT is proficient. That means I can contribute on real tasks, especially alongside Laravel, React/Vue, Node, and SQL databases.</p>
-                            
-                            
-                                                    </section>
-                                            <section class="stack-guide__section">
+                                                                                                            </section>
+                                            <section>
                             <h2>Guidance for working with JWT</h2>
-
-                            
-                                                            <ul>
+                                                                                        <ul>
                                                                             <li>Design clear resources and status codes with JWT</li>
                                                                             <li>Document request/response shapes for clients</li>
                                                                             <li>Secure endpoints with auth and validation</li>
                                                                             <li>Test happy paths and failure cases</li>
                                                                     </ul>
-                            
-                                                    </section>
-                                            <section class="stack-guide__section">
+                                                                                </section>
+                                            <section>
                             <h2>When it is a good fit</h2>
-
                                                             <p>Choose JWT when it matches your product needs and team skills. On this site, related skills and tagged projects show how JWT connects to the rest of my stack.</p>
                                                             <p>Based in Lalitpur, Nepal — available for selective freelance and remote work. Use the contact page if you want help with this technology.</p>
-                            
-                            
-                                                    </section>
-                                    </div>
-            </article>
+                                                                                                            </section>
+                                    </article>
 
-                            <div class="mb-8">
-                    <h2 class="section-label mb-3">Related stack</h2>
-                    <div class="flex flex-wrap gap-2">
-                                                    <a
-     href="https://madhusudantimalsina.com.np/stack/rest-api"     class="skill-badge"
->
-    <span class="skill-badge__icon" aria-hidden="true">
-        <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="14"
-    height="14"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    class=""
-    aria-hidden="true"
->
-    <polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/>
-</svg>
-    </span>
-    <span class="skill-badge__name">REST API</span>
-    </a>
-                                                    <a
-     href="https://madhusudantimalsina.com.np/stack/graphql"     class="skill-badge"
->
-    <span class="skill-badge__icon" aria-hidden="true">
-        <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="14"
-    height="14"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    class=""
-    aria-hidden="true"
->
-    <polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/>
-</svg>
-    </span>
-    <span class="skill-badge__name">GraphQL</span>
-            <span class="skill-badge__learning">Learning</span>
-    </a>
-                                                    <a
-     href="https://madhusudantimalsina.com.np/stack/oauth"     class="skill-badge"
->
-    <span class="skill-badge__icon" aria-hidden="true">
-        <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="14"
-    height="14"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    class=""
-    aria-hidden="true"
->
-    <polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/>
-</svg>
-    </span>
-    <span class="skill-badge__name">OAuth</span>
-    </a>
-                                                    <a
-     href="https://madhusudantimalsina.com.np/stack/sanctum"     class="skill-badge"
->
-    <span class="skill-badge__icon" aria-hidden="true">
-        <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="14"
-    height="14"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    class=""
-    aria-hidden="true"
->
-    <polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/>
-</svg>
-    </span>
-    <span class="skill-badge__name">Sanctum</span>
-    </a>
-                                                    <a
-     href="https://madhusudantimalsina.com.np/stack/microservices"     class="skill-badge"
->
-    <span class="skill-badge__icon" aria-hidden="true">
-        <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="14"
-    height="14"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    class=""
-    aria-hidden="true"
->
-    <rect width="20" height="8" x="2" y="2" rx="2" ry="2"/><rect width="20" height="8" x="2" y="14" rx="2" ry="2"/><line x1="6" x2="6.01" y1="6" y2="6"/><line x1="6" x2="6.01" y1="18" y2="18"/>
-</svg>
-    </span>
-    <span class="skill-badge__name">Microservices</span>
-    </a>
-                                            </div>
+                                    <div style="margin-bottom:1.5rem">
+                        <h2 class="section-title" style="font-size:1.2rem">Related stack</h2>
+                        <div class="chip-row" style="margin-top:.75rem">
+                                                            <a href="https://madhusudantimalsina.com.np/stack/rest-api" class="chip" >
+        REST API
+            </a>
+                                                            <a href="https://madhusudantimalsina.com.np/stack/graphql" class="chip" >
+        GraphQL
+                    <span style="opacity:.7"> · learning</span>
+            </a>
+                                                            <a href="https://madhusudantimalsina.com.np/stack/oauth" class="chip" >
+        OAuth
+            </a>
+                                                            <a href="https://madhusudantimalsina.com.np/stack/sanctum" class="chip" >
+        Sanctum
+            </a>
+                                                            <a href="https://madhusudantimalsina.com.np/stack/microservices" class="chip" >
+        Microservices
+            </a>
+                                                    </div>
+                    </div>
+                
+                                    <div style="margin-bottom:2rem">
+                        <h2 class="section-title" style="font-size:1.2rem">JWT FAQ</h2>
+                        <div class="card-grid" style="margin-top:1rem">
+                                                            <details class="ui-card">
+                                    <summary style="cursor:pointer;font-weight:700">What is JWT used for?</summary>
+                                    <p style="margin-top:.75rem">JWT is used in web development as a API or integration approach for connecting clients and services. It helps teams build and maintain application features more effectively.</p>
+                                </details>
+                                                            <details class="ui-card">
+                                    <summary style="cursor:pointer;font-weight:700">Do you work with JWT?</summary>
+                                    <p style="margin-top:.75rem">Yes. JWT is part of my skill set (proficient). See related projects on this page or contact me for freelance work.</p>
+                                </details>
+                                                            <details class="ui-card">
+                                    <summary style="cursor:pointer;font-weight:700">Where can I see JWT in your portfolio?</summary>
+                                    <p style="margin-top:.75rem">Scroll to the projects section on this page for work tagged with JWT, or filter the projects list by this technology.</p>
+                                </details>
+                                                    </div>
+                    </div>
+                            
+            <h2 class="section-title" style="font-size:1.2rem">JWT projects</h2>
+            <p class="muted" style="margin:.5rem 0 1rem">Real work tagged with JWT from this portfolio.</p>
+
+                            <div class="ui-card">
+                    <p>No public projects tagged with JWT yet — the guide above still covers how I approach this technology.</p>
                 </div>
             
-                            <div class="mb-10">
-                    <h2 class="section-label mb-4">JWT FAQ</h2>
-                    <div class="stack-guide__faqs">
-                                                    <details class="stack-guide__faq neon-card">
-                                <summary>What is JWT used for?</summary>
-                                <p>JWT is used in web development as a API or integration approach for connecting clients and services. It helps teams build and maintain application features more effectively.</p>
-                            </details>
-                                                    <details class="stack-guide__faq neon-card">
-                                <summary>Do you work with JWT?</summary>
-                                <p>Yes. JWT is part of my skill set (proficient). See related projects on this page or contact me for freelance work.</p>
-                            </details>
-                                                    <details class="stack-guide__faq neon-card">
-                                <summary>Where can I see JWT in your portfolio?</summary>
-                                <p>Scroll to the projects section on this page for work tagged with JWT, or filter the projects list by this technology.</p>
-                            </details>
-                                            </div>
-                </div>
-                    
-        <div class="mb-4">
-            <h2 class="section-label mb-2">JWT projects</h2>
-            <p class="text-sm mb-4" style="color: var(--text-secondary);">
-                Real work tagged with JWT from this portfolio.
-            </p>
-        </div>
-
-                    <div
-        class="neon-card hover-lift"
->
-    <div class="neon-card__inner p-6">
-        <p class="text-sm" style="color: var(--text-secondary);">
-                    No public projects tagged with JWT yet — the guide above still covers how I approach this technology.
-                </p>
-    </div>
-</div>
-        
-        <div class="mt-8 flex flex-wrap gap-3">
-            <a
+            <div class="about-actions" style="margin-top:1.75rem">
+                <a
         href="https://madhusudantimalsina.com.np/contact"
-                class="btn-neon btn-neon--solid"
-    >
-        Hire a developer (JWT)
-    </a>
-            <a
+        class="btn btn--primary"
+            >Hire a developer (JWT)</a>
+                <a
         href="https://madhusudantimalsina.com.np/projects?tech=jwt"
-                class="btn-neon btn-neon--ghost"
-    >
-        Filter all projects
-    </a>
-            <a
+        class="btn btn--ghost-dark"
+            >Filter all projects</a>
+                <a
         href="https://madhusudantimalsina.com.np/skills"
-                class="btn-neon btn-neon--ghost"
-    >
-        Back to skills
-    </a>
+        class="btn btn--ghost-dark"
+            >Back to skills</a>
+            </div>
         </div>
     </section>
-            </main>
-
-            <footer class="site-footer" role="contentinfo">
-                <div class="site-footer__inner">
-                    <a href="https://madhusudantimalsina.com.np" class="site-footer__brand" aria-label="Madhusudan Timalsina home">
-                        <span class="site-footer__brand-braces">{ }</span> MT.DEV
+    </main>
+    <footer class="site-footer" role="contentinfo">
+    <div class="site-footer__top">
+        <a href="https://madhusudantimalsina.com.np" class="site-footer__brand">
+            <img
+                class="brand__logo brand__logo--full"
+                src="https://madhusudantimalsina.com.np/images/logo/logo-light.svg"
+                alt="Madhusudan Timalsina"
+                width="320"
+                height="56"
+            >
+        </a>
+        <div class="site-footer__contact">
+                            <a class="site-footer__contact-item" href="https://wa.me/9779861333037" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.5 3.5A11 11 0 0 0 2.1 17.8L1 23l5.3-1.1A11 11 0 1 0 20.5 3.5zM12 20.2a9.1 9.1 0 0 1-4.6-1.3l-.3-.2-3.2.7.7-3.1-.2-.3A9.1 9.1 0 1 1 12 20.2zm5.2-6.8c-.3-.1-1.7-.8-1.9-.9s-.5-.1-.6.1-.7.9-.9 1.1-.3.2-.6.1a7.4 7.4 0 0 1-2.2-1.4 8.2 8.2 0 0 1-1.5-1.9c-.2-.3 0-.4.1-.6l.4-.5.3-.4c.1-.2 0-.3 0-.5l-.9-2.1c-.2-.6-.5-.5-.6-.5h-.5c-.2 0-.5.1-.7.3s-1 1-1 2.4 1 2.8 1.2 3c.1.2 2 3.1 4.9 4.3 1.8.7 2.2.7 3 .6.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.2.2-1.4 0-.1-.3-.2-.6-.4z"/></svg>
+                    Chat on WhatsApp
+                </a>
+                        <a class="site-footer__contact-item" href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=timmadh@gmail.com" target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+                timmadh@gmail.com
+            </a>
+            <span class="site-footer__contact-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 21s7-5.2 7-11a7 7 0 1 0-14 0c0 5.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                Lalitpur, Nepal
+            </span>
+        </div>
+    </div>
+    <div class="site-footer__bottom">
+        <div class="container site-footer__bottom-inner">
+            <p>© 2026 Madhusudan Timalsina. All Rights Reserved.</p>
+            <div class="footer-socials">
+                                    <a href="https://www.linkedin.com/in/madhusudan-timalsina-75a910183/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.9 8.7H3.8V20h3.1V8.7zM5.4 4A1.8 1.8 0 1 0 5.4 7.6 1.8 1.8 0 0 0 5.4 4zM20.2 20h-3.1v-5.5c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9V20H10V8.7h3v1.5h.1c.4-.8 1.5-1.7 3-1.7 3.2 0 3.8 2.1 3.8 4.9V20z"/></svg>
                     </a>
-
-                    <nav class="site-footer__links" aria-label="Footer">
-                                                    <a href="https://madhusudantimalsina.com.np">Home</a>
-                                                    <a href="https://madhusudantimalsina.com.np/about">About</a>
-                                                    <a href="https://madhusudantimalsina.com.np/skills">Skills</a>
-                                                    <a href="https://madhusudantimalsina.com.np/projects">Projects</a>
-                                                    <a href="https://madhusudantimalsina.com.np/education">Education</a>
-                                                <a href="https://madhusudantimalsina.com.np/contact">Contact</a>
-                    </nav>
-
-                    <div class="site-footer__social">
-                        <a
-                            href="https://www.linkedin.com/in/madhusudan-timalsina-75a910183/"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="contact-chip"
-                            aria-label="LinkedIn profile"
-                            title="LinkedIn"
-                        >
-                            <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="18"
-    height="18"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    class=""
-    aria-hidden="true"
->
-    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/>
-</svg>
-                        </a>
-                                                    <a
-                                href="https://github.com/itsmemadhusudan"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="contact-chip"
-                                aria-label="GitHub profile"
-                                title="GitHub"
-                            >
-                                <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="18"
-    height="18"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    class=""
-    aria-hidden="true"
->
-    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/><path d="M9 18c-4.51 2-5-2-7-2"/>
-</svg>
-                            </a>
-                                                <a
-                            href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=timmadh@gmail.com"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="contact-chip"
-                            aria-label="Send an email via Gmail"
-                            title="Email"
-                        >
-                            <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="18"
-    height="18"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    class=""
-    aria-hidden="true"
->
-    <rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-</svg>
-                        </a>
-                                                <a
-                            href="https://wa.me/9779861333037"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            class="contact-chip"
-                            aria-label="Chat on WhatsApp"
-                            title="WhatsApp"
-                        >
-                            <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="18"
-    height="18"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    class=""
-    aria-hidden="true"
->
-    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
-</svg>
-                        </a>
-                                            </div>
-                    <p class="site-footer__copy">
-                        © 2026 Madhusudan Timalsina · Web developer in Lalitpur, Nepal · Available for hire
-                        · <a href="https://madhusudantimalsina.com.np/contact">Hire a developer</a>
-                    </p>
-                </div>
-            </footer>
+                                                    <a href="https://github.com/itsmemadhusudan" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                        <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.2-3.4-1.2-.5-1.1-1.1-1.4-1.1-1.4-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.4 1.1 3 .8.1-.7.4-1.1.7-1.4-2.3-.3-4.7-1.1-4.7-5a3.9 3.9 0 0 1 1-2.7c-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.7 9.7 0 0 1 5 0c2-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7a3.9 3.9 0 0 1 1 2.7c0 3.9-2.4 4.7-4.7 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg>
+                    </a>
+                                <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=timmadh@gmail.com" target="_blank" rel="noopener noreferrer" aria-label="Email">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+</footer>
+    <button type="button" class="back-top" data-back-top aria-label="Back to top">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+    </button>
+    <div class="search-overlay" data-search-overlay hidden>
+        <div class="search-overlay__box" role="dialog" aria-modal="true" aria-label="Search">
+            <label class="sr-only" for="site-search">Search</label>
+            <input id="site-search" type="search" placeholder="Search pages, skills, projects…" autocomplete="off">
         </div>
     </div>
     </body>

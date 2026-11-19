@@ -17,7 +17,8 @@ class PortfolioPagesTest extends TestCase
         $response->assertDontSee('Full-stack', false);
         $response->assertSee('Madhusudan Timalsina | Developer', false);
         $response->assertDontSee('Backend Developer', false);
-        $response->assertSee('How this site is built', false);
+        $response->assertSee('My Biography', false);
+        $response->assertSee('My Success Work', false);
         $response->assertSee('areaServed', false);
     }
 
@@ -114,7 +115,7 @@ class PortfolioPagesTest extends TestCase
         $response = $this->get('/skills');
 
         $response->assertOk();
-        $response->assertSee('skills-tabs', false);
-        $response->assertSee('Learning', false);
+        $response->assertSee('Languages', false);
+        $response->assertSee('learning', false);
     }
 }

@@ -3,22 +3,14 @@
     'slug' => null,
     'proficiency' => 'proficient',
     'icon' => 'code',
-    'href' => null,
 ])
-
-@php
-    $tag = $href ? 'a' : 'span';
-@endphp
-
-<{{ $tag }}
-    @if ($href) href="{{ $href }}" @endif
-    {{ $attributes->class('skill-badge') }}
->
-    <span class="skill-badge__icon" aria-hidden="true">
-        <x-icon :name="$icon" :size="14" />
-    </span>
-    <span class="skill-badge__name">{{ $name }}</span>
-    @if ($proficiency === 'learning')
-        <span class="skill-badge__learning">Learning</span>
-    @endif
-</{{ $tag }}>
+@if ($slug)
+    <a href="{{ route('stack.show', $slug) }}" class="chip" {{ $attributes }}>
+        {{ $name }}
+        @if ($proficiency === 'learning')
+            <span style="opacity:.7"> · learning</span>
+        @endif
+    </a>
+@else
+    <span class="chip" {{ $attributes }}>{{ $name }}</span>
+@endif

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Madhusudan Timalsina logo">
+  <defs>
+    <linearGradient id="mtg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b8a6f"/>
+      <stop offset="1" stop-color="#00c569"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="16" fill="#062a2f"/>
+  <path d="M10 14H54M10 14V50M54 14V50M10 14L32 38L54 14M32 38V52" fill="none" stroke="url(#mtg)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

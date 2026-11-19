@@ -1,4 +1,4 @@
-@extends('layouts.portfolio')
+@extends('layouts.app')
 
 @section('content')
     <x-page-header
@@ -7,69 +7,64 @@
         :subtitle="$project['summary'] ?? $project['desc']"
     />
 
-    <section class="page-wrap pb-10">
-        <div class="flex flex-wrap gap-2 mb-6">
-            <span class="chip">{{ $project['type'] ?? 'project' }}</span>
-            @if (! empty($project['period']))
-                <span class="chip">{{ $project['period'] }}</span>
-            @endif
-        </div>
-
-        <div class="grid lg:grid-cols-3 gap-4 mb-8">
-            <x-card padding="p-5">
-                <p class="section-label">Problem</p>
-                <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">{{ $project['problem'] ?? '—' }}</p>
-            </x-card>
-            <x-card padding="p-5">
-                <p class="section-label">Solution</p>
-                <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">{{ $project['solution'] ?? '—' }}</p>
-            </x-card>
-            <x-card padding="p-5">
-                <p class="section-label">Result</p>
-                <p class="text-sm leading-relaxed" style="color: var(--text-secondary);">{{ $project['result'] ?? '—' }}</p>
-            </x-card>
-        </div>
-
-        <x-card padding="p-6 mb-8">
-            <p class="text-[15px] leading-relaxed" style="color: var(--text-secondary);">
-                {{ $project['long_desc'] ?? $project['desc'] }}
-            </p>
-            @if (! empty($project['highlights']))
-                <ul class="mt-4 space-y-2">
-                    @foreach ($project['highlights'] as $highlight)
-                        <li class="text-sm flex gap-2" style="color: var(--text-secondary);">
-                            <span class="mt-2 shrink-0 w-1.5 h-1.5 rounded-full" style="background: var(--neon-cyan);"></span>
-                            <span>{{ $highlight }}</span>
-                        </li>
-                    @endforeach
-                </ul>
-            @endif
-        </x-card>
-
-        <h2 class="section-title text-xl mb-4">Tech stack</h2>
-        <div class="flex flex-wrap gap-2 mb-8">
-            @foreach ($project['tech'] ?? [] as $slug)
-                @php $skill = $skillMap[$slug] ?? null; @endphp
-                @if ($skill)
-                    <x-skill-badge
-                        :name="$skill['name']"
-                        :slug="$skill['slug']"
-                        :proficiency="$skill['proficiency'] ?? 'proficient'"
-                        :icon="$skill['icon'] ?? 'code'"
-                        :href="route('projects', ['tech' => $skill['slug']])"
-                    />
+    <section class="page-body">
+        <div class="container">
+            <div class="chip-row" style="margin-bottom:1.5rem">
+                <span class="chip">{{ $project['type'] ?? 'project' }}</span>
+                @if (! empty($project['period']))
+                    <span class="chip">{{ $project['period'] }}</span>
                 @endif
-            @endforeach
-        </div>
+            </div>
 
-        <div class="flex flex-wrap gap-3">
-            <x-button :href="route('projects')" variant="ghost">All projects</x-button>
-            @if (! empty($project['live_url']))
-                <x-button :href="$project['live_url']" variant="solid" :external="true">Live site</x-button>
-            @endif
-            @if (! empty($project['repo_url']))
-                <x-button :href="$project['repo_url']" variant="ghost" :external="true">Source</x-button>
-            @endif
+            <div class="card-grid card-grid--3" style="margin-bottom:1.5rem">
+                <div class="ui-card">
+                    <p class="eyebrow">Problem</p>
+                    <p>{{ $project['problem'] ?? '—' }}</p>
+                </div>
+                <div class="ui-card">
+                    <p class="eyebrow">Solution</p>
+                    <p>{{ $project['solution'] ?? '—' }}</p>
+                </div>
+                <div class="ui-card">
+                    <p class="eyebrow">Result</p>
+                    <p>{{ $project['result'] ?? '—' }}</p>
+                </div>
+            </div>
+
+            <div class="ui-card prose-block" style="margin-bottom:1.5rem">
+                <p>{{ $project['long_desc'] ?? $project['desc'] }}</p>
+                @if (! empty($project['highlights']))
+                    <ul>
+                        @foreach ($project['highlights'] as $highlight)
+                            <li>{{ $highlight }}</li>
+                        @endforeach
+                    </ul>
+                @endif
+            </div>
+
+            <h2 class="section-title" style="font-size:1.35rem">Tech stack</h2>
+            <div class="chip-row" style="margin: .85rem 0 1.5rem">
+                @foreach ($project['tech'] ?? [] as $slug)
+                    @php $skill = $skillMap[$slug] ?? null; @endphp
+                    @if ($skill)
+                        <x-skill-badge
+                            :name="$skill['name']"
+                            :slug="$skill['slug']"
+                            :proficiency="$skill['proficiency'] ?? 'proficient'"
+                        />
+                    @endif
+                @endforeach
+            </div>
+
+            <div class="about-actions">
+                <x-button :href="route('projects')" variant="ghost">All projects</x-button>
+                @if (! empty($project['live_url']))
+                    <x-button :href="$project['live_url']" variant="primary" :external="true">Live site</x-button>
+                @endif
+                @if (! empty($project['repo_url']))
+                    <x-button :href="$project['repo_url']" variant="ghost" :external="true">Source</x-button>
+                @endif
+            </div>
         </div>
     </section>
 @endsection

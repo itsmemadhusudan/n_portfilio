@@ -40,20 +40,14 @@ document.addEventListener('alpine:init', () => {
         matches(projectType, projectTech) {
             const typeOk = this.type === 'all' || projectType === this.type;
             const techOk = this.tech.length === 0 || this.tech.every((t) => projectTech.includes(t));
-
             return typeOk && techOk;
         },
         syncUrl() {
             const params = new URLSearchParams();
-            if (this.type && this.type !== 'all') {
-                params.set('type', this.type);
-            }
-            if (this.tech.length) {
-                params.set('tech', this.tech.join(','));
-            }
+            if (this.type && this.type !== 'all') params.set('type', this.type);
+            if (this.tech.length) params.set('tech', this.tech.join(','));
             const qs = params.toString();
-            const url = qs ? `${window.location.pathname}?${qs}` : window.location.pathname;
-            history.replaceState(null, '', url);
+            history.replaceState(null, '', qs ? `${window.location.pathname}?${qs}` : window.location.pathname);
         },
     }));
 });
@@ -65,60 +59,100 @@ function prefersReducedMotion() {
     return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
-function shouldSkipWebGL() {
-    if (prefersReducedMotion()) {
-        return true;
-    }
+function initTheme() {
+    const root = document.documentElement;
+    const toggle = document.querySelector('[data-theme-toggle]');
+    const moon = document.querySelector('[data-icon-moon]');
+    const sun = document.querySelector('[data-icon-sun]');
 
-    const conn = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-    if (conn && (conn.saveData || /2g/.test(conn.effectiveType || ''))) {
-        return true;
-    }
+    const syncIcons = () => {
+        const dark = root.classList.contains('dark');
+        if (moon) moon.hidden = dark;
+        if (sun) sun.hidden = !dark;
+    };
 
-    // Low-end / mobile: keep CSS space only (smooth first load)
-    if (window.matchMedia('(max-width: 720px)').matches) {
-        return true;
-    }
+    syncIcons();
 
-    if (typeof navigator.hardwareConcurrency === 'number' && navigator.hardwareConcurrency > 0 && navigator.hardwareConcurrency <= 2) {
-        return true;
-    }
-
-    if (typeof navigator.deviceMemory === 'number' && navigator.deviceMemory > 0 && navigator.deviceMemory <= 4) {
-        return true;
-    }
-
-    return false;
+    toggle?.addEventListener('click', () => {
+        const next = root.classList.toggle('dark') ? 'dark' : 'light';
+        try {
+            localStorage.setItem('theme', next);
+        } catch (_) {}
+        syncIcons();
+    });
 }
 
-function initScrollReveals() {
-    const nodes = document.querySelectorAll('.reveal, .contact-reveal');
+function initHeader() {
+    const header = document.querySelector('[data-site-header]');
+    if (!header) return;
 
-    document.querySelectorAll(
-        '.stats-code__stats, .feature-grid, .projects-grid, .skills-grid, .stack-grid, .about-grid, .education-list, .achievements-grid',
-    ).forEach((group) => {
-        [...group.children].forEach((child, i) => {
-            if (child.matches('.reveal, .contact-reveal') || child.querySelector('.reveal')) {
-                const target = child.matches('.reveal, .contact-reveal')
-                    ? child
-                    : child.querySelector('.reveal');
-                if (target && ! target.style.getPropertyValue('--reveal-delay')) {
-                    target.style.setProperty('--reveal-delay', `${Math.min(i, 6) * 50}ms`);
-                }
-            }
+    const onScroll = () => {
+        header.classList.toggle('is-scrolled', window.scrollY > 24);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    document.querySelectorAll('[data-dropdown]').forEach((item) => {
+        const btn = item.querySelector('button');
+        btn?.addEventListener('click', () => {
+            const open = item.classList.toggle('is-open');
+            btn.setAttribute('aria-expanded', open ? 'true' : 'false');
         });
     });
 
+    const panel = document.querySelector('[data-mobile-panel]');
+    const toggle = document.querySelector('[data-nav-toggle]');
+    toggle?.addEventListener('click', () => {
+        const open = !panel?.classList.contains('is-open');
+        panel?.classList.toggle('is-open', open);
+        panel?.toggleAttribute('hidden', !open);
+        toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+
+    document.querySelectorAll('[data-mobile-acc]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+            const sub = btn.nextElementSibling;
+            const open = sub?.classList.toggle('is-open');
+            btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+    });
+}
+
+function initSearch() {
+    const overlay = document.querySelector('[data-search-overlay]');
+    const openBtn = document.querySelector('[data-search-open]');
+    const input = overlay?.querySelector('input');
+
+    const close = () => {
+        overlay?.classList.remove('is-open');
+        overlay?.setAttribute('hidden', '');
+    };
+
+    openBtn?.addEventListener('click', () => {
+        overlay?.classList.add('is-open');
+        overlay?.removeAttribute('hidden');
+        input?.focus();
+    });
+
+    overlay?.addEventListener('click', (e) => {
+        if (e.target === overlay) close();
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') close();
+    });
+}
+
+function initReveals() {
+    const nodes = document.querySelectorAll('.reveal, .reveal-scale');
     if (prefersReducedMotion()) {
         nodes.forEach((el) => el.classList.add('is-revealed'));
         return;
     }
-
-    if (! ('IntersectionObserver' in window)) {
+    if (!('IntersectionObserver' in window)) {
         nodes.forEach((el) => el.classList.add('is-revealed'));
         return;
     }
-
     const observer = new IntersectionObserver(
         (entries) => {
             entries.forEach((entry) => {
@@ -128,99 +162,71 @@ function initScrollReveals() {
                 }
             });
         },
-        { rootMargin: '0px 0px -4% 0px', threshold: 0.08 },
+        { threshold: 0.12, rootMargin: '0px 0px -6% 0px' },
     );
-
-    nodes.forEach((el) => {
-        if (! el.hasAttribute('x-data') || el.classList.contains('contact-reveal')) {
-            observer.observe(el);
-        }
-    });
-    document.querySelectorAll('.reveal:not([x-data])').forEach((el) => observer.observe(el));
+    nodes.forEach((el) => observer.observe(el));
 }
 
-function initHeroEntrance() {
-    if (prefersReducedMotion()) {
-        document.querySelectorAll('.hero-enter').forEach((el) => {
-            el.style.opacity = '1';
-            el.style.transform = 'none';
-            el.style.animation = 'none';
+function initCounters() {
+    const root = document.querySelector('[data-stats]');
+    if (!root) return;
+    const nums = root.querySelectorAll('[data-count-to]');
+
+    const run = () => {
+        nums.forEach((el) => {
+            const target = Number(el.getAttribute('data-count-to') || 0);
+            if (prefersReducedMotion()) {
+                el.textContent = String(target);
+                return;
+            }
+            const duration = 1100;
+            const start = performance.now();
+            const tick = (now) => {
+                const t = Math.min(1, (now - start) / duration);
+                const eased = 1 - Math.pow(1 - t, 3);
+                el.textContent = String(Math.round(target * eased));
+                if (t < 1) requestAnimationFrame(tick);
+            };
+            requestAnimationFrame(tick);
         });
-    }
-}
+    };
 
-function initNavScroll() {
-    const nav = document.querySelector('.site-nav');
-    if (! nav) {
+    if (!('IntersectionObserver' in window)) {
+        run();
         return;
     }
-
-    let ticking = false;
-    const onScroll = () => {
-        if (ticking) {
-            return;
-        }
-        ticking = true;
-        requestAnimationFrame(() => {
-            nav.classList.toggle('is-scrolled', window.scrollY > 18);
-            ticking = false;
-        });
-    };
-
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
+    const observer = new IntersectionObserver(
+        (entries) => {
+            if (entries.some((e) => e.isIntersecting)) {
+                run();
+                observer.disconnect();
+            }
+        },
+        { threshold: 0.35 },
+    );
+    observer.observe(root);
 }
 
-function startPlanetWhenIdle(canvas) {
-    let started = false;
-
-    const start = () => {
-        if (started) {
-            return;
-        }
-        started = true;
-        import('./planet/scene')
-            .then(({ initPlanetScene }) => initPlanetScene(canvas))
-            .catch((err) => console.error('Planet scene failed to load', err));
+function initBackTop() {
+    const btn = document.querySelector('[data-back-top]');
+    if (!btn) return;
+    const onScroll = () => {
+        btn.classList.toggle('is-visible', window.scrollY > 480);
     };
-
-    // Keep first paint CSS-only; upgrade Earth after load + idle.
-    const schedule = () => {
-        if ('requestIdleCallback' in window) {
-            requestIdleCallback(start, { timeout: 3200 });
-        } else {
-            setTimeout(start, 1600);
-        }
-    };
-
-    if (document.readyState === 'complete') {
-        schedule();
-    } else {
-        window.addEventListener('load', schedule, { once: true });
-    }
-
-    const onInteract = () => setTimeout(start, 120);
-    window.addEventListener('scroll', onInteract, { once: true, passive: true });
-    window.addEventListener('pointerdown', onInteract, { once: true, passive: true });
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    btn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: prefersReducedMotion() ? 'auto' : 'smooth' });
+    });
 }
 
 function boot() {
-    initHeroEntrance();
-    initScrollReveals();
-    initNavScroll();
-
-    // WebGL planet is home-only (canvas omitted on other pages)
-    const canvas = document.querySelector('.planet-canvas');
-    if (! canvas) {
-        return;
-    }
-
-    if (shouldSkipWebGL()) {
-        canvas.remove();
-        return;
-    }
-
-    startPlanetWhenIdle(canvas);
+    initTheme();
+    initHeader();
+    initSearch();
+    initReveals();
+    initCounters();
+    initBackTop();
 }
 
 if (document.readyState === 'loading') {

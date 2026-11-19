@@ -1,45 +1,41 @@
-@extends('layouts.portfolio')
+@extends('layouts.app')
 
 @section('content')
- <x-page-header
- eyebrow="Background"
- :title="$seo['h1']"
- subtitle="BCIS at Apex College, leadership through the SMART Program and continuous learning that supports professional backend development."
- />
+    <x-page-header
+        eyebrow="Background"
+        :title="$seo['h1']"
+        subtitle="BCIS at Apex College, leadership through the SMART Program, and continuous learning."
+    />
 
- @include('portfolio.partials.education', ['standalone' => true])
+    <section class="page-body">
+        <div class="container">
+            <div class="card-grid" style="margin-bottom:2rem">
+                @foreach ($portfolio['education'] as $item)
+                    <article class="ui-card reveal">
+                        <p class="eyebrow">{{ $item['period'] }}</p>
+                        <h2 class="section-title" style="font-size:1.25rem">{{ $item['degree'] }}</h2>
+                        <p style="color:var(--primary);margin:.25rem 0 .75rem">{{ $item['school'] }}</p>
+                        <p class="muted">{{ $item['details'] }}</p>
+                        @if (! empty($item['points']))
+                            <ul style="margin:1rem 0 0;padding-left:1.1rem;color:var(--text-muted)">
+                                @foreach ($item['points'] as $point)
+                                    <li>{{ $point }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
+                    </article>
+                @endforeach
+            </div>
 
- <section class="page-wrap pb-10">
- <x-section-title
- title="Beyond the classroom"
- subtitle="Formal study is only part of the picture. Mentoring, organizing workshops and representing classmates taught me communication and ownership. The same habits I bring into freelance projects and team development work."
- />
-
- <div class="grid sm:grid-cols-3 gap-3 mb-10">
- <x-card padding="p-3.5">
- <p class="text-3xl font-display mb-2" style="font-weight: 700; color: var(--neon-violet);">42</p>
- <p class="text-sm" style="color: var(--text-secondary);">Students represented as class representative</p>
- </x-card>
- <x-card padding="p-3.5">
- <p class="text-3xl font-display mb-2" style="font-weight: 700; color: var(--neon-cyan);">2×</p>
- <p class="text-sm" style="color: var(--text-secondary);">Best Team recognition while mentoring SMART</p>
- </x-card>
- <x-card padding="p-3.5">
- <p class="text-3xl font-display mb-2" style="font-weight: 700; color: var(--blue);">{{ count($portfolio['projects']) }}+</p>
- <p class="text-sm" style="color: var(--text-secondary);">Shipped college and personal development projects</p>
- </x-card>
- </div>
-
- <x-card padding="p-6 sm:p-8">
- <h3 class="text-lg font-display mb-3" style="font-weight: 600; color: var(--text-primary);">Continuous learning</h3>
- <p class="text-sm leading-relaxed mb-4" style="color: var(--text-secondary);">
- I keep strengthening web development and database fundamentals through self-study, then prove them in projects, Laravel apps, Flutter clients, React interfaces and Node/Python backend experiments.
- </p>
- <div class="flex flex-wrap gap-2">
- @foreach ($portfolio['backend_stack'] as $topic)
- <span class="chip">{{ $topic }}</span>
- @endforeach
- </div>
- </x-card>
- </section>
+            <h2 class="section-title" style="font-size:1.35rem;margin-bottom:1rem">Achievements</h2>
+            <div class="card-grid card-grid--3">
+                @foreach ($portfolio['achievements'] as $item)
+                    <article class="ui-card reveal">
+                        <h3>{{ $item['title'] }}</h3>
+                        <p>{{ $item['desc'] }}</p>
+                    </article>
+                @endforeach
+            </div>
+        </div>
+    </section>
 @endsection
