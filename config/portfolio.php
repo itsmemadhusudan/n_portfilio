@@ -26,6 +26,7 @@ return [
     'ui_stats' => [
         ['value' => 20, 'suffix' => '+', 'label' => 'Finished Projects'],
         ['value' => 5, 'suffix' => '+', 'label' => 'Years Experience'],
+        ['value' => 10, 'suffix' => '+', 'label' => 'Training'],
         ['value' => 10, 'suffix' => '+', 'label' => 'Websites Shipped'],
         ['value' => 4, 'suffix' => '+', 'label' => 'Workshops Led'],
     ],

@@ -948,7 +948,7 @@ html.dark .nav-item__menu {
 
 @media (min-width: 768px) {
     .stats-grid {
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(5, 1fr);
     }
 }
 

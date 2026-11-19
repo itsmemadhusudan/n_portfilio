@@ -48,7 +48,7 @@
     "src": "node_modules/.pnpm/@fontsource+dm-sans@5.3.0/node_modules/@fontsource/dm-sans/files/dm-sans-latin-ext-700-normal.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/app-e5IzmjGj.css",
+    "file": "assets/app-BlIsqkJk.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
