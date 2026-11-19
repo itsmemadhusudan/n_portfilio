@@ -8,9 +8,10 @@
         (() => {
             try {
                 const saved = localStorage.getItem('theme');
-                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                if (saved === 'dark' || (!saved && prefersDark)) {
+                if (saved === 'dark') {
                     document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
                 }
             } catch (_) {}
         })();
@@ -53,8 +54,8 @@
 .hero{min-height:100vh;background:var(--hero-bg);color:#fff;padding-top:calc(var(--header-h) + 2rem)}
 .brand{display:inline-flex;align-items:center;gap:.55rem;color:#fff;font-weight:700}
 </style>
-        <link rel="preload" as="style" href="https://madhusudantimalsina.com.np/build/assets/app-DaS7yK8c.css" onload="this.onload=null;this.rel='stylesheet'">
-        <noscript><link rel="stylesheet" href="https://madhusudantimalsina.com.np/build/assets/app-DaS7yK8c.css"></noscript>
+        <link rel="preload" as="style" href="https://madhusudantimalsina.com.np/build/assets/app-vur6FA9-.css" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://madhusudantimalsina.com.np/build/assets/app-vur6FA9-.css"></noscript>
         <link rel="modulepreload" as="script" href="https://madhusudantimalsina.com.np/build/assets/app-BL6Q5w3e.js" /><script type="module" src="https://madhusudantimalsina.com.np/build/assets/app-BL6Q5w3e.js"></script>    </head>
 <body data-page="home">
     <a href="#main-content" class="sr-only focus:not-sr-only">Skip to content</a>
