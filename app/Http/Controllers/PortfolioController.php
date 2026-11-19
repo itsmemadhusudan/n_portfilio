@@ -25,9 +25,11 @@ class PortfolioController extends Controller
 
     public function skills(): View
     {
+        $technologyStack = config('technology_stack', []);
+
         return $this->page('portfolio.skills', 'skills', [
-            'skillsByCategory' => Portfolio::skillsByCategory(),
-            'skillCategories' => config('portfolio.skill_categories', []),
+            'technologyStack' => $technologyStack,
+            'stackCategories' => $technologyStack['categories'] ?? [],
         ]);
     }
 

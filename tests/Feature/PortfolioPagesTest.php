@@ -115,7 +115,15 @@ class PortfolioPagesTest extends TestCase
         $response = $this->get('/skills');
 
         $response->assertOk();
-        $response->assertSee('Languages', false);
-        $response->assertSee('learning', false);
+        $response->assertSee('Technology Stack', false);
+        $response->assertSee('Frontend Technologies', false);
+        $response->assertSee('stackDirectory(', false);
+        $response->assertSee('Docker', false);
+        $response->assertSee('Google Cloud Platform (GCP)', false);
+        $response->assertDontSee('Kubernetes', false);
+        $response->assertSee('JWT (JSON Web Token)', false);
+        $response->assertSee('OAuth 2.0', false);
+        $response->assertDontSee('Auth0', false);
+        $response->assertSee('View all', false);
     }
 }

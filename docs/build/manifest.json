@@ -48,7 +48,7 @@
     "src": "node_modules/.pnpm/@fontsource+dm-sans@5.3.0/node_modules/@fontsource/dm-sans/files/dm-sans-latin-ext-700-normal.woff2"
   },
   "resources/css/app.css": {
-    "file": "assets/app-BlIsqkJk.css",
+    "file": "assets/app-DaS7yK8c.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "name": "app",
@@ -57,7 +57,7 @@
     ]
   },
   "resources/js/app.js": {
-    "file": "assets/app-Cz3PpOZF.js",
+    "file": "assets/app-BL6Q5w3e.js",
     "name": "app",
     "src": "resources/js/app.js",
     "isEntry": true

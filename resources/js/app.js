@@ -50,6 +50,76 @@ document.addEventListener('alpine:init', () => {
             history.replaceState(null, '', qs ? `${window.location.pathname}?${qs}` : window.location.pathname);
         },
     }));
+
+    Alpine.data('stackDirectory', (categories = []) => ({
+        categories,
+        category: 'all',
+        query: '',
+        init() {
+            const params = new URLSearchParams(window.location.search);
+            this.category = params.get('category') || 'all';
+            this.query = params.get('q') || '';
+        },
+        labels: {
+            frontend: 'Frontend',
+            backend: 'Backend',
+            database: 'Database',
+            mobile: 'Mobile',
+            desktop: 'Desktop',
+            devops: 'DevOps',
+            auth: 'Auth',
+            api: 'APIs',
+            orm: 'ORM',
+            testing: 'Testing',
+            vcs: 'Version Control',
+            monitoring: 'Monitoring',
+            queues: 'Queues',
+            search: 'Search',
+            design: 'UI/UX',
+        },
+        setCategory(id) {
+            this.category = id;
+            this.syncUrl();
+        },
+        shortLabel(cat) {
+            return this.labels[cat.id] || cat.label;
+        },
+        matchesItem(item) {
+            const q = this.query.trim().toLowerCase();
+            if (!q) return true;
+            return [item.name, item.description, item.purpose, item.advantage]
+                .filter(Boolean)
+                .some((value) => String(value).toLowerCase().includes(q));
+        },
+        get filteredCategories() {
+            return this.categories
+                .filter((cat) => this.category === 'all' || cat.id === this.category)
+                .map((cat) => ({
+                    ...cat,
+                    shortLabel: this.shortLabel(cat),
+                    items: (cat.items || []).filter((item) => this.matchesItem(item)),
+                }))
+                .filter((cat) => cat.items.length > 0);
+        },
+        get visibleCategoryCards() {
+            const source = this.category === 'all'
+                ? this.categories
+                : this.categories.filter((cat) => cat.id === this.category);
+
+            return source.map((cat) => ({
+                id: cat.id,
+                shortLabel: this.shortLabel(cat),
+                count: (cat.items || []).filter((item) => this.matchesItem(item)).length,
+            })).filter((cat) => cat.count > 0);
+        },
+        syncUrl() {
+            const params = new URLSearchParams();
+            if (this.category && this.category !== 'all') params.set('category', this.category);
+            if (this.query.trim()) params.set('q', this.query.trim());
+            const qs = params.toString();
+            history.replaceState(null, '', qs ? `${window.location.pathname}?${qs}` : window.location.pathname);
+        },
+    }));
 });
 
 window.Alpine = Alpine;
